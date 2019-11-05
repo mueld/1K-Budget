@@ -25,36 +25,34 @@ void loop()
 {
     switch (Processstate)
     {
-        case Process_Initialize:
+    case Process_Initialize:
         break;
 
-        case Process_Start:
+    case Process_Start:
         break;
 
-        case Process_FirstRound:
+    case Process_FirstRound:
         FirstRound.ExecuteStateMachine();
-        if(FirstRound.activeState() == Finish)
+        if (FirstRound.activeState() == Finish)
         {
             Processstate = Process_Searching;
         }
         break;
-        case Process_Searching:
+    case Process_Searching:
         ObjectdetectionInstance.ExecuteStateMachine();
-        if(Objectdetection.activeState()==Objectstate_found)
+        if (Objectdetection.activeState() == Objectstate_found)
         {
             Processstate = Process_Collect;
         }
         break;
-        
-        case Process_Collect:
+
+    case Process_Collect:
         Collect.ExecuteStateMachine();
-        if(Collect.activeState() == Collect_Finish)
+        if (Collect.activeState() == Collect_Finish)
         {
             Processstate = Process_Searching;
         }
     }
 
-    
     ObjectdetectionInstance.ExecuteStateMachine();
-
 }

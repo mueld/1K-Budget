@@ -9,7 +9,6 @@ void setup ()
 {
     Serial.begin(9600);
     Instance.Setup(AFMS);
-    Serial.println("test");
 }
 
 void loop()

@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
-#include <DrivesController.h>
-
+#include "DrivesController.h"
+#include "Drive.h"
 
 void DrivesController::ExecuteStateMachine()
 {
@@ -58,11 +58,13 @@ void DrivesController::setCommand(Command Command, int Velocity)
     Velocity_Drives = Velocity;
 }
 
-void DrivesController::Setup(Adafruit_MotorShield Pointer)
+void DrivesController::Setup()
 {
-    Shield = &Pointer;
-    VR.Setup(Shield, 1);
-    VL.Setup(Shield, 2);
-    HR.Setup(Shield, 3);
-    HL.Setup(Shield, 4);
+    AFMS = Adafruit_MotorShield();
+    Pointer = &AFMS;
+    VR.Setup(Pointer, 1);
+    VL.Setup(Pointer, 2);
+    HR.Setup(Pointer, 3);
+    HL.Setup(Pointer, 4);
+    Pointer->begin();
 }

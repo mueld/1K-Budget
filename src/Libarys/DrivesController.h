@@ -5,9 +5,6 @@
 #ifndef DrivesController_h
 #define DrivesController_h
 
-
-
-
 enum Command
 {
     StraightForward,
@@ -25,21 +22,17 @@ private:
     Drive VL;
     Drive HR;
     Drive HL;
-    Drive Linear;
-    Drive Rotate;
-    
+
     Drive *Drives[4] = {&VR, &VL, &HR, &HL};
     Command Command_Controller;
-    volatile int *encoder;
-    Adafruit_MotorShield *Shield;
-    Adafruit_MotorShield *Shield2;
+    Adafruit_MotorShield AFMS;
+    Adafruit_MotorShield *Pointer;
     int Velocity_Drives;
 
 public:
     void ExecuteStateMachine();
-    void Setup(Adafruit_MotorShield Pointer, Adafruit_MotorShield Pointer2, volatile int *Encoder);
+    void Setup();
     void setCommand(Command Command, int Velocity);
-    void Collect(int Direction, int Inkrement);
 };
 
 #endif

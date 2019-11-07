@@ -1,6 +1,6 @@
-#include "Libarys/objectdetection.h"
+#include "objectdetection.h"
 #include <Wire.h>
-Adafruit_MotorShield AFMS1 = Adafruit_MotorShield(0x60);
+
 Pixy2 Pixyinstance;
 Objectdetection ObjectdetectionInstance;
 DrivesController DrivesControllerInstance;
@@ -14,16 +14,16 @@ enum Processstate
     Process_Parking,
     Process_FirstRound
 };
-
+Processstate State;
 void setup()
 {
     Serial.begin(115200);
-    DrivesControllerInstance.Setup(AFMS1);
+    DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(DrivesControllerInstance, Pixyinstance);
 }
 void loop()
 {
-    switch (Processstate)
+    switch (State)
     {
         case Process_Initialize:
         break;
@@ -32,26 +32,20 @@ void loop()
         break;
 
         case Process_FirstRound:
-        FirstRound.ExecuteStateMachine();
-        if(FirstRound.activeState() == Finish)
-        {
-            Processstate = Process_Searching;
-        }
+        
+        
         break;
         case Process_Searching:
         ObjectdetectionInstance.ExecuteStateMachine();
-        if(Objectdetection.activeState()==Objectstate_found)
+        if (ObjectdetectionInstance.activestate() == Objectstate_found)
         {
-            Processstate = Process_Collect;
+            State = Process_Collect;
         }
         break;
         
         case Process_Collect:
-        Collect.ExecuteStateMachine();
-        if(Collect.activeState() == Collect_Finish)
-        {
-            Processstate = Process_Searching;
-        }
+
+            break;
     }
 
     

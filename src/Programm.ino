@@ -23,32 +23,5 @@ void setup()
 }
 void loop()
 {
-    switch (State)
-    {
-        case Process_Initialize:
-        break;
-
-        case Process_Start:
-        break;
-
-        case Process_FirstRound:
-        
-        
-        break;
-        case Process_Searching:
-        ObjectdetectionInstance.ExecuteStateMachine();
-        if (ObjectdetectionInstance.activestate() == Objectstate_found)
-        {
-            State = Process_Collect;
-        }
-        break;
-        
-        case Process_Collect:
-
-            break;
-    }
-
     
-    ObjectdetectionInstance.ExecuteStateMachine();
-
 }

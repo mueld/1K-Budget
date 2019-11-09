@@ -32,7 +32,7 @@ public:
     VL53L0X_RangingMeasurementData_t measureFront;
     VL53L0X_RangingMeasurementData_t measureCube;
     void ExectueStateMachine();
-    void Initialize();
+    void Setup();
     void Reading();
 };
 

@@ -32,7 +32,7 @@ private:
 
 public:
     void ExecuteStateMachine();
-    void Setup(DrivesController Instance, ToF ToFs, Objectdetection Pixy);
+    void Setup(DrivesController Instance, ToF ToFs, Objectdetection *PInstance);
 };
 
 #endif

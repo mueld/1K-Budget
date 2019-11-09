@@ -1,7 +1,7 @@
 #include "ToF.h"
 #include <Adafruit_VL53L0X.h>
 
-void ToF::Initialize()
+void ToF::Setup()
 {
     
         // all reset

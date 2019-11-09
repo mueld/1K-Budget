@@ -1,9 +1,11 @@
-#include "objectdetection.h"
 #include "FirstRound.h"
-#include <Wire.h>
 
+
+ToF Sensors;
+FirstRound Round;
 Pixy2 Pixyinstance;
 Objectdetection ObjectdetectionInstance;
+Objectdetection *Pointer = &ObjectdetectionInstance;
 DrivesController DrivesControllerInstance;
 
 enum Processstate
@@ -21,6 +23,8 @@ void setup()
     Serial.begin(115200);
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(DrivesControllerInstance, Pixyinstance);
+    Sensors.Setup();
+    Round.Setup(DrivesControllerInstance, Sensors, Pointer);
 }
 void loop()
 {

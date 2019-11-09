@@ -33,6 +33,7 @@ private:
 public:
     void ExecuteStateMachine();
     void Setup(DrivesController Instance, ToF ToFs, Objectdetection *PInstance);
+    FirstRound_State activeState();
 };
 
 #endif

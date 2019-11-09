@@ -2,6 +2,10 @@
 #include "ToF.h"
 #include "objectdetection.h"
 
+FirstRound_State FirstRound::activeState()
+{
+    return State;
+}
 void FirstRound::Setup(DrivesController Instance, ToF ToFs, Objectdetection *PInstance)
 {
     DriveController = &Instance;
@@ -91,7 +95,7 @@ void FirstRound::ExecuteStateMachine()
             break;
         }
 
-        case FirstRound_Drive:
+    case FirstRound_Drive:
         Sensor->Reading();
 
         if (Camera->activestate() != Objectstate_found)

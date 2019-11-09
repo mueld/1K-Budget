@@ -44,6 +44,7 @@ void Objectdetection::ExecuteStateMachine()
                     else
                     {
                         Drivecontroller->setCommand(Stay, 0);
+                        FirstCubeFound = false;
                         state = Objectstate_found;
                     }
                 }

@@ -1,6 +1,5 @@
 #include "FirstRound.h"
 
-
 ToF Sensors;
 FirstRound Round;
 Pixy2 Pixyinstance;
@@ -18,6 +17,7 @@ enum Processstate
     Process_FirstRound
 };
 Processstate State;
+Processstate OldState;
 void setup()
 {
     Serial.begin(115200);
@@ -28,5 +28,50 @@ void setup()
 }
 void loop()
 {
-    
+    DrivesControllerInstance.ExecuteStateMachine();
+
+    switch (State)
+    {
+
+    case Process_FirstRound:
+        if (Pointer->activestate() != Objectstate_found || Round.activeState() != FirstRound_Finish)
+        {
+            Pointer->FirstRound();
+            Round.ExecuteStateMachine();
+            OldState = State;
+        }
+        else
+        {
+            State = Process_Collect;
+        }
+        break;
+
+    case Process_Searching:
+        if (Pointer->activestate() != Objectstate_found)
+        {
+            Pointer->ExecuteStateMachine();
+            OldState = State;
+        }
+        else
+        {
+            State = Process_Collect;
+        }
+        break;
+
+    case Process_Collect:
+        /*if (Collect.activeState() == Finish)
+        {
+              State = Process_Parking;
+        }
+       if (Collect.activeState() != Collect && Collect.activeState() != Finish)
+       {
+           Collect.ExecuteStateMachine();
+       }
+       else 
+       {
+           State = OldState;
+       }
+        */
+        break;
+    }
 }

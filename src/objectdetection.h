@@ -9,10 +9,7 @@ enum Objectstate
   Objectstate_Searching,
   Objectstate_found,
   Objectstate_Idle,
-  Objectstate_NewPosition,
-  Objectstate_Select,
   Objectstate_initialize,
-  Objectstate_FirstRound
 };
 
 class Objectdetection

@@ -20,6 +20,8 @@ class Objectdetection
 private:
   int nearest;
   int nearest_index;
+  int index;
+  bool FirstCubeFound;
   Objectstate state;
   Pixy2 *Camera;
   DrivesController *Drivecontroller;

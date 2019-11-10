@@ -7,3 +7,6 @@ Abstände:
 -Für Adjust_Distance2;
 -Allgemeine Abstände Für adjustment Distance
 -Abstand Front für 2ten Turn.
+
+
+Fragen Alex: Abstraktion FirstRound, Parking, Unload ?

@@ -1,23 +1,5 @@
-#include "FirstRound.h"
+#include "Variables.h"
 
-ToF Sensors;
-FirstRound Round;
-Pixy2 Pixyinstance;
-Objectdetection ObjectdetectionInstance;
-Objectdetection *Pointer = &ObjectdetectionInstance;
-DrivesController DrivesControllerInstance;
-
-enum Processstate
-{
-    Process_Initialize,
-    Process_Start,
-    Process_Searching,
-    Process_Collect,
-    Process_Parking,
-    Process_FirstRound
-};
-Processstate State;
-Processstate OldState;
 void setup()
 {
     Serial.begin(115200);
@@ -34,31 +16,39 @@ void loop()
     {
 
     case Process_FirstRound:
-        if (Pointer->activestate() != Objectstate_found || Round.activeState() != FirstRound_Finish)
+
+        ObjectdetectionInstance.FirstRound();
+        if (ObjectdetectionInstance.activestate() == Objectstate_found)
         {
-            Pointer->FirstRound();
+            OldState = State;
+            State = Process_Collect;
+        }
+        else if (Round.activeState() == FirstRound_Finish)
+        {
+            State = Process_Searching;
+        }
+
+        else if (Round.activeState() != FirstRound_Finish)
+        {
             Round.ExecuteStateMachine();
             OldState = State;
         }
-        else
-        {
-            State = Process_Collect;
-        }
+
         break;
 
     case Process_Searching:
-        if (Pointer->activestate() != Objectstate_found)
+
+        ObjectdetectionInstance.ExecuteStateMachine();
+        if (ObjectdetectionInstance.activestate() == Objectstate_found)
         {
-            Pointer->ExecuteStateMachine();
             OldState = State;
-        }
-        else
-        {
             State = Process_Collect;
         }
+
         break;
 
     case Process_Collect:
+
         /*if (Collect.activeState() == Finish)
         {
               State = Process_Parking;
@@ -71,6 +61,24 @@ void loop()
        {
            State = OldState;
        }
+        */
+        break;
+
+    case Process_Unload:
+        /* UnloadInstance.ExecuteStateMachine();
+        if(OnloadInstance.activeState() == Onload_Finish)
+        {
+            State = Process_Parking;
+        }
+        */
+        break;
+
+    case Process_Parking:
+        /* ParkingInstance.ExecuteStateMachine();
+        if(ParkingInstance.activeState() == Parking_Finish)
+        {
+            State = Process_Finish;
+        }
         */
         break;
     }

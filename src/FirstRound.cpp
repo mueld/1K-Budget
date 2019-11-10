@@ -6,10 +6,10 @@ FirstRound_State FirstRound::activeState()
 {
     return State;
 }
-void FirstRound::Setup(DrivesController Instance, ToF ToFs, Objectdetection *PInstance)
+void FirstRound::Setup(DrivesController *Instance, ToF *ToFs, Objectdetection *PInstance)
 {
-    DriveController = &Instance;
-    Sensor = &ToFs;
+    DriveController = Instance;
+    Sensor = ToFs;
     Camera = PInstance;
 }
 void FirstRound::ExecuteStateMachine()

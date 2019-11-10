@@ -3,10 +3,10 @@
 void setup()
 {
     Serial.begin(115200);
-    DrivesControllerInstance.Setup();
-    ObjectdetectionInstance.Setup(DrivesControllerInstance, Pixyinstance);
+    DrivesControllerInstance.Setup(&Encoder_L, &Encoder_R);
+    ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Sensors.Setup();
-    Round.Setup(DrivesControllerInstance, Sensors, Pointer);
+    Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
 }
 void loop()
 {

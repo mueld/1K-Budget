@@ -5,7 +5,7 @@
 
 void DrivesController::ExecuteStateMachine()
 {
-    switch(Command_Controller)
+    switch (Command_Controller)
     {
     case StraightForward:
         for (int i = 0; i < 4; i++)
@@ -21,11 +21,11 @@ void DrivesController::ExecuteStateMachine()
         }
         break;
     case Stay:
-    for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             Drives[i]->setMotor(1, 0);
         }
-        
+
     case TurnLeft:
         VR.setMotor(1, Velocity_Drives);
         VL.setMotor(2, Velocity_Drives);
@@ -58,13 +58,26 @@ void DrivesController::setCommand(Command Command, int Velocity)
     Velocity_Drives = Velocity;
 }
 
-void DrivesController::Setup()
+bool DrivesController::setPosition(int Direction, int Increment)
 {
-    AFMS = Adafruit_MotorShield();
-    Pointer = &AFMS;
-    VR.Setup(Pointer, 1);
-    VL.Setup(Pointer, 2);
-    HR.Setup(Pointer, 3);
-    HL.Setup(Pointer, 4);
-    Pointer->begin();
+    Position = false;
+    if (Increment < Encoder_Rotate)
+    {
+    }
+}
+
+void DrivesController::Setup(volatile int *Encoder_L, volatile int *Encoder_R)
+{
+    Encoder_Linear = Encoder_L;
+    Encoder_Rotate = Encoder_R;
+    AFMS1 = Adafruit_MotorShield(0x60);
+    AFMS2 = Adafruit_MotorShield(0x61);
+    VR.Setup(&AFMS1, 1);
+    VL.Setup(&AFMS1, 2);
+    HR.Setup(&AFMS1, 3);
+    HL.Setup(&AFMS1, 4);
+    Linear.Setup(&AFMS2, 1);
+    Rotate.Setup(&AFMS2, 2);
+    AFMS1.begin();
+    AFMS2.begin();
 }

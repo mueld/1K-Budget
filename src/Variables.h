@@ -6,8 +6,9 @@ ToF Sensors;
 FirstRound Round;
 Pixy2 Pixyinstance;
 Objectdetection ObjectdetectionInstance;
-Objectdetection *Pointer = &ObjectdetectionInstance;
 DrivesController DrivesControllerInstance;
+volatile int Encoder_L;
+volatile int Encoder_R;
 
 enum Processstate
 {

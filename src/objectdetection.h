@@ -25,7 +25,7 @@ private:
   Command DrivesControllerCommmand;
 
 public:
-  void Setup(DrivesController drivecontroller, Pixy2 pixy);
+  void Setup(DrivesController *drivecontroller, Pixy2 *pixy);
   Objectstate activestate();
   void ExecuteStateMachine();
   void FirstRound();

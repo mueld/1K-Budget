@@ -2,10 +2,10 @@
 #include "DrivesController.h"
 #include "objectdetection.h"
 
-void Objectdetection::Setup(DrivesController drivecontroller, Pixy2 pixy)
+void Objectdetection::Setup(DrivesController *drivecontroller, Pixy2 *pixy)
 {
-    Drivecontroller = &drivecontroller;
-    Camera = &pixy;
+    Drivecontroller = drivecontroller;
+    Camera = pixy;
     Camera->init();
 }
 
@@ -86,7 +86,6 @@ void Objectdetection::FirstRound()
             break;
 
         case Objectstate_found:
-
             state = Objectstate_Searching;
             break;
         }

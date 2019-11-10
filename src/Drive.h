@@ -12,10 +12,10 @@ private:
     Adafruit_DCMotor *Wheel;
     Adafruit_MotorShield *Shield;
 
+
 public:
     void Setup(Adafruit_MotorShield *shield, int Port);
     void setMotor(int Direction, int Velocity);
-    
 };
 
 #endif

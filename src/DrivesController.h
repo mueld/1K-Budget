@@ -15,6 +15,11 @@ enum Command
     GoLeft,
     Stay
 };
+enum MotorPosition
+{
+    Motor_Rotate,
+    Motor_Linear
+};
 class DrivesController
 {
 private:
@@ -38,7 +43,7 @@ public:
     void ExecuteStateMachine();
     void Setup(volatile int *Encoder_L, volatile int *Encoder_R);
     void setCommand(Command Command, int Velocity);
-    bool setPosition(int Direction, int Increment);
+    bool setPosition(MotorPosition Motor, int Direction, int Increment);
 };
 
 #endif

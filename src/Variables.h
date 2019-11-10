@@ -1,5 +1,5 @@
 #include "FirstRound.h"
-
+#include <EEPROM.h>
 #ifndef Variables_h
 #define Variables_h
 ToF Sensors;
@@ -24,4 +24,6 @@ enum Processstate
 
 Processstate State;
 Processstate OldState;
+void Encoder_linear(volatile int *Encoder);
+void Encoder_rotate(volatile int *Encoder);
 #endif

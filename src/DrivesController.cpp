@@ -58,9 +58,26 @@ void DrivesController::setCommand(Command Command, int Velocity)
     Velocity_Drives = Velocity;
 }
 
-bool DrivesController::setPosition(int Direction, int Increment)
+bool DrivesController::setPosition(MotorPosition Motor, int direction, int Increment)
 {
     Position = false;
+    switch (Motor)
+    {
+    case Motor_Linear:
+        if (Increment < Encoder_Linear)
+        {
+            Linear.setMotor(direction, 100);
+        }
+        else
+        {
+            Linear.setMotor(1, 0);
+            Encoder_Linear = 0;
+        }
+        break;
+
+    default:
+        break;
+    }
     if (Increment < Encoder_Rotate)
     {
     }

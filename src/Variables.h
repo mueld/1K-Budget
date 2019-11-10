@@ -2,6 +2,11 @@
 #include <EEPROM.h>
 #ifndef Variables_h
 #define Variables_h
+#define EncoderPinA_L 2
+#define EncoderPinB_L 3
+#define EncoderPinA_R 18
+#define EncoderPinB_R 19
+
 ToF Sensors;
 FirstRound Round;
 Pixy2 Pixyinstance;
@@ -24,6 +29,9 @@ enum Processstate
 
 Processstate State;
 Processstate OldState;
-void Encoder_linear(volatile int *Encoder);
-void Encoder_rotate(volatile int *Encoder);
+void EncoderTraceA_Linear();
+void EncoderTraceB_Linear();
+void EncoderTraceA_Rotate();
+void EncoderTraceB_Rotate();
+
 #endif

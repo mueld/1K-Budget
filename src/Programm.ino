@@ -1,29 +1,4 @@
-#include "Variables.h"
-
-void Encoder_Linear()
-{
-
-    if (digitalRead(EncoderPinB_L) == LOW)
-    {
-        Encoder_Li--;
-    }
-    else
-    {
-        Encoder_Li++;
-    }
-}
-
-void Encoder_Rotate()
-{
-    if (digitalRead(EncoderPinB_R) == LOW)
-    {
-        Encoder_Ro--;
-    }
-    else
-    {
-        Encoder_Ro++;
-    }
-}
+#include "Libarys/Variables.h"
 
 void setup()
 {

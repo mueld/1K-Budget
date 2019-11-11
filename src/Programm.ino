@@ -1,13 +1,16 @@
-#include "Variables.h"
+#include "Libarys/Variables.h"
 
 void setup()
 {
     Serial.begin(115200);
-    DrivesControllerInstance.Setup(&Encoder_L, &Encoder_R);
+    DrivesControllerInstance.Setup(&Encoder_Li, &Encoder_Ro);
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Sensors.Setup();
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
+<<<<<<< HEAD
     attachInterrupt(0, EncoderLinear, FALLING);
+=======
+>>>>>>> 98296af97767d85905fb36dac72607299744171a
 }
 void loop()
 {

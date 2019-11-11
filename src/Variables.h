@@ -1,11 +1,11 @@
 #include "FirstRound.h"
-#include <EEPROM.h>
+
 #ifndef Variables_h
 #define Variables_h
 #define EncoderPinA_L 2
-#define EncoderPinB_L 3
-#define EncoderPinA_R 18
-#define EncoderPinB_R 19
+#define EncoderPinA_R 3
+#define EncoderPinB_L 4
+#define EncoderPinB_R 5
 
 ToF Sensors;
 FirstRound Round;
@@ -29,9 +29,30 @@ enum Processstate
 
 Processstate State;
 Processstate OldState;
-void EncoderTraceA_Linear();
-void EncoderTraceB_Linear();
-void EncoderTraceA_Rotate();
-void EncoderTraceB_Rotate();
 
+void EncoderRotate()
+{
+    if(EncoderPinB_R == LOW)
+{
+    Encoder_R--;
+}
+else
+{
+    Encoder_R++;
+}
+
+}
+
+
+void EncoderLinear()
+{
+if (EncoderPinB_L == LOW)
+{
+    Encoder_L--;
+}
+else
+{
+    Encoder_L++;
+}
+}
 #endif

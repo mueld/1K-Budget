@@ -7,7 +7,7 @@ void setup()
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Sensors.Setup();
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
-    attachInterrupt()
+    attachInterrupt(0, EncoderLinear, FALLING);
 }
 void loop()
 {

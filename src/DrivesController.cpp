@@ -64,29 +64,27 @@ bool DrivesController::setPosition(MotorPosition Motor, int direction, int Incre
     switch (Motor)
     {
     case Motor_Linear:
-        if (Increment < Encoder_Linear)
+        if (Increment < E_linear)
         {
             Linear.setMotor(direction, 100);
         }
         else
         {
             Linear.setMotor(1, 0);
-            Encoder_Linear = 0;
+            
         }
         break;
 
-    default:
-        break;
     }
-    if (Increment < Encoder_Rotate)
+    if (Increment < E_rotate)
     {
     }
 }
 
-void DrivesController::Setup(volatile int *Encoder_L, volatile int *Encoder_R)
+void DrivesController::Setup(volatile int *Encoder_l, volatile int *Encoder_r)
 {
-    Encoder_Linear = Encoder_L;
-    Encoder_Rotate = Encoder_R;
+    E_linear = Encoder_l;
+    E_rotate = Encoder_r;
     AFMS1 = Adafruit_MotorShield(0x60);
     AFMS2 = Adafruit_MotorShield(0x61);
     VR.Setup(&AFMS1, 1);

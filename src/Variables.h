@@ -1,19 +1,21 @@
 #include "FirstRound.h"
-#include <EEPROM.h>
+#include <Arduino.h>
 #ifndef Variables_h
 #define Variables_h
 #define EncoderPinA_L 2
-#define EncoderPinB_L 3
-#define EncoderPinA_R 18
-#define EncoderPinB_R 19
+#define EncoderPinB_L 4
+#define EncoderPinA_R 3
+#define EncoderPinB_R 5
 
 ToF Sensors;
 FirstRound Round;
 Pixy2 Pixyinstance;
 Objectdetection ObjectdetectionInstance;
 DrivesController DrivesControllerInstance;
-volatile int Encoder_L;
-volatile int Encoder_R;
+volatile int Encoder_Li;
+volatile int Encoder_Ro;
+
+
 
 enum Processstate
 {
@@ -29,9 +31,7 @@ enum Processstate
 
 Processstate State;
 Processstate OldState;
-void EncoderTraceA_Linear();
-void EncoderTraceB_Linear();
-void EncoderTraceA_Rotate();
-void EncoderTraceB_Rotate();
+
+
 
 #endif

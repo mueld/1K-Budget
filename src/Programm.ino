@@ -1,13 +1,38 @@
 #include "Variables.h"
 
+void Encoder_Linear()
+{
+
+    if (digitalRead(EncoderPinB_L) == LOW)
+    {
+        Encoder_Li--;
+    }
+    else
+    {
+        Encoder_Li++;
+    }
+}
+
+void Encoder_Rotate()
+{
+    if (digitalRead(EncoderPinB_R) == LOW)
+    {
+        Encoder_Ro--;
+    }
+    else
+    {
+        Encoder_Ro++;
+    }
+}
+
 void setup()
 {
     Serial.begin(115200);
-    DrivesControllerInstance.Setup(&Encoder_L, &Encoder_R);
+    DrivesControllerInstance.Setup(&Encoder_Li, &Encoder_Ro);
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Sensors.Setup();
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
-    attachInterrupt()
+    
 }
 void loop()
 {

@@ -36,14 +36,14 @@ private:
     Adafruit_MotorShield AFMS2;
     volatile int *E_linear;
     volatile int *E_rotate;
-    bool Position;
+    bool State;
     int Velocity_Drives;
 
 public:
     void ExecuteStateMachine();
     void Setup(volatile int *Encoder_l, volatile int *Encoder_r);
     void setCommand(Command Command, int Velocity);
-    bool setPosition(MotorPosition Motor, int Direction, int Increment);
+    bool setPosition(MotorPosition Motor, int Position);
 };
 
 #endif

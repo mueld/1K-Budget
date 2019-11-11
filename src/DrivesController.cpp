@@ -27,28 +27,22 @@ void DrivesController::ExecuteStateMachine()
         }
 
     case TurnLeft:
-        VR.setMotor(1, Velocity_Drives);
-        VL.setMotor(2, Velocity_Drives);
-        HR.setMotor(1, Velocity_Drives);
-        HL.setMotor(2, Velocity_Drives);
+        Drives[0], Drives[2]->setMotor(1, Velocity_Drives);
+        Drives[1], Drives[3]->setMotor(2, Velocity_Drives);
+
         break;
     case TurnRight:
-        VR.setMotor(2, Velocity_Drives);
-        VL.setMotor(1, Velocity_Drives);
-        HR.setMotor(2, Velocity_Drives);
-        HL.setMotor(1, Velocity_Drives);
+        Drives[0], Drives[2]->setMotor(2, Velocity_Drives);
+        Drives[1], Drives[3]->setMotor(1, Velocity_Drives);
         break;
     case GoRight:
-        VR.setMotor(2, Velocity_Drives);
-        VL.setMotor(1, Velocity_Drives);
-        HR.setMotor(1, Velocity_Drives);
-        HL.setMotor(2, Velocity_Drives);
+        Drives[0], Drives[3]->setMotor(2, Velocity_Drives);
+        Drives[1], Drives[2]->setMotor(1, Velocity_Drives);
+
         break;
     case GoLeft:
-        VR.setMotor(1, Velocity_Drives);
-        VL.setMotor(2, Velocity_Drives);
-        HR.setMotor(2, Velocity_Drives);
-        HL.setMotor(1, Velocity_Drives);
+        Drives[0], Drives[3]->setMotor(1, Velocity_Drives);
+        Drives[1], Drives[2]->setMotor(2, Velocity_Drives);
         break;
     }
 }

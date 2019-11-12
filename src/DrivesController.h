@@ -4,7 +4,10 @@
 
 #ifndef DrivesController_h
 #define DrivesController_h
-
+#define EncoderPinA_L 2
+#define EncoderPinB_L 4
+#define EncoderPinA_R 3
+#define EncoderPinB_R 5
 enum Command
 {
     StraightForward,
@@ -34,16 +37,18 @@ private:
     Command Command_Controller;
     Adafruit_MotorShield AFMS1;
     Adafruit_MotorShield AFMS2;
-    volatile int *E_linear;
-    volatile int *E_rotate;
+    volatile int Encoder_Linear;
+    volatile int Encoder_Rotate;
     bool State;
     int Velocity_Drives;
 
 public:
     void ExecuteStateMachine();
-    void Setup(volatile int *Encoder_l, volatile int *Encoder_r);
+    void Setup();
     void setCommand(Command Command, int Velocity);
     bool setPosition(MotorPosition Motor, int Position);
+    void ReadEncoderLinear();
+    void ReadEncoderRotate();
 };
 
 #endif

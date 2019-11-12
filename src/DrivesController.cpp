@@ -3,6 +3,29 @@
 #include "DrivesController.h"
 #include "Drive.h"
 
+void DrivesController::ReadEncoderLinear()
+{
+    if (digitalRead(EncoderPinB_L) == LOW)
+    {
+        Encoder_Linear--;
+    }
+    else
+    {
+        Encoder_Linear++;
+    }
+}
+
+void DrivesController::ReadEncoderRotate()
+{
+    if (digitalRead(EncoderPinB_R) == LOW)
+    {
+        Encoder_Rotate--;
+    }
+    else
+    {
+        Encoder_Rotate++;
+    }
+}
 void DrivesController::ExecuteStateMachine()
 {
     switch (Command_Controller)
@@ -54,49 +77,47 @@ void DrivesController::setCommand(Command Command, int Velocity)
 
 bool DrivesController::setPosition(MotorPosition Motor, int Position)
 {
-   
+
     State = false;
     switch (Motor)
     {
     case Motor_Linear:
-        if (E_linear < Position - 10)
+        if (Encoder_Linear < Position - 10)
         {
             Linear.setMotor(FORWARD, 100);
         }
-        else if (E_linear > Position + 10)
+        else if (Encoder_Linear > Position + 10)
         {
-            Linear.setMotor(BACKWARD, 100);   
+            Linear.setMotor(BACKWARD, 100);
         }
         else
         {
             Linear.setMotor(1, 0);
             State = true;
         }
-    break;
-    
-case Motor_Rotate:
-    if (E_rotate < Position - 10)
-    {
-        Rotate.setMotor(FORWARD, 100);
-    }
-    else if (E_rotate > Position + 10)
-    {
-        Rotate.setMotor(BACKWARD, 100);
-    }
-    else
-    {
-        Rotate.setMotor(1, 0);
-        State = true;
-    }
-    break;
+        break;
+
+    case Motor_Rotate:
+        if (Encoder_Rotate < Position - 10)
+        {
+            Rotate.setMotor(FORWARD, 100);
+        }
+        else if (Encoder_Rotate > Position + 10)
+        {
+            Rotate.setMotor(BACKWARD, 100);
+        }
+        else
+        {
+            Rotate.setMotor(1, 0);
+            State = true;
+        }
+        break;
     }
     return State;
 }
 
-void DrivesController::Setup(volatile int *Encoder_l, volatile int *Encoder_r)
+void DrivesController::Setup()
 {
-    E_linear = Encoder_l;
-    E_rotate = Encoder_r;
     AFMS1 = Adafruit_MotorShield(0x60);
     AFMS2 = Adafruit_MotorShield(0x61);
     VR.Setup(&AFMS1, 1);

@@ -3,11 +3,12 @@
 void setup()
 {
     Serial.begin(115200);
-    DrivesControllerInstance.Setup(&Encoder_Li, &Encoder_Ro);
+    DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Sensors.Setup();
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
-    attachInterrupt(0, Encoder_Linear, FALLING);
+    attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
+    attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
 }
 void loop()
 {

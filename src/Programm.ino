@@ -12,7 +12,6 @@ void setup()
 }
 void loop()
 {
-    DrivesControllerInstance.ExecuteStateMachine();
 
     switch (State)
     {

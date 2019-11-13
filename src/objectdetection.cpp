@@ -35,15 +35,15 @@ void Objectdetection::ExecuteStateMachine()
                 {
                     if (Camera->ccc.blocks[i].m_x >= 180)
                     {
-                        Drivecontroller->setCommand(TurnRight, 100);
+                        Drivecontroller->TurnRight(100);
                     }
                     else if (Camera->ccc.blocks[i].m_x >= 160)
                     {
-                        Drivecontroller->setCommand(TurnRight, 30);
+                        Drivecontroller->TurnRight(30);
                     }
                     else
                     {
-                        Drivecontroller->setCommand(Stay, 0);
+                        Drivecontroller->Stay();
                         FirstCubeFound = false;
                         state = Objectstate_found;
                     }
@@ -52,9 +52,7 @@ void Objectdetection::ExecuteStateMachine()
         }
         else
         {
-
-            DrivesControllerCommmand = TurnRight;
-            Drivecontroller->setCommand(DrivesControllerCommmand, 100);
+            Drivecontroller->TurnRight(100);
         }
         break;
 
@@ -79,7 +77,7 @@ void Objectdetection::FirstRound()
             {
                 if (Camera->ccc.blocks[i].m_y >= 170 && Camera->ccc.blocks[i].m_x <= 120)
                 {
-                    Drivecontroller->setCommand(Stay, 0);
+                    Drivecontroller->Stay();
                     state = Objectstate_found;
                 }
             }

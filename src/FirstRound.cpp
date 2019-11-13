@@ -20,15 +20,15 @@ void FirstRound::ExecuteStateMachine()
         Sensor->Reading();
         if (Sensor->measureFront.RangeMilliMeter <= 1000)
         {
-            DriveController->setCommand(StraightForward, 100);
+            DriveController->MoveForward(100);
         }
         else if (Sensor->measureVR.RangeMilliMeter >= 10)
         {
-            DriveController->setCommand(GoRight, 50);
+            DriveController->MoveRight(50);
         }
         else
         {
-            DriveController->setCommand(Stay, 0);
+            DriveController->Stay();
             State = FirstRound_Adjust;
         }
         break;
@@ -47,15 +47,15 @@ void FirstRound::ExecuteStateMachine()
 
             if (Sensor->measureVR.RangeMilliMeter > 280)
             {
-                DriveController->setCommand(GoRight, 25);
+                DriveController->MoveRight(25);
             }
             else if (Sensor->measureVR.RangeMilliMeter < 270)
             {
-                DriveController->setCommand(GoLeft, 25);
+                DriveController->MoveLeft(25);
             }
             else
             {
-                DriveController->setCommand(Stay, 0);
+                DriveController->Stay();
                 State_Adjust = Adjust_Parallel;
             }
             break;
@@ -63,15 +63,15 @@ void FirstRound::ExecuteStateMachine()
         case Adjust_Distance2:
             if (Sensor->measureVR.RangeMilliMeter > 15)
             {
-                DriveController->setCommand(GoRight, 25);
+                DriveController->MoveRight(25);
             }
             else if (Sensor->measureVR.RangeMilliMeter < 5)
             {
-                DriveController->setCommand(GoLeft, 25);
+                DriveController->MoveLeft(25);
             }
             else
             {
-                DriveController->setCommand(Stay, 0);
+                DriveController->Stay();
                 State_Adjust = Adjust_Parallel;
             }
             break;
@@ -79,15 +79,16 @@ void FirstRound::ExecuteStateMachine()
         case Adjust_Parallel:
             if (Sensor->measureVR.RangeMilliMeter % Sensor->measureHR.RangeMilliMeter >= 2 && Sensor->measureVR.RangeMilliMeter > Sensor->measureHR.RangeMilliMeter)
             {
-                DriveController->setCommand(TurnRight, 25);
+                DriveController->TurnLeft(25);
             }
             else if (Sensor->measureHR.RangeMilliMeter % Sensor->measureVR.RangeMilliMeter >= 2)
             {
-                DriveController->setCommand(TurnLeft, 25);
+                DriveController->TurnLeft(25);
+                ;
             }
             else
             {
-                DriveController->setCommand(Stay, 0);
+                DriveController->Stay();
                 State_Adjust = Adjust_Distance;
                 State = FirstRound_Drive;
             }
@@ -108,24 +109,24 @@ void FirstRound::ExecuteStateMachine()
 
             if (Sensor->measureVR.RangeMilliMeter > 15 || Sensor->measureVR.RangeMilliMeter < 5)
             {
-                DriveController->setCommand(Stay, 0);
+                DriveController->Stay();
                 State = FirstRound_Adjust;
             }
 
             if (Sensor->measureFront.RangeMilliMeter >= 50)
             {
-                DriveController->setCommand(StraightForward, 100);
+                DriveController->MoveForward(100);
             }
             else
             {
-                DriveController->setCommand(Stay, 0);
+                DriveController->Stay();
                 Turns++;
                 State = FirstRound_Turn;
             }
         }
         else
         {
-            DriveController->setCommand(Stay, 0);
+            DriveController->Stay();
             State = FirstRound_Idle;
         }
         break;
@@ -137,12 +138,12 @@ void FirstRound::ExecuteStateMachine()
         Sensor->Reading();
         if (Sensor->measureFront.RangeMilliMeter <= 900 || Sensor->measureHR.RangeMilliMeter % Sensor->measureVR.RangeMilliMeter > 2)
         {
-            DriveController->setCommand(TurnLeft, 30);
+            DriveController->TurnLeft(30);
         }
 
         else
         {
-            DriveController->setCommand(Stay, 0);
+            DriveController->Stay();
             Turns++;
             State = FirstRound_Adjust;
         }

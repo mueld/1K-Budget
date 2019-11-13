@@ -22,7 +22,6 @@ private:
   Objectstate state;
   Pixy2 *Camera;
   DrivesController *Drivecontroller;
-  Command DrivesControllerCommmand;
 
 public:
   void Setup(DrivesController *drivecontroller, Pixy2 *pixy);

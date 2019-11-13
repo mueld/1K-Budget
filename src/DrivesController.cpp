@@ -27,20 +27,13 @@ void DrivesController::ReadEncoderRotate()
     }
 }
 
-
 void DrivesController::MoveTheLadies(Direction_Drive Direction, int Veloctiy)
 {
-    if(State != Controller_Idle )
-    {
-        return;
-    }
-
     State = Controller_MoveTheLadies;
     for (int i = 0; i < 4; i++)
     {
         Drives[i]->setMotor(Controller_Direction, Veloctiy)
     }
-    
 }
 
 void DrivesController::MoveForward(int Velocity)
@@ -70,8 +63,8 @@ void DrivesController::MoveRight(int Velocity)
 
 void DrivesController::MoveLeft(int Velocity)
 {
-    State = 
-    MoveTheLadies(Drive_MoveLeft, Velocity);
+    State =
+        MoveTheLadies(Drive_MoveLeft, Velocity);
 }
 
 void DrivesController::Stay()
@@ -81,7 +74,6 @@ void DrivesController::Stay()
     {
         Drives[i]->setMotor(1, 0);
     }
-    
 }
 
 bool DrivesController::setPosition(MotorPosition Motor, int Position)

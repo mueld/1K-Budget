@@ -14,15 +14,14 @@ enum MotorPosition
     Motor_Rotate,
     Motor_Linear
 };
-enum ControllerState 
+enum ControllerState
 {
     Controller_Initilaize,
     Controller_MoveTheLadies,
     Controller_Positioning,
     Controller_Idle
 
-}
-class DrivesController
+} class DrivesController
 {
 private:
     Drive VR;
@@ -35,7 +34,7 @@ private:
 
     Adafruit_MotorShield AFMS1;
     Adafruit_MotorShield AFMS2;
-    
+
     volatile int Encoder_Linear;
     volatile int Encoder_Rotate;
     bool InPosition;
@@ -44,10 +43,9 @@ private:
     Direction_Drive Controller_Direction;
     void MoveTheLadies(Direction_Drive Direction, int Velocity_Drives);
 
-    public:
+public:
     void Setup();
 
-    
     void MoveForward(int Velocity);
     void MoveBackward(int Velocity);
     void TurnRight(int Velocity);

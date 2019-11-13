@@ -26,67 +26,76 @@ void DrivesController::ReadEncoderRotate()
         Encoder_Rotate++;
     }
 }
-void DrivesController::ExecuteStateMachine()
+
+
+void DrivesController::MoveTheLadies(Direction_Drive Direction, int Veloctiy)
 {
-    switch (Command_Controller)
+    if(State != Controller_Idle )
     {
-    case StraightForward:
-        for (int i = 0; i < 4; i++)
-        {
-            Drives[i]->setMotor(1, Velocity_Drives);
-        }
-        break;
-
-    case StraightBackward:
-        for (int i = 0; i < 4; i++)
-        {
-            Drives[i]->setMotor(2, Velocity_Drives);
-        }
-        break;
-    case Stay:
-        for (int i = 0; i < 4; i++)
-        {
-            Drives[i]->setMotor(1, 0);
-        }
-
-    case TurnLeft:
-        Drives[0], Drives[2]->setMotor(1, Velocity_Drives);
-        Drives[1], Drives[3]->setMotor(2, Velocity_Drives);
-
-        break;
-    case TurnRight:
-        Drives[0], Drives[2]->setMotor(2, Velocity_Drives);
-        Drives[1], Drives[3]->setMotor(1, Velocity_Drives);
-        break;
-    case GoRight:
-        Drives[0], Drives[3]->setMotor(2, Velocity_Drives);
-        Drives[1], Drives[2]->setMotor(1, Velocity_Drives);
-
-        break;
-    case GoLeft:
-        Drives[0], Drives[3]->setMotor(1, Velocity_Drives);
-        Drives[1], Drives[2]->setMotor(2, Velocity_Drives);
-        break;
+        return;
     }
+
+    State = Controller_MoveTheLadies;
+    for (int i = 0; i < 4; i++)
+    {
+        Drives[i]->setMotor(Controller_Direction, Veloctiy)
+    }
+    
 }
-void DrivesController::setCommand(Command Command, int Velocity)
+
+void DrivesController::MoveForward(int Velocity)
 {
-    Command_Controller = Command;
-    Velocity_Drives = Velocity;
+    MoveTheLadies(Drive_Forward, Velocity);
+}
+
+void DrivesController::MoveBackward(int Velocity)
+{
+    MoveTheLadies(Drive_Backward, Velocity);
+}
+
+void DrivesController::TurnRight(int Velocity)
+{
+    MoveTheLadies(Drive_TurnRight, Velocity);
+}
+
+void DrivesController::TurnLeft(int Velocity)
+{
+    MoveTheLadies(Drive_TurnLeft, Velocity);
+}
+
+void DrivesController::MoveRight(int Velocity)
+{
+    MoveTheLadies(Drive_MoveRight, Velocity);
+}
+
+void DrivesController::MoveLeft(int Velocity)
+{
+    State = 
+    MoveTheLadies(Drive_MoveLeft, Velocity);
+}
+
+void DrivesController::Stay()
+{
+    State = Controller_Idle;
+    for (int i = 0; i < 4; i++)
+    {
+        Drives[i]->setMotor(1, 0);
+    }
+    
 }
 
 bool DrivesController::setPosition(MotorPosition Motor, int Position)
 {
 
-    State = false;
+    InPosition = false;
     switch (Motor)
     {
     case Motor_Linear:
-        if (Encoder_Linear < Position - 10)
+        if (Encoder_Linear < Position - 2)
         {
             Linear.setMotor(FORWARD, 100);
         }
-        else if (Encoder_Linear > Position + 10)
+        else if (Encoder_Linear > Position + 2)
         {
             Linear.setMotor(BACKWARD, 100);
         }
@@ -120,10 +129,10 @@ void DrivesController::Setup()
 {
     AFMS1 = Adafruit_MotorShield(0x60);
     AFMS2 = Adafruit_MotorShield(0x61);
-    VR.Setup(&AFMS1, 1);
-    VL.Setup(&AFMS1, 2);
-    HR.Setup(&AFMS1, 3);
-    HL.Setup(&AFMS1, 4);
+    VR.Setup(&AFMS1, 1, Location_VR);
+    VL.Setup(&AFMS1, 2, Location_VL);
+    HR.Setup(&AFMS1, 3, Location_HR);
+    HL.Setup(&AFMS1, 4, Location_HL);
     Linear.Setup(&AFMS2, 1);
     Rotate.Setup(&AFMS2, 2);
     AFMS1.begin();

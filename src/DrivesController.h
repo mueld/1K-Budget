@@ -8,21 +8,20 @@
 #define EncoderPinB_L 4
 #define EncoderPinA_R 3
 #define EncoderPinB_R 5
-enum Command
-{
-    StraightForward,
-    StraightBackward,
-    TurnLeft,
-    TurnRight,
-    GoRight,
-    GoLeft,
-    Stay
-};
+
 enum MotorPosition
 {
     Motor_Rotate,
     Motor_Linear
 };
+enum ControllerState 
+{
+    Controller_Initilaize,
+    Controller_MoveTheLadies,
+    Controller_Positioning,
+    Controller_Idle
+
+}
 class DrivesController
 {
 private:
@@ -32,20 +31,31 @@ private:
     Drive HL;
     Drive Linear;
     Drive Rotate;
-
     Drive *Drives[4] = {&VR, &VL, &HR, &HL};
-    Command Command_Controller;
+
     Adafruit_MotorShield AFMS1;
     Adafruit_MotorShield AFMS2;
+    
     volatile int Encoder_Linear;
     volatile int Encoder_Rotate;
-    bool State;
-    int Velocity_Drives;
+    bool InPosition;
 
-public:
-    void ExecuteStateMachine();
+    ControllerState State;
+    Direction_Drive Controller_Direction;
+    void MoveTheLadies(Direction_Drive Direction, int Velocity_Drives);
+
+    public:
     void Setup();
-    void setCommand(Command Command, int Velocity);
+
+    
+    void MoveForward(int Velocity);
+    void MoveBackward(int Velocity);
+    void TurnRight(int Velocity);
+    void TurnLeft(int Velocity);
+    void MoveRight(int Velocity);
+    void MoveLeft(int Velocity);
+    void Stay(int Velocity);
+
     bool setPosition(MotorPosition Motor, int Position);
     void ReadEncoderLinear();
     void ReadEncoderRotate();

@@ -21,6 +21,7 @@ enum Location
     Location_HR,
     Location_HL
 };
+
 int LookUpTable[6][4] =
     {
         {1, 0, 1, 0},
@@ -30,8 +31,7 @@ int LookUpTable[6][4] =
         {0, 0, 1, 1},
         {1, 1, 0, 1}
     };
-
-
+    
 class Drive
 {
 private:

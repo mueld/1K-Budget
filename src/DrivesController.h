@@ -54,7 +54,7 @@ private:
     void TurnLeft(int Velocity);
     void MoveRight(int Velocity);
     void MoveLeft(int Velocity);
-    void Stay(int Velocity);
+    void Stay();
 
     bool setPosition(MotorPosition Motor, int Position);
     void ReadEncoderLinear();

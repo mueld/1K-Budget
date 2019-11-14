@@ -75,18 +75,18 @@ void DrivesController::Stay()
     }
 }
 
-bool DrivesController::setPosition(MotorPosition Motor, int Position)
+bool DrivesController::setPosition(MotorPosition Motor, Position_Axis position)
 {
 
     InPosition = false;
     switch (Motor)
     {
     case Motor_Linear:
-        if (Encoder_Linear < Position - 2)
+        if (Encoder_Linear < Position[position] - 2)
         {
             Linear.setMotor(FORWARD, 100);
         }
-        else if (Encoder_Linear > Position + 2)
+        else if (Encoder_Linear > Position[position] + 2)
         {
             Linear.setMotor(BACKWARD, 100);
         }
@@ -98,11 +98,11 @@ bool DrivesController::setPosition(MotorPosition Motor, int Position)
         break;
 
     case Motor_Rotate:
-        if (Encoder_Rotate < Position - 10)
+        if (Encoder_Rotate < Position[position] - 10)
         {
             Rotate.setMotor(FORWARD, 100);
         }
-        else if (Encoder_Rotate > Position + 10)
+        else if (Encoder_Rotate > Position[position] + 10)
         {
             Rotate.setMotor(BACKWARD, 100);
         }
@@ -113,7 +113,7 @@ bool DrivesController::setPosition(MotorPosition Motor, int Position)
         }
         break;
     }
-    return State;
+    return InPosition;
 }
 
 void DrivesController::Setup()

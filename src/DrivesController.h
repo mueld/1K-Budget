@@ -14,6 +14,14 @@ enum MotorPosition
     Motor_Rotate,
     Motor_Linear
 };
+enum Position_Axis
+{
+    Position_StartingPositionStroke,
+    Position_Stroke,
+    Position_StartingPositionRotate,
+    Position_Rotate
+
+};
 enum ControllerState
 {
     Controller_Initilaize,
@@ -40,6 +48,7 @@ private:
     volatile int Encoder_Linear;
     volatile int Encoder_Rotate;
     bool InPosition;
+    int Position[4] {0, 4000, 0 , 4000};
 
     ControllerState State;
     Direction_Drive Controller_Direction;
@@ -55,7 +64,7 @@ public:
     void MoveLeft(int Velocity);
     void Stay();
 
-    bool setPosition(MotorPosition Motor, int Position);
+    bool setPosition(MotorPosition Motor, Position_Axis position);
     void ReadEncoderLinear();
     void ReadEncoderRotate();
 };

@@ -21,7 +21,9 @@ enum ControllerState
     Controller_Positioning,
     Controller_Idle
 
-} class DrivesController
+};
+
+class DrivesController
 {
 private:
     Drive VR;
@@ -45,7 +47,6 @@ private:
 
 public:
     void Setup();
-
     void MoveForward(int Velocity);
     void MoveBackward(int Velocity);
     void TurnRight(int Velocity);

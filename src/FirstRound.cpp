@@ -117,7 +117,7 @@ void FirstRound::ExecuteStateMachine()
     case FirstRound_Turn:
         Sensor->Reading();
 
-        if (Sensor->measureFront.RangeMilliMeter <= 50 || (Sensor->measureFront.RangeMilliMeter <= 900 &&Turns = 2))
+        if ((Sensor->measureFront.RangeMilliMeter <= 50) || (Sensor->measureFront.RangeMilliMeter <= 900 && Turns == 2))
         {
             DriveController->Stay();
         }

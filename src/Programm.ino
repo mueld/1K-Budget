@@ -14,8 +14,6 @@ void loop()
 {
     Sensors.ExectueStateMachine();
 
-
-    
     switch (State)
     {
 

@@ -22,23 +22,20 @@ enum Location
     Location_HL
 };
 
-int LookUpTable[6][4] =
-    {
-        {1, 0, 1, 0},
-        {0, 1, 0, 1},
-        {0, 0, 0, 0},
-        {1, 1, 1, 1},
-        {0, 0, 1, 1},
-        {1, 1, 0, 1}
-    };
-    
 class Drive
 {
 private:
-
     Adafruit_DCMotor *Wheel;
     Adafruit_MotorShield *Shield;
     Location Location_Drive;
+    int LookUpTable[6][4] =
+        {
+            {1, 0, 1, 0},
+            {0, 1, 0, 1},
+            {0, 0, 0, 0},
+            {1, 1, 1, 1},
+            {0, 0, 1, 1},
+            {1, 1, 0, 1}};
 
 public:
     void Setup(Adafruit_MotorShield *shield, int Port, Location location);

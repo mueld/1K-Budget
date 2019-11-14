@@ -2,7 +2,6 @@
 #define Tof_h
 #include <Wire.h>
 #include <Adafruit_VL53L0X.h>
-#include <Adafruit_VL6180X.h>
 
 enum ToF_State
 {
@@ -12,14 +11,13 @@ enum ToF_State
 class ToF
 {
 private:
-    int Pin[] = {6, 7, 8, 9};
-    int Address[] = {48, 49, 50, 51};
+    int Pin[4] = {6, 7, 8, 9};
+    int Address[4] = {48, 49, 50, 51};
     Adafruit_VL53L0X VR = Adafruit_VL53L0X();
     Adafruit_VL53L0X HR = Adafruit_VL53L0X();
     Adafruit_VL53L0X Front = Adafruit_VL53L0X();
     Adafruit_VL53L0X LEFT = Adafruit_VL53L0X();
-    Adafruit_VL53L0X *Sensoren[] = {&VR, &HR, &Front, &LEFT};
-    Adafruit_VL6180X Cube = Adafruit_VL6180X();
+    Adafruit_VL53L0X *Sensoren[4] = {&VR, &HR, &Front, &LEFT};
     ToF_State State;
 
 public:
@@ -31,7 +29,7 @@ public:
     void ExectueStateMachine();
     void Setup();
     void Reading();
-    void InitToF(Adafruit_VL53L0X Sensor, int Pin);
+    void InitToF();
 };
 
 #endif

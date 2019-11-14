@@ -32,7 +32,7 @@ void DrivesController::MoveTheLadies(Direction_Drive Direction, int Veloctiy)
     State = Controller_MoveTheLadies;
     for (int i = 0; i < 4; i++)
     {
-        Drives[i]->setMotor(Controller_Direction, Veloctiy)
+        Drives[i]->setMotor(Controller_Direction, Veloctiy);
     }
 }
 
@@ -63,8 +63,7 @@ void DrivesController::MoveRight(int Velocity)
 
 void DrivesController::MoveLeft(int Velocity)
 {
-    State =
-        MoveTheLadies(Drive_MoveLeft, Velocity);
+    MoveTheLadies(Drive_MoveLeft, Velocity);
 }
 
 void DrivesController::Stay()
@@ -94,7 +93,7 @@ bool DrivesController::setPosition(MotorPosition Motor, int Position)
         else
         {
             Linear.setMotor(1, 0);
-            State = true;
+            InPosition = true;
         }
         break;
 
@@ -110,7 +109,7 @@ bool DrivesController::setPosition(MotorPosition Motor, int Position)
         else
         {
             Rotate.setMotor(1, 0);
-            State = true;
+            InPosition = true;
         }
         break;
     }
@@ -125,8 +124,8 @@ void DrivesController::Setup()
     VL.Setup(&AFMS1, 2, Location_VL);
     HR.Setup(&AFMS1, 3, Location_HR);
     HL.Setup(&AFMS1, 4, Location_HL);
-    Linear.Setup(&AFMS2, 1);
-    Rotate.Setup(&AFMS2, 2);
+    Linear.Setup(&AFMS2, 1, 0);
+    Rotate.Setup(&AFMS2, 2, 0);
     AFMS1.begin();
     AFMS2.begin();
 }

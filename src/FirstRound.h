@@ -7,7 +7,7 @@
 enum FirstRound_State
 {
     FirstRound_Start,
-    FirstRound_Drive,
+    FirstRound_Move,
     FirstRound_Turn,
     FirstRound_Adjust,
     FirstRound_Idle,
@@ -15,20 +15,21 @@ enum FirstRound_State
 };
 enum Adjust
 {
-    Adjust_Distance,
+    VerifyDistance,
     Adjust_Parallel,
-    Adjust_Distance2
+    VerifyDistance2
 };
 
 class FirstRound
 {
 private:
     FirstRound_State State = FirstRound_Start;
+    Adjust State_Adjust = VerifyDistance;
     DrivesController *DriveController;
     ToF *Sensor;
     Objectdetection *Camera;
-    int Turns;
-    Adjust State_Adjust = Adjust_Distance;
+
+    int Turns = 0;
 
 public:
     void ExecuteStateMachine();

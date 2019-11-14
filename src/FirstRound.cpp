@@ -39,29 +39,14 @@ void FirstRound::ExecuteStateMachine()
         switch (State_Adjust)
         {
 
-        case Adjust_Distance:
+        case VerifyDistance:
             if (Turns == 2)
             {
-                State_Adjust = Adjust_Distance2;
+                State_Adjust = VerifyDistance2;
+                return;
             }
 
-            if (Sensor->measureVR.RangeMilliMeter > 280)
-            {
-                DriveController->MoveRight(25);
-            }
-            else if (Sensor->measureVR.RangeMilliMeter < 270)
-            {
-                DriveController->MoveLeft(25);
-            }
-            else
-            {
-                DriveController->Stay();
-                State_Adjust = Adjust_Parallel;
-            }
-            break;
-
-        case Adjust_Distance2:
-            if (Sensor->measureVR.RangeMilliMeter > 15)
+            else if (Sensor->measureVR.RangeMilliMeter > 15)
             {
                 DriveController->MoveRight(25);
             }
@@ -76,53 +61,47 @@ void FirstRound::ExecuteStateMachine()
             }
             break;
 
+        case VerifyDistance2:
+            if (Sensor->measureLEFT.RangeMilliMeter < 740)
+            {
+                DriveController->MoveRight(25);
+            }
+            else if (Sensor->measureLEFT.RangeMilliMeter > 745)
+            {
+                DriveController->MoveLeft(25);
+            }
+            else
+            {
+                DriveController->Stay();
+                State_Adjust = Adjust_Parallel;
+            }
+            break;
+
         case Adjust_Parallel:
-            if (Sensor->measureVR.RangeMilliMeter % Sensor->measureHR.RangeMilliMeter >= 2 && Sensor->measureVR.RangeMilliMeter > Sensor->measureHR.RangeMilliMeter)
+            if (Sensor->measureVR.RangeMilliMeter % Sensor->measureHR.RangeMilliMeter >= 4 && Sensor->measureVR.RangeMilliMeter > Sensor->measureHR.RangeMilliMeter)
             {
                 DriveController->TurnLeft(25);
             }
             else if (Sensor->measureHR.RangeMilliMeter % Sensor->measureVR.RangeMilliMeter >= 2)
             {
                 DriveController->TurnLeft(25);
-                ;
             }
             else
             {
                 DriveController->Stay();
-                State_Adjust = Adjust_Distance;
-                State = FirstRound_Drive;
+                State_Adjust = VerifyDistance;
+                State = FirstRound_Turn;
             }
-
             break;
         }
 
-    case FirstRound_Drive:
+    case FirstRound_Move:
         Sensor->Reading();
 
         if (Camera->activestate() != Objectstate_found)
         {
-            if (Sensor->measureFront.RangeMilliMeter >= 270 && Turns == 1)
-            {
-                DriveController->setCommand(Stay, 0);
-                State = FirstRound_Turn;
-            }
-
-            if (Sensor->measureVR.RangeMilliMeter > 15 || Sensor->measureVR.RangeMilliMeter < 5)
-            {
-                DriveController->Stay();
-                State = FirstRound_Adjust;
-            }
-
-            if (Sensor->measureFront.RangeMilliMeter >= 50)
-            {
-                DriveController->MoveForward(100);
-            }
-            else
-            {
-                DriveController->Stay();
-                Turns++;
-                State = FirstRound_Turn;
-            }
+            DriveController->MoveForward(50);
+            State = FirstRound_Adjust;
         }
         else
         {
@@ -130,13 +109,25 @@ void FirstRound::ExecuteStateMachine()
             State = FirstRound_Idle;
         }
         break;
+
     case FirstRound_Idle:
-        State = FirstRound_Drive;
+        State = FirstRound_Move;
         break;
 
     case FirstRound_Turn:
         Sensor->Reading();
-        if (Sensor->measureFront.RangeMilliMeter <= 900 || Sensor->measureHR.RangeMilliMeter % Sensor->measureVR.RangeMilliMeter > 2)
+
+        if (Sensor->measureFront.RangeMilliMeter <= 50 || (Sensor->measureFront.RangeMilliMeter <= 900 &&Turns = 2))
+        {
+            DriveController->Stay();
+        }
+        else
+        {
+            State = FirstRound_Move;
+            return;
+        }
+
+        if (Sensor->measureFront.RangeMilliMeter <= 900 || Sensor->measureHR.RangeMilliMeter % Sensor->measureVR.RangeMilliMeter > 6)
         {
             DriveController->TurnLeft(30);
         }

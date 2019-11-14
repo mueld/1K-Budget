@@ -18,35 +18,11 @@ void loop()
     {
 
     case Process_FirstRound:
-
-        ObjectdetectionInstance.FirstRound();
-        if (ObjectdetectionInstance.activestate() == Objectstate_found)
-        {
-            OldState = State;
-            State = Process_Collect;
-        }
-        else if (Round.activeState() == FirstRound_Finish)
-        {
-            State = Process_Searching;
-        }
-
-        else if (Round.activeState() != FirstRound_Finish)
-        {
-            Round.ExecuteStateMachine();
-            OldState = State;
-        }
-
+        void FirstRound();
         break;
 
     case Process_Searching:
-
-        ObjectdetectionInstance.ExecuteStateMachine();
-        if (ObjectdetectionInstance.activestate() == Objectstate_found)
-        {
-            OldState = State;
-            State = Process_Collect;
-        }
-
+        void Searching();
         break;
 
     case Process_Collect:

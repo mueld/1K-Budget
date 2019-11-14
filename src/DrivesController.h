@@ -4,19 +4,33 @@
 
 #ifndef DrivesController_h
 #define DrivesController_h
+#define EncoderPinA_L 2
+#define EncoderPinB_L 4
+#define EncoderPinA_R 3
+#define EncoderPinB_R 5
 
-
-
-enum Command
+enum MotorPosition
 {
-    StraightForward,
-    StraightBackward,
-    TurnLeft,
-    TurnRight,
-    GoRight,
-    GoLeft,
-    Stay
+    Motor_Rotate,
+    Motor_Linear
 };
+enum Position_Axis
+{
+    Position_StartingPositionStroke,
+    Position_Stroke,
+    Position_StartingPositionRotate,
+    Position_Rotate
+
+};
+enum ControllerState
+{
+    Controller_Initilaize,
+    Controller_MoveTheLadies,
+    Controller_Positioning,
+    Controller_Idle
+
+};
+
 class DrivesController
 {
 private:
@@ -24,17 +38,35 @@ private:
     Drive VL;
     Drive HR;
     Drive HL;
-    
+    Drive Linear;
+    Drive Rotate;
     Drive *Drives[4] = {&VR, &VL, &HR, &HL};
-    Command Command_Controller;
-    Adafruit_MotorShield AFMS;
-    Adafruit_MotorShield *Pointer;
-    int Velocity_Drives;
+
+    Adafruit_MotorShield AFMS1;
+    Adafruit_MotorShield AFMS2;
+
+    volatile int Encoder_Linear;
+    volatile int Encoder_Rotate;
+    bool InPosition;
+    int Position[4] {0, 4000, 0 , 4000};
+
+    ControllerState State;
+    Direction_Drive Controller_Direction;
+    void MoveTheLadies(Direction_Drive Direction, int Velocity_Drives);
 
 public:
-    void ExecuteStateMachine();
     void Setup();
-    void setCommand(Command Command, int Velocity);
+    void MoveForward(int Velocity);
+    void MoveBackward(int Velocity);
+    void TurnRight(int Velocity);
+    void TurnLeft(int Velocity);
+    void MoveRight(int Velocity);
+    void MoveLeft(int Velocity);
+    void Stay();
+
+    bool setPosition(MotorPosition Motor, Position_Axis position);
+    void ReadEncoderLinear();
+    void ReadEncoderRotate();
 };
 
 #endif

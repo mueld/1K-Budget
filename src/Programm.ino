@@ -1,27 +1,63 @@
-#include "objectdetection.h"
-#include <Wire.h>
+#include "Libarys/Variables.h"
 
-Pixy2 Pixyinstance;
-Objectdetection ObjectdetectionInstance;
-DrivesController DrivesControllerInstance;
-
-enum Processstate
-{
-    Process_Initialize,
-    Process_Start,
-    Process_Searching,
-    Process_Collect,
-    Process_Parking,
-    Process_FirstRound
-};
-Processstate State;
 void setup()
 {
     Serial.begin(115200);
     DrivesControllerInstance.Setup();
-    ObjectdetectionInstance.Setup(DrivesControllerInstance, Pixyinstance);
+    ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
+    Sensors.Setup();
+    Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
+    attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
+    attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
 }
 void loop()
 {
-    
+    Sensors.ExectueStateMachine();
+
+    switch (State)
+    {
+
+    case Process_FirstRound:
+        void FirstRound();
+        break;
+
+    case Process_Searching:
+        void Searching();
+        break;
+
+    case Process_Collect:
+
+        /*if (Collect.activeState() == Finish)
+        {
+              State = Process_Parking;
+        }
+       if (Collect.activeState() != Collect && Collect.activeState() != Finish)
+       {
+           Collect.ExecuteStateMachine();
+       }
+       else 
+       {
+           State = OldState;
+       }
+        */
+        break;
+
+    case Process_Unload:
+        /* UnloadInstance.ExecuteStateMachine();
+        if(OnloadInstance.activeState() == Onload_Finish)
+        {
+            State = Process_Parking;
+        }
+        */
+        break;
+
+    case Process_Parking:
+        /* ParkingInstance.ExecuteStateMachine();
+        if(ParkingInstance.activeState() == Parking_Finish)
+        {
+            State = Process_Finish;
+        }
+        */
+        break;
+    }
 }

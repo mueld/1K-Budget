@@ -3,13 +3,15 @@
 
 #include "Drive.h"
 
-void Drive::Setup(Adafruit_MotorShield *shield, int Port)
+void Drive::Setup(Adafruit_MotorShield *shield, int Port, Location location)
 {
     Shield = shield;
+    Location_Drive = location;
     Wheel = Shield->getMotor(Port);
 }
-void Drive::setMotor(int Direction, int Velocity)
+
+void Drive::setMotor(Direction_Drive Direction, int Velocity)
 {
-    Wheel->run(Direction);
+    Wheel->run(LookUpTable[Direction][Location_Drive]);
     Wheel->setSpeed(Velocity);
 }

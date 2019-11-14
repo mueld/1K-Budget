@@ -1,75 +1,45 @@
 #include "ToF.h"
+#include <Wire.h>
 #include <Adafruit_VL53L0X.h>
-
-void ToF::Initialize()
+#include <Adafruit_VL6180X.h>
+void ToF::InitToF()
 {
-    
-        // all reset
-        digitalWrite(SHT_VR, LOW);
-        digitalWrite(SHT_HR, LOW);
-        digitalWrite(SHT_FRONT, LOW);
-        digitalWrite(SHT_CUBE, LOW);
-        delay(10);
-        // all unreset
-        digitalWrite(SHT_VR, HIGH);
-        digitalWrite(SHT_HR, HIGH);
-        digitalWrite(SHT_FRONT, HIGH);
-        digitalWrite(SHT_CUBE, HIGH);
-        delay(10);
+    for (int i = 6; i < 10; i++)
+    {
+        digitalWrite(i, LOW);
+    }
+    delay(10);
 
-        // activating LOX1 and reseting LOX2
-        digitalWrite(SHT_VR, HIGH);
-        digitalWrite(SHT_HR, LOW);
-        digitalWrite(SHT_FRONT, LOW);
-        digitalWrite(SHT_CUBE, LOW);
+    // all unreset
+    for (int i = 6; i < 10; i++)
+    {
+        digitalWrite(i, HIGH);
+    }
+    delay(10);
 
-        // initing LOX1
-        if (!VR.begin(VR_ADDRESS))
+    for (int i = 7; i < 10; i++)
+    {
+        digitalWrite(i, LOW);
+    }
+
+    for (int i = 0; i < 4; i++)
+    {
+        digitalWrite(Pin[i], HIGH);
+        delay(10);
+        while (!Sensoren[i]->begin(Address[i]))
         {
             Serial.println("Falied to set the new Address for VR");
-            digitalWrite(SHT_VR, LOW);
+            digitalWrite(Pin[i], LOW);
             delay(10);
-            digitalWrite(SHT_VR, HIGH);
-            delay(10);
-        }
-
-        digitalWrite(SHT_HR, HIGH);
-        delay(10);
-
-        if (!HR.begin(HR_ADDRESS))
-        {
-            Serial.println("Falied to set the new Address for HR");
-            digitalWrite(SHT_HR, LOW);
-            delay(10);
-            digitalWrite(SHT_HR, HIGH);
-            delay(10);
-        }
-
-        digitalWrite(SHT_FRONT, HIGH);
-        delay(10);
-
-        if (!Front.begin(FRONT_ADDRESS))
-        {
-            Serial.println("Falied to set the new Address for FRONT");
-            digitalWrite(SHT_FRONT, LOW);
-            delay(10);
-            digitalWrite(SHT_FRONT, HIGH);
-            delay(10);
-        }
-
-        digitalWrite(SHT_CUBE, HIGH);
-        delay(10);
-
-        if (!Cube.begin(CUBE_ADDRESS))
-        {
-            Serial.println("Falied to set the new Address for CUBE");
-            digitalWrite(SHT_CUBE, LOW);
-            delay(10);
-            digitalWrite(SHT_CUBE, HIGH);
+            digitalWrite(Pin[i], HIGH);
             delay(10);
         }
     }
-
+}
+void ToF::Setup()
+{
+    InitToF();
+}
 
 void ToF::ExectueStateMachine()
 {
@@ -79,7 +49,7 @@ void ToF::ExectueStateMachine()
         VR.rangingTest(&measureVR, false);
         HR.rangingTest(&measureHR, false);
         Front.rangingTest(&measureFront, false);
-        Cube.rangingTest(&measureCube, false);
+        LEFT.rangingTest(&measureLEFT, false);
         State = ToF_Idle;
         break;
 
@@ -88,6 +58,7 @@ void ToF::ExectueStateMachine()
         break;
     }
 }
+
 void ToF::Reading()
 {
     State = ToF_Reading;

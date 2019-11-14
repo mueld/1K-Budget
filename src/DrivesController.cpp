@@ -3,68 +3,129 @@
 #include "DrivesController.h"
 #include "Drive.h"
 
-void DrivesController::ExecuteStateMachine()
+void DrivesController::ReadEncoderLinear()
 {
-    switch(Command_Controller)
+    if (digitalRead(EncoderPinB_L) == LOW)
     {
-    case StraightForward:
-        for (int i = 0; i < 4; i++)
+        Encoder_Linear--;
+    }
+    else
+    {
+        Encoder_Linear++;
+    }
+}
+
+void DrivesController::ReadEncoderRotate()
+{
+    if (digitalRead(EncoderPinB_R) == LOW)
+    {
+        Encoder_Rotate--;
+    }
+    else
+    {
+        Encoder_Rotate++;
+    }
+}
+
+void DrivesController::MoveTheLadies(Direction_Drive Direction, int Veloctiy)
+{
+    State = Controller_MoveTheLadies;
+    for (int i = 0; i < 4; i++)
+    {
+        Drives[i]->setMotor(Controller_Direction, Veloctiy);
+    }
+}
+
+void DrivesController::MoveForward(int Velocity)
+{
+    MoveTheLadies(Drive_Forward, Velocity);
+}
+
+void DrivesController::MoveBackward(int Velocity)
+{
+    MoveTheLadies(Drive_Backward, Velocity);
+}
+
+void DrivesController::TurnRight(int Velocity)
+{
+    MoveTheLadies(Drive_TurnRight, Velocity);
+}
+
+void DrivesController::TurnLeft(int Velocity)
+{
+    MoveTheLadies(Drive_TurnLeft, Velocity);
+}
+
+void DrivesController::MoveRight(int Velocity)
+{
+    MoveTheLadies(Drive_MoveRight, Velocity);
+}
+
+void DrivesController::MoveLeft(int Velocity)
+{
+    MoveTheLadies(Drive_MoveLeft, Velocity);
+}
+
+void DrivesController::Stay()
+{
+    State = Controller_Idle;
+    for (int i = 0; i < 4; i++)
+    {
+        Drives[i]->setMotor(1, 0);
+    }
+}
+
+bool DrivesController::setPosition(MotorPosition Motor, Position_Axis position)
+{
+
+    InPosition = false;
+    switch (Motor)
+    {
+    case Motor_Linear:
+        if (Encoder_Linear < Position[position] - 2)
         {
-            Drives[i]->setMotor(1, Velocity_Drives);
+            Linear.setMotor(FORWARD, 100);
+        }
+        else if (Encoder_Linear > Position[position] + 2)
+        {
+            Linear.setMotor(BACKWARD, 100);
+        }
+        else
+        {
+            Linear.setMotor(1, 0);
+            InPosition = true;
         }
         break;
 
-    case StraightBackward:
-        for (int i = 0; i < 4; i++)
+    case Motor_Rotate:
+        if (Encoder_Rotate < Position[position] - 10)
         {
-            Drives[i]->setMotor(2, Velocity_Drives);
+            Rotate.setMotor(FORWARD, 100);
         }
-        break;
-    case Stay:
-    for (int i = 0; i < 4; i++)
+        else if (Encoder_Rotate > Position[position] + 10)
         {
-            Drives[i]->setMotor(1, 0);
+            Rotate.setMotor(BACKWARD, 100);
         }
-        
-    case TurnLeft:
-        VR.setMotor(1, Velocity_Drives);
-        VL.setMotor(2, Velocity_Drives);
-        HR.setMotor(1, Velocity_Drives);
-        HL.setMotor(2, Velocity_Drives);
-        break;
-    case TurnRight:
-        VR.setMotor(2, Velocity_Drives);
-        VL.setMotor(1, Velocity_Drives);
-        HR.setMotor(2, Velocity_Drives);
-        HL.setMotor(1, Velocity_Drives);
-        break;
-    case GoRight:
-        VR.setMotor(2, Velocity_Drives);
-        VL.setMotor(1, Velocity_Drives);
-        HR.setMotor(1, Velocity_Drives);
-        HL.setMotor(2, Velocity_Drives);
-        break;
-    case GoLeft:
-        VR.setMotor(1, Velocity_Drives);
-        VL.setMotor(2, Velocity_Drives);
-        HR.setMotor(2, Velocity_Drives);
-        HL.setMotor(1, Velocity_Drives);
+        else
+        {
+            Rotate.setMotor(1, 0);
+            InPosition = true;
+        }
         break;
     }
-}
-void DrivesController::setCommand(Command Command, int Velocity)
-{
-    Command_Controller = Command;
-    Velocity_Drives = Velocity;
+    return InPosition;
 }
 
 void DrivesController::Setup()
 {
-    AFMS = Adafruit_MotorShield();
-    Pointer = &AFMS;
-    VR.Setup(Pointer, 1);
-    VL.Setup(Pointer, 2);
-    HR.Setup(Pointer, 3);
-    HL.Setup(Pointer, 4);
-    Pointer->begin();
+    AFMS1 = Adafruit_MotorShield(0x60);
+    AFMS2 = Adafruit_MotorShield(0x61);
+    VR.Setup(&AFMS1, 1, Location_VR);
+    VL.Setup(&AFMS1, 2, Location_VL);
+    HR.Setup(&AFMS1, 3, Location_HR);
+    HL.Setup(&AFMS1, 4, Location_HL);
+    Linear.Setup(&AFMS2, 1, 0);
+    Rotate.Setup(&AFMS2, 2, 0);
+    AFMS1.begin();
+    AFMS2.begin();
 }

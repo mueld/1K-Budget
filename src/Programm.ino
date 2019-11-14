@@ -12,7 +12,10 @@ void setup()
 }
 void loop()
 {
+    Sensors.ExectueStateMachine();
 
+
+    
     switch (State)
     {
 

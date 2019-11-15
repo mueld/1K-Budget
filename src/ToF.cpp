@@ -38,6 +38,7 @@ void ToF::InitToF()
 }
 void ToF::Setup()
 {
+    Cube.begin();
     InitToF();
 }
 
@@ -50,6 +51,7 @@ void ToF::ExectueStateMachine()
         HR.rangingTest(&measureHR, false);
         Front.rangingTest(&measureFront, false);
         LEFT.rangingTest(&measureLEFT, false);
+        Cube_Value = Cube.readRange();
         State = ToF_Idle;
         break;
 

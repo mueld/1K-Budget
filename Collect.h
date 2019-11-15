@@ -5,14 +5,19 @@
 
 enum State_Collect
 {
-
+    MovetoPosition,
+    Stroke,
+    Idle
 };
 
 class Collect_h
 {
     private:
+        State_Collect State;
+        DrivesController *Controller;
+        ToF *Sensoren;
 
     public:
         void Setup(ToF *Sensor DrivesController *DriveController);
-        bool Collect();
+        void StateMachine();
 };

@@ -5,59 +5,49 @@ void setup()
     Serial.begin(115200);
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
-    Sensors.Setup();
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
+    Sensors.Setup();
+    CollectInstance.Setup( &Sensors, &DrivesControllerInstance);
+    UnloadInstance.Setup(&DrivesControllerInstance, &Sensors);
+    ParkingInstance.Setup(&DrivesControllerInstance, &ObjectdetectionInstance, &Sensors);
+
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
+
 }
 void loop()
 {
-    Sensors.ExectueStateMachine();
-
+    Sensors.Reading();
+    
     switch (State)
     {
 
+    case Process_Start:
+            Cubes = 0;
+    break;
+
     case Process_FirstRound:
-        void FirstRound();
+        Execute_FirstRound();
+        break;
+
+    case Process_Idle:
+        Execute_Idle();
         break;
 
     case Process_Searching:
-        void Searching();
+        Execute_Searching();
         break;
 
     case Process_Collect:
-
-        /*if (Collect.activeState() == Finish)
-        {
-              State = Process_Parking;
-        }
-       if (Collect.activeState() != Collect && Collect.activeState() != Finish)
-       {
-           Collect.ExecuteStateMachine();
-       }
-       else 
-       {
-           State = OldState;
-       }
-        */
+        ExectueCollect();
         break;
 
     case Process_Unload:
-        /* UnloadInstance.ExecuteStateMachine();
-        if(OnloadInstance.activeState() == Onload_Finish)
-        {
-            State = Process_Parking;
-        }
-        */
+        ExecuteUnload();
         break;
 
     case Process_Parking:
-        /* ParkingInstance.ExecuteStateMachine();
-        if(ParkingInstance.activeState() == Parking_Finish)
-        {
-            State = Process_Finish;
-        }
-        */
+        ExectueParking();
         break;
     }
 }

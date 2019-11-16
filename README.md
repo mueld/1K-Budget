@@ -9,4 +9,6 @@ Abstände:
 -Abstand Front für 2ten Turn.
 
 
-Fragen Alex: Abstraktion FirstRound, Parking, Unload ?
+Fragen Alex:    -Fehlerbehandlung wo? Global in der Klasse??? try catch....
+                -Executstatemachine return True?
+                -

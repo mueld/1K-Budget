@@ -5,11 +5,15 @@ void setup()
     Serial.begin(115200);
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
+    Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
     Sensors.Setup();
     CollectInstance.Setup( &Sensors, &DrivesControllerInstance);
-    Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
+    UnloadInstance.Setup(&DrivesControllerInstance, &Sensors);
+    ParkingInstance.Setup(&DrivesControllerInstance, &ObjectdetectionInstance, &Sensors);
+
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
+
 }
 void loop()
 {
@@ -23,50 +27,27 @@ void loop()
     break;
 
     case Process_FirstRound:
-        void FirstRound();
+        Execute_FirstRound();
         break;
+
     case Process_Idle:
-        if (Round.activeState() != FirstRound_Finish)
-        {
-            State = Process_FirstRound;
-        }
-        else if(Cubes == 6)
-        {
-            State = Process_Unload;
-        }
-        else
-        {
-            State = Process_Searching;
-        }
-    break;
-        case Process_Searching:
-        void Searching();
+        Execute_Idle();
+        break;
+
+    case Process_Searching:
+        Execute_Searching();
         break;
 
     case Process_Collect:
-
-        if (CollectInstance.CollectThatShit())
-        {
-            State = Process_Idle;
-        }
-            break;
+        ExectueCollect();
+        break;
 
     case Process_Unload:
-        /* UnloadInstance.ExecuteStateMachine();
-        if(OnloadInstance.activeState() == Onload_Finish)
-        {
-            State = Process_Parking;
-        }
-        */
+        ExecuteUnload();
         break;
 
     case Process_Parking:
-        /* ParkingInstance.ExecuteStateMachine();
-        if(ParkingInstance.activeState() == Parking_Finish)
-        {
-            State = Process_Finish;
-        }
-        */
+        ExectueParking();
         break;
     }
 }

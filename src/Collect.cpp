@@ -8,6 +8,7 @@ void Collect::Setup(ToF *Sensor, DrivesController *DriveController)
 }
 bool Collect::CollectThatShit()
 {
+    bool result = false;
     switch (State)
     {
     case MovetoPosition:
@@ -26,7 +27,8 @@ bool Collect::CollectThatShit()
         if (Controller->setPosition(Motor_Linear, Position_Stroke))
         {
             State = Finish;
-            return true;
+            result = true;
+            return result;
         }
     break;
 
@@ -34,4 +36,5 @@ bool Collect::CollectThatShit()
         State = MovetoPosition;
     break;
     }
+    return result;
 }

@@ -2,6 +2,7 @@
 
 #ifndef Variables_h
 #define Variables_h
+#define DEBUG
 
 ToF Sensors;
 FirstRound Round;
@@ -24,8 +25,10 @@ enum Processstate
     Process_Parking,
     Process_FirstRound,
     Process_Idle,
+    Process_Error,
     Process_Finish
 };
+
 
 Processstate State;
 Processstate OldState;

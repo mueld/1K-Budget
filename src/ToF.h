@@ -5,11 +5,11 @@
 #ifndef Tof_h
 #define Tof_h
 
-
 enum ToF_State
 {
     ToF_Reading,
-    ToF_Idle
+    ToF_Idle,
+    ToF_Verify_Error
 };
 class ToF
 {
@@ -30,7 +30,8 @@ public:
     VL53L0X_RangingMeasurementData_t measureHR;
     VL53L0X_RangingMeasurementData_t measureFront;
     VL53L0X_RangingMeasurementData_t measureLEFT;
-    void ExectueStateMachine();
+    VL53L0X_RangingMeasurementData_t *Table_Measure[4] = {&measureVR, &measureHR, &measureFront, &measureLEFT};
+    void ExecuteStateMachine();
     void Setup();
     void Reading();
     void InitToF();

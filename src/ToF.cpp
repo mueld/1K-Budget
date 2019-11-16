@@ -42,13 +42,37 @@ void ToF::Setup()
     InitToF();
 }
 
+void ToF::ExecuteStateMachine()
+{
+        switch (State)
+        {
+        case ToF_Verify_Error:
+            for (int i = 0; i < 4; i++)
+            {
+                if (Sensoren[i]->Status != 0)
+                {
+                    return;
+                }
+            }
+            State = ToF_Reading;
+            break;
+
+        case ToF_Reading:
+
+            VR.rangingTest(&measureVR, false);
+            HR.rangingTest(&measureHR, false);
+            Front.rangingTest(&measureFront, false);
+            LEFT.rangingTest(&measureLEFT, false);
+            Cube_Value = Cube.readRange();
+            State = ToF_Idle;
+            break;
+            
+        case ToF_Idle:
+            break;
+        }
+}
+
 void ToF::Reading()
 {
-        VR.rangingTest(&measureVR, false);
-        HR.rangingTest(&measureHR, false);
-        Front.rangingTest(&measureFront, false);
-        LEFT.rangingTest(&measureLEFT, false);
-        Cube_Value = Cube.readRange();
-
-
+    State = ToF_Verify_Error;
 }

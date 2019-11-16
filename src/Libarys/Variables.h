@@ -1,4 +1,4 @@
-#include "../FirstRound.h"
+#include "../Collect.h"
 
 #ifndef Variables_h
 #define Variables_h
@@ -8,6 +8,9 @@ FirstRound Round;
 Pixy2 Pixyinstance;
 Objectdetection ObjectdetectionInstance;
 DrivesController DrivesControllerInstance;
+Collect CollectInstance;
+
+int Cubes;
 
 enum Processstate
 {
@@ -18,6 +21,7 @@ enum Processstate
     Process_Unload,
     Process_Parking,
     Process_FirstRound,
+    Process_Idle,
     Process_Finish
 };
 
@@ -37,18 +41,16 @@ void FirstRound()
     ObjectdetectionInstance.FirstRound();
     if (ObjectdetectionInstance.activestate() == Objectstate_found)
     {
-        OldState = State;
         State = Process_Collect;
     }
     else if (Round.activeState() == FirstRound_Finish)
     {
-        State = Process_Searching;
+        State = Process_Idle;
     }
 
     else if (Round.activeState() != FirstRound_Finish)
     {
         Round.ExecuteStateMachine();
-        OldState = State;
     }
 }
 
@@ -57,7 +59,6 @@ void Searching()
     ObjectdetectionInstance.ExecuteStateMachine();
     if (ObjectdetectionInstance.activestate() == Objectstate_found)
     {
-        OldState = State;
         State = Process_Collect;
     }
 }

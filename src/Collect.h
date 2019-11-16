@@ -7,10 +7,10 @@ enum State_Collect
 {
     MovetoPosition,
     Stroke,
-    Idle
+    Finish
 };
 
-class Collect_h
+class Collect
 {
     private:
         State_Collect State;
@@ -18,6 +18,8 @@ class Collect_h
         ToF *Sensoren;
 
     public:
-        void Setup(ToF *Sensor DrivesController *DriveController);
-        void StateMachine();
+        void Setup(ToF *Sensor, DrivesController *DriveController);
+        bool CollectThatShit();
 };
+
+#endif

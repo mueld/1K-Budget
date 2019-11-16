@@ -6,41 +6,50 @@ void setup()
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Sensors.Setup();
+    CollectInstance.Setup( &Sensors, &DrivesControllerInstance);
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
 }
 void loop()
 {
-    Sensors.ExectueStateMachine();
+    Sensors.Reading();
 
     switch (State)
     {
 
+    case Process_Start:
+            Cubes = 0;
+    break;
+
     case Process_FirstRound:
         void FirstRound();
         break;
-
-    case Process_Searching:
+    case Process_Idle:
+        if (Round.activeState() != FirstRound_Finish)
+        {
+            State = Process_FirstRound;
+        }
+        else if(Cubes == 6)
+        {
+            State = Process_Unload;
+        }
+        else
+        {
+            State = Process_Searching;
+        }
+    break;
+        case Process_Searching:
         void Searching();
         break;
 
     case Process_Collect:
 
-        /*if (Collect.activeState() == Finish)
+        if (CollectInstance.CollectThatShit())
         {
-              State = Process_Parking;
+            State = Process_Idle;
         }
-       if (Collect.activeState() != Collect && Collect.activeState() != Finish)
-       {
-           Collect.ExecuteStateMachine();
-       }
-       else 
-       {
-           State = OldState;
-       }
-        */
-        break;
+            break;
 
     case Process_Unload:
         /* UnloadInstance.ExecuteStateMachine();

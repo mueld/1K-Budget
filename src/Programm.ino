@@ -18,7 +18,7 @@ void setup()
 void loop()
 {
     Sensors.Reading();
-
+    
     switch (State)
     {
 

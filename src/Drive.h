@@ -22,6 +22,11 @@ enum Location
     Location_HL
 };
 
+class  Wheel::Drive{
+        
+}
+
+
 class Drive
 {
 private:
@@ -39,7 +44,7 @@ private:
 
 public:
     void Setup(Adafruit_MotorShield *shield, int Port, Location location);
-    void setMotor(Direction_Drive Direction, int Velocity);
+    void startMovement(Direction_Drive Direction, int Velocity);
 };
 
 #endif

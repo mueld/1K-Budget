@@ -32,7 +32,7 @@ void DrivesController::MoveTheLadies(Direction_Drive Direction, int Veloctiy)
     State = Controller_MoveTheLadies;
     for (int i = 0; i < 4; i++)
     {
-        Drives[i]->setMotor(Controller_Direction, Veloctiy);
+        Drives[i]->startMovement(Controller_Direction, Veloctiy);
     }
 }
 

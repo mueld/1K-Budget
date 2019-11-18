@@ -15,6 +15,11 @@ void setup()
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
 
 }
+
+void Checkforerrrors(){
+    
+}
+
 void loop()
 {
     Sensors.Reading();
@@ -50,4 +55,6 @@ void loop()
         ExectueParking();
         break;
     }
+
+    checkforerrors();
 }

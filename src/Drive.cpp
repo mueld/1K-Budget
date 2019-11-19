@@ -21,8 +21,8 @@ void Drive::Setup(Adafruit_MotorShield *shield, int Port)
     Wheel = Shield->getMotor(Port);
 }
 
-void Drive::startMovement(Direction_Drive Direction, int Velocity)
+void Wheel::startMovement(Direction_Drive Direction, int Velocity)
 {
-    Wheel->run(LookUpTable[Direction][Location_Drive]);
-    Wheel->setSpeed(Velocity);
+    Motor->run(LookUpTable[Direction][Location_Drive]);
+    Motor->setSpeed(Velocity);
 }

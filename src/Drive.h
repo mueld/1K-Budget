@@ -22,17 +22,9 @@ enum Location
     Location_HL
 };
 
-class  Wheel::Drive{
-        
-}
-
-
-class Drive
-{
+class  Wheel: Drive{
 private:
-    Adafruit_DCMotor *Wheel;
-    Adafruit_MotorShield *Shield;
-    Location Location_Drive;
+    Location Wheel_ID;
     int LookUpTable[6][4] =
         {
             {1, 0, 1, 0},
@@ -42,9 +34,18 @@ private:
             {0, 0, 1, 1},
             {1, 1, 0, 1}};
 
-public:
-    void Setup(Adafruit_MotorShield *shield, int Port, Location location);
     void startMovement(Direction_Drive Direction, int Velocity);
+};
+
+
+class Drive
+{
+private:
+    Adafruit_DCMotor *Motor;
+    Adafruit_MotorShield *Shield;
+    
+public:
+    void Setup(Adafruit_MotorShield *shield, int Port);
 };
 
 #endif

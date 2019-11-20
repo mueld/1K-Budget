@@ -6,12 +6,20 @@
 
 enum Direction_Drive
 {
-    Drive_Forward = 4,
-    Drive_Backward = 5,
+    Drive_Forward = 0,
+    Drive_Backward = 1,
     Drive_TurnRight = 2,
     Drive_TurnLeft = 3,
-    Drive_MoveRight = 1,
-    Drive_MoveLeft = 0
+    Drive_MoveRight = 4,
+    Drive_MoveLeft = 5
+};
+
+enum Position_Axis
+{
+    Position_StartingPositionStroke,
+    Position_Stroke,
+    Position_StartingPositionRotate,
+    Position_Rotate
 };
 
 enum Location
@@ -21,31 +29,47 @@ enum Location
     Location_HR,
     Location_HL
 };
+class Drive
+{
+protected:
+    Adafruit_DCMotor *Motor;
+    Adafruit_MotorShield *Shield;
 
-class  Wheel: Drive{
+public:
+    void SetShield(Adafruit_MotorShield *shield_, int port);
+    void MovementMotor(int Direction, int Velocity);
+};
+
+
+class  Wheel: public Drive{
 private:
     Location Wheel_ID;
     int LookUpTable[6][4] =
         {
-            {1, 0, 1, 0},
-            {0, 1, 0, 1},
-            {0, 0, 0, 0},
+            {1,2, 1, 2},
+            {2, 1, 2, 1},
+            {2, 2, 2, 2},
             {1, 1, 1, 1},
-            {0, 0, 1, 1},
-            {1, 1, 0, 1}};
-
-    void startMovement(Direction_Drive Direction, int Velocity);
-};
+            {2, 2, 1, 1},
+            {1, 1, 2, 1}};
 
 
-class Drive
-{
-private:
-    Adafruit_DCMotor *Motor;
-    Adafruit_MotorShield *Shield;
-    
 public:
-    void Setup(Adafruit_MotorShield *shield, int Port);
+    void startMovement(Direction_Drive Direction, int Velocity);
+    void Setup(Adafruit_MotorShield *shield, int Port, Location location);
 };
+
+
+class Axis: public Drive{
+    protected:
+        int Position[4]{0, 4000, 0, 4000};
+        bool InPosition;
+        volatile int *Encoder;
+
+    public:
+    void Setup(Adafruit_MotorShield *shield, int port, volatile int *encoder);
+    bool SetPosition(Position_Axis position);
+};    
+
 
 #endif

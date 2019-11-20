@@ -9,18 +9,10 @@
 #define EncoderPinA_R 3
 #define EncoderPinB_R 5
 
-enum MotorPosition
+enum Motor
 {
-    Motor_Rotate,
-    Motor_Linear
-};
-enum Position_Axis
-{
-    Position_StartingPositionStroke,
-    Position_Stroke,
-    Position_StartingPositionRotate,
-    Position_Rotate
-
+    Motor_Linear,
+    Motor_Rotate
 };
 enum ControllerState
 {
@@ -34,24 +26,19 @@ enum ControllerState
 class DrivesController
 {
 private:
-    Drive VR;
-    Drive VL;
-    Drive HR;
-    Drive HL;
-    Drive Linear;
-    Drive Rotate;
-    Drive *Drives[4] = {&VR, &VL, &HR, &HL};
+    Wheel VR;
+    Wheel VL;
+    Wheel HR;
+    Wheel HL;
+    Axis Linear;
+    Axis Rotate;
+    Wheel *Drives[4] = {&VR, &VL, &HR, &HL};
 
     Adafruit_MotorShield AFMS1;
     Adafruit_MotorShield AFMS2;
-
-    volatile int Encoder_Linear;
-    volatile int Encoder_Rotate;
-    bool InPosition;
-    int Position[4] {0, 4000, 0 , 4000};
+    volatile int Encoder[2];
 
     ControllerState State;
-    Direction_Drive Controller_Direction;
     void MoveTheLadies(Direction_Drive Direction, int Velocity_Drives);
 
 public:
@@ -64,7 +51,7 @@ public:
     void MoveLeft(int Velocity);
     void Stay();
 
-    bool setPosition(MotorPosition Motor, Position_Axis position);
+    bool Position(Motor Motor, Position_Axis position);
     void ReadEncoderLinear();
     void ReadEncoderRotate();
 };

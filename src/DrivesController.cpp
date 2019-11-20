@@ -7,11 +7,11 @@ void DrivesController::ReadEncoderLinear()
 {
     if (digitalRead(EncoderPinB_L) == LOW)
     {
-        Encoder_Linear--;
+        Encoder[0]--;
     }
     else
     {
-        Encoder_Linear++;
+        Encoder[0]++;
     }
 }
 
@@ -19,20 +19,22 @@ void DrivesController::ReadEncoderRotate()
 {
     if (digitalRead(EncoderPinB_R) == LOW)
     {
-        Encoder_Rotate--;
+        Encoder[1]--;
     }
     else
     {
-        Encoder_Rotate++;
+        Encoder[1]++;
     }
 }
 
 void DrivesController::MoveTheLadies(Direction_Drive Direction, int Veloctiy)
 {
+    Serial.println("bin in MoveTheLadies");
     State = Controller_MoveTheLadies;
     for (int i = 0; i < 4; i++)
     {
-        Drives[i]->startMovement(Controller_Direction, Veloctiy);
+        Serial.println(i);
+        Drives[i]->startMovement(Direction, Veloctiy);
     }
 }
 
@@ -71,61 +73,43 @@ void DrivesController::Stay()
     State = Controller_Idle;
     for (int i = 0; i < 4; i++)
     {
-        Drives[i]->setMotor(1, 0);
+        Drives[i]->startMovement(1, 0);
     }
 }
 
-bool DrivesController::setPosition(MotorPosition Motor, Position_Axis position)
+bool DrivesController::Position(Motor Motor, Position_Axis Position)
 {
-
-    InPosition = false;
     switch (Motor)
     {
     case Motor_Linear:
-        if (Encoder_Linear < Position[position] - 2)
+        if(Linear.SetPosition(Position))
         {
-            Linear.setMotor(FORWARD, 100);
-        }
-        else if (Encoder_Linear > Position[position] + 2)
-        {
-            Linear.setMotor(BACKWARD, 100);
-        }
-        else
-        {
-            Linear.setMotor(1, 0);
-            InPosition = true;
+            return true;
         }
         break;
 
     case Motor_Rotate:
-        if (Encoder_Rotate < Position[position] - 10)
+        if (Rotate.SetPosition(Position))
         {
-            Rotate.setMotor(FORWARD, 100);
-        }
-        else if (Encoder_Rotate > Position[position] + 10)
-        {
-            Rotate.setMotor(BACKWARD, 100);
-        }
-        else
-        {
-            Rotate.setMotor(1, 0);
-            InPosition = true;
+            return true;
         }
         break;
     }
-    return InPosition;
+    return false;
 }
+
 
 void DrivesController::Setup()
 {
+    Serial.println("bin im setup");
     AFMS1 = Adafruit_MotorShield(0x60);
     AFMS2 = Adafruit_MotorShield(0x61);
     VR.Setup(&AFMS1, 1, Location_VR);
     VL.Setup(&AFMS1, 2, Location_VL);
     HR.Setup(&AFMS1, 3, Location_HR);
     HL.Setup(&AFMS1, 4, Location_HL);
-    Linear.Setup(&AFMS2, 1, 0);
-    Rotate.Setup(&AFMS2, 2, 0);
+    Linear.Setup(&AFMS2, 1, &Encoder[0]);
+    Rotate.Setup(&AFMS2, 2, &Encoder[1]);
     AFMS1.begin();
     AFMS2.begin();
 }

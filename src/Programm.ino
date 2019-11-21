@@ -16,9 +16,7 @@ void setup()
 
 }
 
-void Checkforerrrors(){
-    
-}
+
 
 void loop()
 {
@@ -56,5 +54,4 @@ void loop()
         break;
     }
 
-    checkforerrors();
 }

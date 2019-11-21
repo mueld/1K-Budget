@@ -29,6 +29,12 @@ enum Location
     Location_HR,
     Location_HL
 };
+class Errorhandler
+{   
+    public:
+    virtual bool ErrorState();
+    virtual void RemedyError();
+};
 class Drive
 {
 protected:
@@ -60,15 +66,20 @@ public:
 };
 
 
-class Axis: public Drive{
+class Axis: public Drive, public Errorhandler{
     protected:
         int Position[4]{0, 4000, 0, 4000};
         bool InPosition;
         volatile int *Encoder;
+        volatile int Encoder_old = 100;
+        bool Error = false;
+        int actualtime;
 
     public:
     void Setup(Adafruit_MotorShield *shield, int port, volatile int *encoder);
     bool SetPosition(Position_Axis position);
+    bool ErrorState();
+    void RemedyError();
 };    
 
 

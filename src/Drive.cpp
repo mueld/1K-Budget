@@ -35,19 +35,47 @@ void Axis::Setup(Adafruit_MotorShield *shield, int port, volatile int *encoder)
 bool Axis::SetPosition(Position_Axis position)
 {
     InPosition = false;
-
-    if (Encoder < Position[position] - 2)
+    if(Encoder != Encoder_old)
     {
-        MovementMotor(FORWARD, 100);
-    }
-    else if (Encoder > Position[position] + 2)
-    {
-        MovementMotor(BACKWARD, 100);
+            if (Encoder < Position[position] - 2)
+        {
+            MovementMotor(FORWARD, 100);
+            Encoder_old = Encoder;
+        }
+        else if (Encoder > Position[position] + 2)
+        {
+            MovementMotor(BACKWARD, 100);
+        }
+        else
+        {
+            MovementMotor(1, 0);
+            InPosition = true;
+        }
     }
     else
     {
         MovementMotor(1, 0);
-        InPosition = true;
+        Error = true;
     }
+    
     return InPosition;
+}
+bool Axis::ErrorState()
+{
+    if(Error)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void Axis::RemedyError()
+{
+    if(SetPosition(Position_StartingPositionStroke))
+    {
+        Error = false;
+    }
 }

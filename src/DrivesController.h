@@ -51,7 +51,7 @@ public:
     void MoveLeft(int Velocity);
     void Stay();
 
-    bool Position(Motor Motor, Position_Axis position);
+    bool setPosition(Motor Motor, Position_Axis position);
     void ReadEncoderLinear();
     void ReadEncoderRotate();
 };

@@ -33,7 +33,7 @@ class Errorhandler
 {   
     public:
     virtual bool ErrorState();
-    virtual void RemedyError();
+    virtual bool RemedyError();
 };
 class Drive
 {
@@ -79,7 +79,7 @@ class Axis: public Drive, public Errorhandler{
     void Setup(Adafruit_MotorShield *shield, int port, volatile int *encoder);
     bool SetPosition(Position_Axis position);
     bool ErrorState();
-    void RemedyError();
+    bool RemedyError();
 };    
 
 

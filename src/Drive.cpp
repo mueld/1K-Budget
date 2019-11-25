@@ -72,7 +72,7 @@ bool Axis::ErrorState()
     }
 }
 
-void Axis::RemedyError()
+bool Axis::RemedyError()
 {
     if(SetPosition(Position_StartingPositionStroke))
     {

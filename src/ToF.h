@@ -11,10 +11,13 @@ enum ToF_State
     ToF_Idle,
     ToF_Verify_Error
 };
+
 class ToF
 {
 private:
-    int Pin[4] = {6, 7, 8, 9};
+  
+   
+    int Pin[4] = {3,4,5,6};
     int Address[4] = {48, 49, 50, 51};
     Adafruit_VL53L0X VR = Adafruit_VL53L0X();
     Adafruit_VL53L0X HR = Adafruit_VL53L0X();

@@ -4,41 +4,51 @@
 #include <Adafruit_VL6180X.h>
 void ToF::InitToF()
 {
-    for (int i = 6; i < 10; i++)
+    
+    for (int i = 0; i < 4; i++)
     {
-        digitalWrite(i, LOW);
+        digitalWrite(Pin[i], LOW);
     }
+    
     delay(10);
-
     // all unreset
-    for (int i = 6; i < 10; i++)
+    for (int i = 0; i < 4; i++)
     {
-        digitalWrite(i, HIGH);
+        digitalWrite(Pin[i], HIGH);
     }
+
     delay(10);
 
-    for (int i = 7; i < 10; i++)
-    {
-        digitalWrite(i, LOW);
-    }
+    // activating LOX1 and reseting LOX2
+    digitalWrite(3, HIGH);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW);
 
+    // initing LOX1
     for (int i = 0; i < 4; i++)
     {
         digitalWrite(Pin[i], HIGH);
         delay(10);
-        while (!Sensoren[i]->begin(Address[i]))
+        Serial.println("Initialized..");
+        if (!Sensoren[i]->begin(Address[i]))
         {
-            Serial.println("Falied to set the new Address for VR");
-            digitalWrite(Pin[i], LOW);
-            delay(10);
-            digitalWrite(Pin[i], HIGH);
-            delay(10);
-        }
+           Serial.print("Failed to boot ");
+           Serial.print(i);
+           while (1)
+               ;
+       }
+       else
+       {
+           Serial.println("Succesfull");
+       }
+       
     }
+    
+    
 }
 void ToF::Setup()
 {
-    Cube.begin();
     InitToF();
 }
 
@@ -59,20 +69,25 @@ void ToF::ExecuteStateMachine()
 
         case ToF_Reading:
 
-            VR.rangingTest(&measureVR, false);
-            HR.rangingTest(&measureHR, false);
-            Front.rangingTest(&measureFront, false);
-            LEFT.rangingTest(&measureLEFT, false);
+            for (int i = 0; i < 4; i++)
+            {
+                Sensoren[i]->rangingTest(Table_Measure[i], false);
+            }
             Cube_Value = Cube.readRange();
             State = ToF_Idle;
             break;
             
         case ToF_Idle:
+            State = ToF_Verify_Error;
             break;
         }
 }
 
 void ToF::Reading()
 {
-    State = ToF_Verify_Error;
+    for (int i = 0; i < 4; i++)
+    {
+        Sensoren[i]->rangingTest(Table_Measure[i], false);
+    }
+
 }

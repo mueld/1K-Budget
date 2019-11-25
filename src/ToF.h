@@ -1,18 +1,21 @@
 #include <Wire.h>
 #include <Adafruit_VL53L0X.h>
 #include <Adafruit_VL6180X.h>
+#include"Drive.h"
 
 #ifndef Tof_h
 #define Tof_h
+
 
 enum ToF_State
 {
     ToF_Reading,
     ToF_Idle,
-    ToF_Verify_Error
+    ToF_Verify_Error,
+    ToF_Error
 };
 
-class ToF
+class ToF: public Errorhandler
 {
 private:
   
@@ -38,6 +41,8 @@ public:
     void Setup();
     void Reading();
     void InitToF();
+    bool ErrorState();
+    bool RemedyError();
 };
 
 #endif

@@ -91,3 +91,26 @@ void ToF::Reading()
     }
 
 }
+
+bool ToF::ErrorState()
+{
+    for (int i = 0; i < 4; i++)
+    {
+        if (Sensoren[i]->Status != 0)
+        {
+            return true;
+        }
+    }
+    
+    else
+    {
+        return false;
+    }
+    
+}
+
+bool ToF::RemedyError()
+{
+    Serial.println("Steuerung neu Starten!");
+
+}

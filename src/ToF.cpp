@@ -101,12 +101,7 @@ bool ToF::ErrorState()
             return true;
         }
     }
-    
-    else
-    {
         return false;
-    }
-    
 }
 
 bool ToF::RemedyError()

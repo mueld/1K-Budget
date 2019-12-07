@@ -77,7 +77,7 @@ void DrivesController::Stay()
     }
 }
 
-bool DrivesController::Position(Motor Motor, Position_Axis Position)
+bool DrivesController::setPosition(Motor Motor, Position_Axis Position)
 {
     switch (Motor)
     {

@@ -66,7 +66,7 @@ public:
 };
 
 
-class Axis: public Drive, public Errorhandler{
+class Axis: public Drive{
     protected:
         int Position[4]{0, 4000, 0, 4000};
         bool InPosition;
@@ -78,8 +78,6 @@ class Axis: public Drive, public Errorhandler{
     public:
     void Setup(Adafruit_MotorShield *shield, int port, volatile int *encoder);
     bool SetPosition(Position_Axis position);
-    bool ErrorState();
-    bool RemedyError();
 };    
 
 

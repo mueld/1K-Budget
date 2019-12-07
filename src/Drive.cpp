@@ -35,47 +35,27 @@ void Axis::Setup(Adafruit_MotorShield *shield, int port, volatile int *encoder)
 bool Axis::SetPosition(Position_Axis position)
 {
     InPosition = false;
-    if(Encoder != Encoder_old)
-    {
-            if (Encoder < Position[position] - 2)
-        {
-            MovementMotor(FORWARD, 100);
-            Encoder_old = Encoder;
-        }
-        else if (Encoder > Position[position] + 2)
-        {
-            MovementMotor(BACKWARD, 100);
-        }
-        else
-        {
-            MovementMotor(1, 0);
-            InPosition = true;
-        }
-    }
-    else
-    {
-        MovementMotor(1, 0);
-        Error = true;
-    }
-    
-    return InPosition;
-}
-bool Axis::ErrorState()
-{
-    if(Error)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
 
-bool Axis::RemedyError()
-{
-    if(SetPosition(Position_StartingPositionStroke))
+    if (*Encoder < Position[position] -100 )
     {
-        Error = false;
+        Serial.println("Position:");
+        Serial.println(Position[position]);
+        Serial.println("Positioniere Forwärts");
+        MovementMotor(FORWARD, 100);
+    } 
+
+    else if (*Encoder > Position[position]+100)
+    {
+        Serial.println("Position:");
+        Serial.println(Position[position]);
+        Serial.println("Positioniere Rückwärts");
+        MovementMotor(BACKWARD, 100);
+    } 
+    else
+    {
+        Serial.println("Position erreicht");
+        MovementMotor(1, 0);
+        InPosition = true;
     }
+    return InPosition;
 }

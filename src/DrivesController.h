@@ -36,7 +36,7 @@ private:
 
     Adafruit_MotorShield AFMS1;
     Adafruit_MotorShield AFMS2;
-    volatile int Encoder[2];
+    volatile int Encoder[2] = {2000,0};
 
     ControllerState State;
     void MoveTheLadies(Direction_Drive Direction, int Velocity_Drives);
@@ -51,9 +51,11 @@ public:
     void MoveLeft(int Velocity);
     void Stay();
 
-    bool setPosition(Motor Motor, Position_Axis position);
+    bool Position(Motor Motor, Position_Axis position);
     void ReadEncoderLinear();
     void ReadEncoderRotate();
+    void PrintEncoder();
+
 };
 
 #endif

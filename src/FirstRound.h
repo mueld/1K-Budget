@@ -9,31 +9,32 @@ enum FirstRound_State
     FirstRound_Start,
     FirstRound_Move,
     FirstRound_Turn,
-    FirstRound_Adjust,
+    FirstRound_Align,
     FirstRound_Idle,
     FirstRound_Finish
 };
-enum Adjust
+enum Turn
 {
-    VerifyDistance,
-    Adjust_Parallel,
-    VerifyDistance2
+    Verify,
+    Turn,
+    Idle
 };
+
 
 class FirstRound
 {
 private:
     FirstRound_State State = FirstRound_Start;
-    Adjust State_Adjust = VerifyDistance;
     DrivesController *DriveController;
     ToF *Sensor;
     Objectdetection *Camera;
-
+    Turn State_turn = Verify;
     int Turns = 0;
 
 public:
     void ExecuteStateMachine();
     void Setup(DrivesController *Instance, ToF *ToFs, Objectdetection *PInstance);
+    bool Turn(int Distance);
     FirstRound_State activeState();
 
 };

@@ -30,6 +30,19 @@ void Align::Execute(int Distance)
         break;
     
     case  Align_Parallel:
+        if (Sensor->measureVR.RangeMilliMeter % Sensor->measureHR.RangeMilliMeter >= 4 && Sensor->measureVR.RangeMilliMeter > Sensor->measureHR.RangeMilliMeter)
+        {
+            DriveController->TurnLeft(25);
+        }
+        else if (Sensor->measureHR.RangeMilliMeter % Sensor->measureVR.RangeMilliMeter >= 2)
+        {
+            DriveController->TurnRight(25);
+        }
+        else
+        {
+            DriveController->Stay();
+            State = Align_Idle;
+        }
         break;
     }
 }

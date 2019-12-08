@@ -12,6 +12,7 @@ DrivesController DrivesControllerInstance;
 Collect CollectInstance;
 Unload UnloadInstance;
 Parking ParkingInstance;
+Align AlignInstance;
 
 int Cubes;
 

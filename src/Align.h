@@ -13,12 +13,11 @@ class Align
 {
     private:
         Align_State State;
-        Objectdetection *Camera;
         DrivesController *Controller;
         ToF *Sensors;
 
     public:
-        void Setup(Objectdetection &Camera, DrivesController &Controller, ToF &Sensors);
+        void Setup(DrivesController *Controller, ToF *Sensors);
         void Execute(int Distance);
         Align_State ActiveState();
 }

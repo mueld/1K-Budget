@@ -6,11 +6,12 @@ FirstRound_State FirstRound::activeState()
 {
     return State;
 }
-void FirstRound::Setup(DrivesController *Instance, ToF *ToFs, Objectdetection *PInstance)
+void FirstRound::Setup(DrivesController *Instance, ToF *ToFs, Objectdetection *PInstance, Align *AlignInstance)
 {
     DriveController = Instance;
     Sensor = ToFs;
     Camera = PInstance;
+    Align_ = AlignInstance;
 }
 void FirstRound::ExecuteStateMachine()
 {
@@ -34,30 +35,29 @@ void FirstRound::ExecuteStateMachine()
         break;
 
     case FirstRound_Align:
-        /*Align.Execute(10);
+        Align_->Execute(10);
         
-        if(Align.ActiveState() == Align_Idle)
+        if(Align_->ActiveState() == Align_Idle)
         {
-            State = FirstRound_Move;
+            State = FirstRound_Idle;
         }
-        */
         break;
     case FirstRound_Move:
-
-        if (Camera->activestate() != Objectstate_found)
-        {
             DriveController->MoveForward(50);
             State = FirstRound_Align;
+
+            break;
+
+    case FirstRound_Idle:
+        if (Camera->activestate() != Objectstate_found)
+        {
+            State = FirstRound_Turn;
         }
         else
         {
-            DriveController->Stay();
-            State = FirstRound_Turn;
+            State = FirstRound_Idle;
         }
-        break;
-
-    case FirstRound_Idle:
-        State = FirstRound_Move;
+        
         break;
 
     case FirstRound_Turn:
@@ -71,7 +71,7 @@ void FirstRound::ExecuteStateMachine()
        }
         if(State_turn == Idle)
         {
-            State = FirstRound_Idle;
+            State = FirstRound_Move;
         }
     }
 }

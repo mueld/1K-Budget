@@ -1,6 +1,6 @@
 #include "ToF.h"
 #include "objectdetection.h"
-
+#include "Align.h"
 #ifndef FirstRound_h
 #define FirstRound_h
 
@@ -28,12 +28,13 @@ private:
     DrivesController *DriveController;
     ToF *Sensor;
     Objectdetection *Camera;
+    Align *Align_;
     Turn State_turn = Verify;
     int Turns = 0;
 
 public:
     void ExecuteStateMachine();
-    void Setup(DrivesController *Instance, ToF *ToFs, Objectdetection *PInstance);
+    void Setup(DrivesController *Instance, ToF *ToFs, Objectdetection *PInstance, Align *AlignInstance);
     bool Turn(int Distance);
     FirstRound_State activeState();
 

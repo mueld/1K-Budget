@@ -2,7 +2,7 @@
 #include "ToF.h"
 #include "Align.h"
 
-void Align::Setup(Objectdetection &Camera, DrivesController &Controller, ToF &Sensors)
+void Align::Setup(DrivesController *Controller, ToF *Sensors)
 {
     this->Camera = Camera;
     this->Controller = Controller;

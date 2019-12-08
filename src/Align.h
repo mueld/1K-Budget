@@ -22,8 +22,4 @@ class Align
         Align_State ActiveState();
 }
 
-
-
-
-
 #endif

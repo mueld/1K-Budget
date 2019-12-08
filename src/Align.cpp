@@ -4,9 +4,8 @@
 
 void Align::Setup(DrivesController *Controller, ToF *Sensors)
 {
-    this->Camera = Camera;
     this->Controller = Controller;
-    this->Sensors = Sensors;
+    this->Sensor = Sensors;
 }
 
 void Align::Execute(int Distance)
@@ -14,17 +13,17 @@ void Align::Execute(int Distance)
     switch (State)
     {
     case Align_Distance:
-        if (Sensor->*measureVR.RangeMilliMeter > Distance)
+        if (Sensor->measureVR.RangeMilliMeter > Distance)
         {
-            DriveController->MoveRight(25);
+            Controller->MoveRight(25);
         }
-        else if (Sensor->*measureVR.RangeMilliMeter < Distance)
+        else if (Sensor->measureVR.RangeMilliMeter < Distance)
         {
-            DriveController->MoveLeft(25);
+            Controller->MoveLeft(25);
         }
         else
         {
-            DriveController->Stay();
+            Controller->Stay();
             State = Align_Parallel;
         }
         break;
@@ -32,17 +31,21 @@ void Align::Execute(int Distance)
     case  Align_Parallel:
         if (Sensor->measureVR.RangeMilliMeter % Sensor->measureHR.RangeMilliMeter >= 4 && Sensor->measureVR.RangeMilliMeter > Sensor->measureHR.RangeMilliMeter)
         {
-            DriveController->TurnLeft(25);
+            Controller->TurnLeft(25);
         }
         else if (Sensor->measureHR.RangeMilliMeter % Sensor->measureVR.RangeMilliMeter >= 2)
         {
-            DriveController->TurnRight(25);
+            Controller->TurnRight(25);
         }
         else
         {
-            DriveController->Stay();
+            Controller->Stay();
             State = Align_Idle;
         }
         break;
     }
+}
+Align_State Align::ActiveState()
+{
+    return State;
 }

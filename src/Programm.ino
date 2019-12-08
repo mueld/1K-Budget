@@ -5,15 +5,14 @@ void setup()
     Serial.begin(115200);
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
-    Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance);
+    Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance, &AlignInstance);
     Sensors.Setup();
-    CollectInstance.Setup( &Sensors, &DrivesControllerInstance);
+    CollectInstance.Setup(&Sensors, &DrivesControllerInstance);
     UnloadInstance.Setup(&DrivesControllerInstance, &Sensors);
     ParkingInstance.Setup(&DrivesControllerInstance, &ObjectdetectionInstance, &Sensors);
 
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
-
 }
 
 

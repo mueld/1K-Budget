@@ -8,18 +8,18 @@ enum Align_State
     Align_Distance,
     Align_Parallel,
     Align_Idle
-}
+};
 class Align
 {
     private:
         Align_State State;
         DrivesController *Controller;
-        ToF *Sensors;
+        ToF *Sensor;
 
     public:
         void Setup(DrivesController *Controller, ToF *Sensors);
         void Execute(int Distance);
         Align_State ActiveState();
-}
+};
 
 #endif

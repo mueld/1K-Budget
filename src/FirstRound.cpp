@@ -61,7 +61,7 @@ void FirstRound::ExecuteStateMachine()
         break;
 
     case FirstRound_Turn:
-        if(Turn <2)
+        if(Turns <2)
         {
             Turn(10);
         }
@@ -81,10 +81,10 @@ void FirstRound::Turn(int Distance)
     switch (State_turn)
     {
     case Verify:
-        if (Sensor->*measureFront.RangeMilliMeter <= Distance)
+        if (Sensor->measureFront.RangeMilliMeter <= Distance)
         {
-            State_turn = Turn;
-            DriveController->TurnLeft();
+            State_turn = Turn_;
+            DriveController->TurnLeft(30);
         }
         else 
         {
@@ -92,7 +92,7 @@ void FirstRound::Turn(int Distance)
         }
             break;
     
-    case Turn:
+    case Turn_:
 
         if (Sensor->measureFront.RangeMilliMeter <= 900 )
         {
@@ -102,7 +102,7 @@ void FirstRound::Turn(int Distance)
         {
             DriveController->Stay();
             Turns++;
-            Statet_turn = Idle;
+            State_turn = Idle;
             
         }
         break;

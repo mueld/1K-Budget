@@ -13,10 +13,10 @@ enum FirstRound_State
     FirstRound_Idle,
     FirstRound_Finish
 };
-enum Turn
+enum Turn_State
 {
     Verify,
-    Turn,
+    Turn_,
     Idle
 };
 
@@ -29,13 +29,13 @@ private:
     ToF *Sensor;
     Objectdetection *Camera;
     Align *Align_;
-    Turn State_turn = Verify;
+    Turn_State State_turn = Verify;
     int Turns = 0;
 
 public:
     void ExecuteStateMachine();
     void Setup(DrivesController *Instance, ToF *ToFs, Objectdetection *PInstance, Align *AlignInstance);
-    bool Turn(int Distance);
+    void Turn(int Distance);
     FirstRound_State activeState();
 
 };

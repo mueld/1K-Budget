@@ -89,7 +89,10 @@ void ToF::Reading()
     {
         Sensoren[i]->rangingTest(Table_Measure[i], false);
     }
-
+    for (int i = 0; i < 4; i++)
+    {
+        Table_Measure_Data[i] = Table_Measure[i]->RangeMilliMeter;
+    }
 }
 
 bool ToF::ErrorState()
@@ -108,4 +111,8 @@ bool ToF::RemedyError()
 {
     Serial.println("Steuerung neu Starten!");
 
+}
+void ToF::Register(ToF_Interface *O)
+{
+    Observers[Index_Interface] = O;
 }

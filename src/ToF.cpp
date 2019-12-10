@@ -115,4 +115,5 @@ bool ToF::RemedyError()
 void ToF::Register(ToF_Interface *O)
 {
     Observers[Index_Interface] = O;
+    Index_Interface++;
 }

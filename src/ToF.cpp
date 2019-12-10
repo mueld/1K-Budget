@@ -117,3 +117,11 @@ void ToF::Register(ToF_Interface *O)
     Observers[Index_Interface] = O;
     Index_Interface++;
 }
+void ToF::NotifyObserver()
+{
+    for (int i = 0; i < 4; i++)
+    {
+        Observers[i]->update(Table_Measure_Data);
+    }
+    
+}

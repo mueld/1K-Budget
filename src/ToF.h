@@ -23,6 +23,7 @@ class Subject_Interface
 {
     public:
         virtual void Register(ToF_Interface *Ob);
+        virtual void NotifyObserver();
 };
 class ToF : public Subject_Interface
 {
@@ -54,6 +55,7 @@ public:
     bool ErrorState();
     bool RemedyError();
     void Register(ToF_Interface *Ob);
+    void NotifyObserver();
 };
 
 #endif

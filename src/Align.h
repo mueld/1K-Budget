@@ -9,16 +9,18 @@ enum Align_State
     Align_Parallel,
     Align_Idle
 };
-class Align
+class Align: public ToF_Interface
 {
     private:
         Align_State State;
         DrivesController *Controller;
-        ToF *Sensor;
+        int Sensor_Data[4];
 
     public:
-        void Setup(DrivesController *Controller, ToF *Sensors);
+        void Setup(DrivesController *Controller);
         void Execute(int Distance);
+        void update(int Table[]);
+        void Print();
         Align_State ActiveState();
 };
 

@@ -2,17 +2,24 @@
 
 void setup()
 {
-    Serial.begin(115200);
+    for (int i = 3; i < 8; i++)
+    {
+        pinMode(i, OUTPUT);
+    }
+        Serial.begin(115200);
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance, &AlignInstance);
     Sensors.Setup();
+    AlignInstance(&DrivesControllerInstance);
     CollectInstance.Setup(&Sensors, &DrivesControllerInstance);
     UnloadInstance.Setup(&DrivesControllerInstance, &Sensors);
     ParkingInstance.Setup(&DrivesControllerInstance, &ObjectdetectionInstance, &Sensors);
 
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
+    Sensors.Register(&AlignInstance);
+    Sensors.Register(&Round);
 }
 
 

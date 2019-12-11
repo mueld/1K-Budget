@@ -2,10 +2,10 @@
 #include "ToF.h"
 #include "Align.h"
 
-void Align::Setup(DrivesController *Controller, ToF *Sensors)
+void Align::Setup(DrivesController *Controller)
 {
     this->Controller = Controller;
-    this->Sensor = Sensors;
+
 }
 
 void Align::Execute(int Distance)
@@ -13,11 +13,11 @@ void Align::Execute(int Distance)
     switch (State)
     {
     case Align_Distance:
-        if (Sensor->measureVR.RangeMilliMeter > Distance)
+        if (Sensor_Data[0] > Distance)
         {
             Controller->MoveRight(25);
         }
-        else if (Sensor->measureVR.RangeMilliMeter < Distance)
+        else if (Sensor_Data[0] < Distance)
         {
             Controller->MoveLeft(25);
         }
@@ -29,11 +29,11 @@ void Align::Execute(int Distance)
         break;
     
     case  Align_Parallel:
-        if (Sensor->measureVR.RangeMilliMeter % Sensor->measureHR.RangeMilliMeter >= 4 && Sensor->measureVR.RangeMilliMeter > Sensor->measureHR.RangeMilliMeter)
+        if (Sensor_Data[0] % Sensor_Data[1] >= 4 && Sensor_Data[0] > Sensor_Data[1])
         {
             Controller->TurnLeft(25);
         }
-        else if (Sensor->measureHR.RangeMilliMeter % Sensor->measureVR.RangeMilliMeter >= 2)
+        else if (Sensor_Data[1] % Sensor_Data[0] >= 2)
         {
             Controller->TurnRight(25);
         }
@@ -49,3 +49,21 @@ Align_State Align::ActiveState()
 {
     return State;
 }
+void Align::update(int Table[])
+{
+    for (int i = 0; i < 4; i++)
+    {
+        Sensor_Data[i] = Table[i];
+    }
+}
+void Align::Print()
+{
+    if (Sensor_Data[0] >303 )
+    {
+        for (int i = 0; i < 4; i++)
+    {
+        Serial.println(Sensor_Data[i]);
+    }
+    }
+    
+    }

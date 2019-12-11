@@ -19,11 +19,11 @@ void FirstRound::ExecuteStateMachine()
     switch (State)
     {
     case FirstRound_Start:
-        if (Sensor->measureFront.RangeMilliMeter <= 1000)
+        if (Sensor_Data[2] <= 1000)
         {
             DriveController->MoveForward(100);
         }
-        else if (Sensor->measureVR.RangeMilliMeter >= 10)
+        else if (Sensor_Data[0] >= 10)
         {
             DriveController->MoveRight(50);
         }
@@ -81,7 +81,7 @@ void FirstRound::Turn(int Distance)
     switch (State_turn)
     {
     case Verify:
-        if (Sensor->measureFront.RangeMilliMeter <= Distance)
+        if (Sensor_Data[2] <= Distance)
         {
             State_turn = Turn_;
             DriveController->TurnLeft(30);
@@ -94,7 +94,7 @@ void FirstRound::Turn(int Distance)
     
     case Turn_:
 
-        if (Sensor->measureFront.RangeMilliMeter <= 900 )
+        if (Sensor_Data[2] <= 900 )
         {
             DriveController->TurnLeft(30);
         }
@@ -111,9 +111,10 @@ void FirstRound::Turn(int Distance)
         break;
     }
 }
-
-
-
-
-
-   
+void FirstRound::update(int Table[4]) {
+    for (int i = 0; i < 4; i++)
+    {
+        Sensor_Data[i] = Table[i];
+    }
+    
+}

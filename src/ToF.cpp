@@ -52,36 +52,6 @@ void ToF::Setup()
     InitToF();
 }
 
-void ToF::ExecuteStateMachine()
-{
-        switch (State)
-        {
-        case ToF_Verify_Error:
-            for (int i = 0; i < 4; i++)
-            {
-                if (Sensoren[i]->Status != 0)
-                {
-                    return;
-                }
-            }
-            State = ToF_Reading;
-            break;
-
-        case ToF_Reading:
-
-            for (int i = 0; i < 4; i++)
-            {
-                Sensoren[i]->rangingTest(Table_Measure[i], false);
-            }
-            Cube_Value = Cube.readRange();
-            State = ToF_Idle;
-            break;
-            
-        case ToF_Idle:
-            State = ToF_Verify_Error;
-            break;
-        }
-}
 
 void ToF::Reading()
 {
@@ -89,7 +59,12 @@ void ToF::Reading()
     {
         Sensoren[i]->rangingTest(Table_Measure[i], false);
     }
-
+    for (int i = 0; i < 4; i++)
+    {
+        Table_Measure_Data[i] = Table_Measure[i]->RangeMilliMeter;
+      //  Serial.println("Übergabe an Array:");
+        //Serial.println(Table_Measure_Data[i]);
+    }
 }
 
 bool ToF::ErrorState()
@@ -108,4 +83,17 @@ bool ToF::RemedyError()
 {
     Serial.println("Steuerung neu Starten!");
 
+}
+void ToF::Register(ToF_Interface *O)
+{
+    Observers[Index_Interface] = O;
+    Index_Interface++;
+}
+void ToF::NotifyObserver()
+{
+    for (int i = 0; i < 1; i++)
+    {
+        Observers[i]->update(Table_Measure_Data);
+    }
+    
 }

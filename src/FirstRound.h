@@ -20,8 +20,7 @@ enum Turn_State
     Idle
 };
 
-
-class FirstRound
+class FirstRound : public ToF_Interface
 {
 private:
     FirstRound_State State = FirstRound_Start;
@@ -31,13 +30,14 @@ private:
     Align *Align_;
     Turn_State State_turn = Verify;
     int Turns = 0;
+    int Sensor_Data[4];
 
 public:
     void ExecuteStateMachine();
     void Setup(DrivesController *Instance, ToF *ToFs, Objectdetection *PInstance, Align *AlignInstance);
     void Turn(int Distance);
+    void update(int Table[4]);
     FirstRound_State activeState();
-
 };
 
 #endif

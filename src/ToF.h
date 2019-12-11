@@ -17,7 +17,7 @@ enum ToF_State
 class ToF_Interface
 {
     public:
-    virtual void update(int Table[4]);
+    virtual void update(int Table[]);
 };
 class Subject_Interface
 {

@@ -62,6 +62,8 @@ void ToF::Reading()
     for (int i = 0; i < 4; i++)
     {
         Table_Measure_Data[i] = Table_Measure[i]->RangeMilliMeter;
+      //  Serial.println("Übergabe an Array:");
+        //Serial.println(Table_Measure_Data[i]);
     }
 }
 
@@ -89,7 +91,7 @@ void ToF::Register(ToF_Interface *O)
 }
 void ToF::NotifyObserver()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 1; i++)
     {
         Observers[i]->update(Table_Measure_Data);
     }

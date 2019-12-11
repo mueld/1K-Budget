@@ -19,7 +19,7 @@ class Align: public ToF_Interface
     public:
         void Setup(DrivesController *Controller);
         void Execute(int Distance);
-        void update(int Table[4]);
+        void update(int Table[]);
         void Print();
         Align_State ActiveState();
 };

@@ -2,10 +2,10 @@
 #include "ToF.h"
 #include "Align.h"
 
-void Align::Setup(DrivesController *Controller, ToF *Sensors)
+void Align::Setup(DrivesController *Controller)
 {
     this->Controller = Controller;
-    this->Sensor = Sensors;
+
 }
 
 void Align::Execute(int Distance)
@@ -49,7 +49,7 @@ Align_State Align::ActiveState()
 {
     return State;
 }
-void Align::update(int Table[4])
+void Align::update(int Table[])
 {
     for (int i = 0; i < 4; i++)
     {
@@ -58,9 +58,12 @@ void Align::update(int Table[4])
 }
 void Align::Print()
 {
-    for (int i = 0; i < 4; i++)
+    if (Sensor_Data[0] >303 )
+    {
+        for (int i = 0; i < 4; i++)
     {
         Serial.println(Sensor_Data[i]);
+    }
     }
     
     }

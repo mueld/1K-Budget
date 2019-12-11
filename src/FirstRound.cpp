@@ -111,9 +111,10 @@ void FirstRound::Turn(int Distance)
         break;
     }
 }
-
-
-
-
-
-   
+void FirstRound::update(int Table[4]) {
+    for (int i = 0; i < 4; i++)
+    {
+        Sensor_Data[i] = Table[i];
+    }
+    
+}

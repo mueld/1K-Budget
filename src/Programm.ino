@@ -13,6 +13,8 @@ void setup()
 
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
+    Sensors.Register(&AlignInstance);
+    Sensors.Register(&Round);
 }
 
 

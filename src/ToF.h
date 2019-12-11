@@ -39,16 +39,14 @@ private:
     Adafruit_VL6180X Cube = Adafruit_VL6180X();
     ToF_State State;
     int Index_Interface = 0;
-
-public:
-    int Table_Measure_Data[4];
-    int Cube_Value;
     VL53L0X_RangingMeasurementData_t measureVR;
     VL53L0X_RangingMeasurementData_t measureHR;
     VL53L0X_RangingMeasurementData_t measureFront;
     VL53L0X_RangingMeasurementData_t measureLEFT;
     VL53L0X_RangingMeasurementData_t *Table_Measure[4] = {&measureVR, &measureHR, &measureFront, &measureLEFT};
-    void ExecuteStateMachine();
+public:
+    int Table_Measure_Data[4];
+    int Cube_Value;
     void Setup();
     void Reading();
     void InitToF();

@@ -52,36 +52,6 @@ void ToF::Setup()
     InitToF();
 }
 
-void ToF::ExecuteStateMachine()
-{
-        switch (State)
-        {
-        case ToF_Verify_Error:
-            for (int i = 0; i < 4; i++)
-            {
-                if (Sensoren[i]->Status != 0)
-                {
-                    return;
-                }
-            }
-            State = ToF_Reading;
-            break;
-
-        case ToF_Reading:
-
-            for (int i = 0; i < 4; i++)
-            {
-                Sensoren[i]->rangingTest(Table_Measure[i], false);
-            }
-            Cube_Value = Cube.readRange();
-            State = ToF_Idle;
-            break;
-            
-        case ToF_Idle:
-            State = ToF_Verify_Error;
-            break;
-        }
-}
 
 void ToF::Reading()
 {

@@ -56,3 +56,11 @@ void Align::update(int Table[4])
         Sensor_Data[i] = Table[i];
     }
 }
+void Align::Print()
+{
+    for (int i = 0; i < 4; i++)
+    {
+        Serial.println(Sensor_Data[i]);
+    }
+    
+    }

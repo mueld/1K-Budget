@@ -25,3 +25,10 @@ bool Parking::ExecuteParking()
     }
     return result;
 }
+void Parking::update(int Table[4])
+{
+    for (int i = 0; i < 4; i++)
+    {
+        Sensor_Data[i] = Table[i];
+    }
+}

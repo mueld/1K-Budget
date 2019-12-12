@@ -31,3 +31,10 @@ bool Unload::ExecuteUnload()
     }
     return result;
 }
+void Unload::update(int Table[4])
+{
+    for (int i = 0; i < 4; i++)
+    {
+        Sensor_Data[i] = Table[i];
+    }
+}

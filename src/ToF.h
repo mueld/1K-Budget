@@ -22,13 +22,13 @@ class ToF_Interface
 class Subject_Interface
 {
     public:
-        virtual void Register(ToF_Interface *Ob);
+        virtual void Register(ToF_Interface *OI);
         virtual void NotifyObserver();
 };
 class ToF : public Subject_Interface
 {
 private:
-    ToF_Interface *Observers[4];
+    ToF_Interface *Observers[5];
     int Pin[4] = {3,4,5,6};
     int Address[4] = {48, 49, 50, 51};
     Adafruit_VL53L0X VR = Adafruit_VL53L0X();

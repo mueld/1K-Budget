@@ -14,7 +14,7 @@ void setup()
     AlignInstance.Setup(&DrivesControllerInstance);
     CollectInstance.Setup(&Sensors, &DrivesControllerInstance);
     UnloadInstance.Setup(&DrivesControllerInstance, &Sensors);
-    ParkingInstance.Setup(&DrivesControllerInstance, &ObjectdetectionInstance, &Sensors, &UnloadInstance);
+    ParkingInstance.Setup(&DrivesControllerInstance, &ObjectdetectionInstance, &Sensors);
 
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);

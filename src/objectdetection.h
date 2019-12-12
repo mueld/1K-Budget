@@ -31,7 +31,7 @@ public:
   void Setup(DrivesController *drivecontroller, Pixy2 *pixy);
   void ExecuteStateMachine();
   void FirstRound();
-  Objectstate ActiveState();
+  int ActiveState();
 };
 
 #endif

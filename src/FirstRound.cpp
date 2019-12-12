@@ -6,11 +6,11 @@ FirstRound_State FirstRound::activeState()
 {
     return State;
 }
-void FirstRound::Setup(DrivesController *Instance, ToF *ToFs, Objectdetection *PInstance, Align *AlignInstance)
+void FirstRound::Setup(DrivesController *Instance, ToF *ToFs, IModuleState *IModuleState_, Align *AlignInstance)
 {
     DriveController = Instance;
     Sensor = ToFs;
-    Camera = PInstance;
+    this->IModuleState_ = IModuleState_;
     Align_ = AlignInstance;
 }
 void FirstRound::ExecuteStateMachine()
@@ -49,7 +49,7 @@ void FirstRound::ExecuteStateMachine()
             break;
 
     case FirstRound_Idle:
-        if (Camera->activestate() != Objectstate_found)
+        if (IModuleState_->ActiveState() != Objectstate_found)
         {
             State = FirstRound_Turn;
         }

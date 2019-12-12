@@ -45,7 +45,7 @@ void DrivesControllerEncoderRotate()
 void Execute_FirstRound()
 {
     ObjectdetectionInstance.FirstRound();
-    if (ObjectdetectionInstance.activestate() == Objectstate_found)
+    if (ObjectdetectionInstance.ActiveState() == Objectstate_found)
     {
         State = Process_Collect;
     }
@@ -63,7 +63,7 @@ void Execute_FirstRound()
 void Execute_Searching()
 {
     ObjectdetectionInstance.ExecuteStateMachine();
-    if (ObjectdetectionInstance.activestate() == Objectstate_found)
+    if (ObjectdetectionInstance.ActiveState() == Objectstate_found)
     {
         State = Process_Collect;
     }

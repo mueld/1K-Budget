@@ -9,7 +9,7 @@ void setup()
         Serial.begin(115200);
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
-    Round.Setup(&DrivesControllerInstance, &Sensors, &AlignInstance, &ObjectdetectionInstance);
+    Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance ,& AlignInstance);
     Sensors.Setup();
     AlignInstance.Setup(&DrivesControllerInstance);
     CollectInstance.Setup(&Sensors, &DrivesControllerInstance);

@@ -33,7 +33,6 @@ class Errorhandler
 {   
     public:
     virtual bool ErrorState();
-    virtual bool RemedyError();
 };
 class Drive
 {

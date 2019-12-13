@@ -9,7 +9,7 @@ enum Align_State
     Align_Parallel,
     Align_Idle
 };
-class Align: public ToF_Interface
+class Align: public ToF_Interface, public IModuleState
 {
     private:
         Align_State State;
@@ -21,7 +21,7 @@ class Align: public ToF_Interface
         void Execute(int Distance);
         void update(int Table[]);
         void Print();
-        Align_State ActiveState();
+        int ActiveState();
 };
 
 #endif

@@ -9,7 +9,7 @@ void setup()
         Serial.begin(115200);
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
-    Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance ,& AlignInstance);
+    Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance, &AlignInstance);
     Sensors.Setup();
     AlignInstance.Setup(&DrivesControllerInstance);
     CollectInstance.Setup(&Sensors, &DrivesControllerInstance);
@@ -20,9 +20,6 @@ void setup()
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
     Sensors.Register(&AlignInstance);
     Sensors.Register(&Round);
-    Sensors.Register(&CollectInstance);
-    Sensors.Register(&UnloadInstance);
-    Sensors.Register(&ParkingInstance);
 }
 
 
@@ -30,8 +27,7 @@ void setup()
 void loop()
 {
     Sensors.Reading();
-    Sensors.NotifyObserver();
-
+    
     switch (State)
     {
 

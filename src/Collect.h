@@ -10,18 +10,17 @@ enum State_Collect
     Finish
 };
 
-class Collect: public ToF_Interface
+class Collect: public IModuleState
 {
     private:
         State_Collect State;
         DrivesController *Controller;
         ToF *Sensoren;
-        int Sensor_Data[4];
 
     public:
         void Setup(ToF *Sensor, DrivesController *DriveController);
         bool CollectThatShit();
-        void update(int Table[4]);
+        int ActiveState();
 };
 
 #endif

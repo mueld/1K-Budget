@@ -6,9 +6,9 @@ void Unload::Setup(DrivesController *DriveController, ToF *Sensoren)
     Sensors = Sensoren;
 }
 
-bool Unload::ExecuteUnload()
+void Unload::ExecuteUnload()
 {
-    bool result = false;
+
 
     switch (State)
     {
@@ -21,20 +21,16 @@ bool Unload::ExecuteUnload()
 
     case Unload_ConatainerStartPostion:
 
-        result = true;
-        return result;
+
         break;
 
     case Unload_Idle:
         State = Unload_MoveToPosition;
         break;
     }
-    return result;
+
 }
-void Unload::update(int Table[4])
+int Unload::ActiveState()
 {
-    for (int i = 0; i < 4; i++)
-    {
-        Sensor_Data[i] = Table[i];
-    }
+    return State;
 }

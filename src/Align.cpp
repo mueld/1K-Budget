@@ -45,10 +45,6 @@ void Align::Execute(int Distance)
         break;
     }
 }
-Align_State Align::ActiveState()
-{
-    return State;
-}
 void Align::update(int Table[])
 {
     for (int i = 0; i < 4; i++)
@@ -67,3 +63,7 @@ void Align::Print()
     }
     
     }
+int Align::ActiveState()
+{
+    return State;
+}

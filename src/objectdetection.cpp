@@ -9,7 +9,7 @@ void Objectdetection::Setup(DrivesController *drivecontroller, Pixy2 *pixy)
     Camera->init();
 }
 
-Objectstate Objectdetection::activestate()
+int Objectdetection::ActiveState()
 {
     return state;
 }

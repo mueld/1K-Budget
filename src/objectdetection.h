@@ -11,8 +11,12 @@ enum Objectstate
   Objectstate_Idle,
   Objectstate_initialize,
 };
-
-class Objectdetection
+class IModuleState
+{
+  public:
+  virtual int ActiveState();
+};
+class Objectdetection: public IModuleState
 {
 private:
   int nearest;
@@ -25,9 +29,9 @@ private:
 
 public:
   void Setup(DrivesController *drivecontroller, Pixy2 *pixy);
-  Objectstate activestate();
   void ExecuteStateMachine();
   void FirstRound();
+  int ActiveState();
 };
 
 #endif

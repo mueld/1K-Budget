@@ -38,11 +38,7 @@ bool Collect::CollectThatShit()
     }
     return result;
 }
-void Collect::update(int Table[4])
+int Collect::ActiveState()
 {
-    for (int i = 0; i < 4; i++)
-    {
-        Sensor_Data[i] = Table[i];
-    }
-    
+    return State;
 }

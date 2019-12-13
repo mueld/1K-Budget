@@ -43,9 +43,7 @@ void ToF::InitToF()
            Serial.println("Succesfull");
        }
        
-    }
-    
-    
+    }  
 }
 void ToF::Setup()
 {
@@ -79,11 +77,6 @@ bool ToF::ErrorState()
         return false;
 }
 
-bool ToF::RemedyError()
-{
-    Serial.println("Steuerung neu Starten!");
-
-}
 void ToF::Register(ToF_Interface *O)
 {
     Observers[Index_Interface] = O;

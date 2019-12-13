@@ -9,18 +9,17 @@ enum Unload_State
     Unload_Idle
 };
 
-class Unload:  public ToF_Interface
+class Unload: public IModuleState
 {
     private:
     Unload_State State;
     DrivesController *Controller;
     ToF *Sensors;
-    int Sensor_Data[4];
 
 public:
     void Setup(DrivesController *DriveController, ToF *Sensoren);
-    bool ExecuteUnload();
-    void update(int Table[4]);
+    void ExecuteUnload();
+    int ActiveState();
 };
 
 #endif

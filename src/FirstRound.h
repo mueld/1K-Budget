@@ -26,7 +26,7 @@ private:
     FirstRound_State State = FirstRound_Start;
     DrivesController *DriveController;
     ToF *Sensor;
-    Objectdetection *Camera;
+    IModuleState *IModuleState_;
     Align *Align_;
     Turn_State State_turn = Verify;
     int Turns = 0;
@@ -34,8 +34,9 @@ private:
 
 public:
     void ExecuteStateMachine();
-    void Setup(DrivesController *Instance, ToF *ToFs, Objectdetection *PInstance, Align *AlignInstance);
+    void Setup(DrivesController *Instance, ToF *ToFs, IModuleState *IModuleState_, Align *AlignInstance);
     void Turn(int Distance);
+   void Print_State();
     void update(int Table[4]);
     FirstRound_State activeState();
 };

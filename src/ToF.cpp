@@ -76,6 +76,11 @@ bool ToF::ErrorState()
     }
         return false;
 }
+String ToF::Error_Message()
+{
+    String Message = "Sensor ausgefallen Steuerung bitte neu starten";
+    return Message;
+}
 
 void ToF::Register(ToF_Interface *O)
 {

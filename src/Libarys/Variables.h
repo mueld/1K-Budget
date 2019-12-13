@@ -1,8 +1,17 @@
 #include "../Parking.h"
-
+#include "../Webserver.h"
 #ifndef Variables_h
 #define Variables_h
 #define DEBUG
+
+char ssid[] = "Mueller";
+char pass[] = "SECRET_PASS";
+
+char serverAddress[] = "192.168.0.3"; // server address
+int port = 8080;
+
+WiFiClient wifi;
+HttpClient client = HttpClient(wifi, serverAddress, port);
 
 ToF Sensors;
 FirstRound Round;
@@ -13,27 +22,28 @@ Collect CollectInstance;
 Unload UnloadInstance;
 Parking ParkingInstance;
 Align AlignInstance;
+Webserver WsInstance;
 
-int Cubes;
 
 enum Processstate
 {
-    Process_Initialize,
-    Process_Start,
-    Process_Searching,
-    Process_Collect,
-    Process_Unload,
-    Process_Parking,
-    Process_FirstRound,
-    Process_Idle,
-    Process_Error,
-    Process_Finish
+    Process_Start= 0,
+    Process_Searching = 2,
+    Process_ObjectFound = 3,
+    Process_Collect = 4,
+    Process_CollectedCube = 5,
+    Process_Unload = 7,
+    Process_Parking = 6,
+    Process_UnloadedCubes = 8,
+    Process_FirstRound = 1,
+    Process_Idle = 10,
+    Process_Error = 11,
+    Process_Finish = 9
 };
-
 
 Processstate State;
 Processstate OldState;
-
+int Cubes = 6;
 void DrivesControllerEncoderLinear()
 {
     DrivesControllerInstance.ReadEncoderLinear();

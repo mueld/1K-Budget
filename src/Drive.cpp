@@ -36,6 +36,10 @@ bool Axis::SetPosition(Position_Axis position)
 {
     InPosition = false;
 
+    if(starttime == 0)
+    {
+        starttime = millis();
+    }
     if (*Encoder < Position[position] -100 )
     {
         Serial.println("Position:");
@@ -56,6 +60,27 @@ bool Axis::SetPosition(Position_Axis position)
         Serial.println("Position erreicht");
         MovementMotor(1, 0);
         InPosition = true;
+        starttime = 0;
     }
     return InPosition;
+}
+bool Axis::Schleppabstand()
+{
+    Sollposition = faktor * (starttime - millis()) + 0;
+    if (Sollposition - *Encoder < 20)
+    {
+        return true;
+    }
+}
+bool Axis::ErrorState()
+{
+   if(Schleppabstand()) 
+   {
+       return true;
+   }
+}
+String Axis::Error_Message()
+{
+    String Message = "Schleppabstand zu gross";
+    return Message;
 }

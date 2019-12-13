@@ -36,6 +36,7 @@ public:
     void ExecuteStateMachine();
     void Setup(DrivesController *Instance, ToF *ToFs, IModuleState *IModuleState_, Align *AlignInstance);
     void Turn(int Distance);
+   void Print_State();
     void update(int Table[4]);
     FirstRound_State activeState();
 };

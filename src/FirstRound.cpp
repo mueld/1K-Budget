@@ -13,6 +13,10 @@ void FirstRound::Setup(DrivesController *Instance, ToF *ToFs, IModuleState *IMod
     this->IModuleState_ = IModuleState_;
     Align_ = AlignInstance;
 }
+void FirstRound::Print_State()
+{
+    Serial.println(IModuleState_->ActiveState());
+}
 void FirstRound::ExecuteStateMachine()
 {
     Sensor->Reading();

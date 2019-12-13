@@ -10,7 +10,7 @@ enum State_Collect
     Finish
 };
 
-class Collect
+class Collect: public IModuleState
 {
     private:
         State_Collect State;
@@ -20,6 +20,7 @@ class Collect
     public:
         void Setup(ToF *Sensor, DrivesController *DriveController);
         bool CollectThatShit();
+        int ActiveState();
 };
 
 #endif

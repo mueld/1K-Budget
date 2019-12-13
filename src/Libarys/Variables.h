@@ -96,14 +96,14 @@ void ExectueCollect()
 }
 void ExecuteUnload()
 {
-    if (UnloadInstance.ExecuteUnload())
+    if (UnloadInstance.ActiveState() == Unload_Idle)
     {
         State = Process_Parking;
     }
 }
 void ExectueParking()
 {
-    if (ParkingInstance.ExecuteParking())
+    if (ParkingInstance.ActiveState() == Parking_Idle)
     {
          State = Process_Idle;
     }

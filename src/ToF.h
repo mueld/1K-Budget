@@ -25,7 +25,7 @@ class Subject_Interface
         virtual void Register(ToF_Interface *Ob);
         virtual void NotifyObserver();
 };
-class ToF : public Subject_Interface
+class ToF : public Subject_Interface, public Errorhandler
 {
 private:
     ToF_Interface *Observers[4];
@@ -51,7 +51,6 @@ public:
     void Reading();
     void InitToF();
     bool ErrorState();
-    bool RemedyError();
     void Register(ToF_Interface *Ob);
     void NotifyObserver();
 };

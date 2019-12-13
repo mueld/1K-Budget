@@ -5,10 +5,11 @@ enum Parking_State
 {
     Parking_SearchPosition,
     Parking_GotoWall,
-    Parking_Park
+    Parking_Park,
+    Parking_Idle
 };
 
-class Parking
+class Parking: public IModuleState
 {
 private:
     Parking_State State;
@@ -18,8 +19,8 @@ private:
 
 public:
     void Setup(DrivesController *DriveController, Objectdetection *objectdetection, ToF *Sensors);
-    bool ExecuteParking();
-
+    void ExecuteParking();
+    int ActiveState();
 };
 
 

@@ -8,9 +8,8 @@ void Parking::Setup(DrivesController *DriveController, Objectdetection *objectde
     Sensor = Sensors;
 }
 
-bool Parking::ExecuteParking()
+void Parking::ExecuteParking()
 {
-    bool result = false;
     switch (State)
     {
     case Parking_SearchPosition:
@@ -19,9 +18,10 @@ bool Parking::ExecuteParking()
     case Parking_GotoWall:
         break;
     case Parking_Park:
-        result = true;
-        return result;
         break;
     }
-    return result;
+}
+int Parking::ActiveState()
+{
+    return State;
 }

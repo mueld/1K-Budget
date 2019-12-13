@@ -38,3 +38,7 @@ bool Collect::CollectThatShit()
     }
     return result;
 }
+int Collect::ActiveState()
+{
+    return State;
+}

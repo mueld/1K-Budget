@@ -9,7 +9,7 @@ enum Unload_State
     Unload_Idle
 };
 
-class Unload
+class Unload: public IModuleState
 {
     private:
     Unload_State State;
@@ -18,7 +18,8 @@ class Unload
 
 public:
     void Setup(DrivesController *DriveController, ToF *Sensoren);
-    bool ExecuteUnload();
+    void ExecuteUnload();
+    int ActiveState();
 };
 
 #endif

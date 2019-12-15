@@ -6,16 +6,16 @@ void setup()
     {
         pinMode(i, OUTPUT);
     }
-        Serial.begin(115200);
+    Serial.begin(115200);
+    Sensors.Setup();
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance, &AlignInstance);
-    Sensors.Setup();
     AlignInstance.Setup(&DrivesControllerInstance);
     CollectInstance.Setup(&Sensors, &DrivesControllerInstance);
     UnloadInstance.Setup(&DrivesControllerInstance, &Sensors);
     ParkingInstance.Setup(&DrivesControllerInstance, &ObjectdetectionInstance, &Sensors);
-    WsInstance.Setup(State, Cubes, &client);
+    WsInstance.Setup(State, Cubes, &client, &Sensors, &DrivesControllerInstance);
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
     Sensors.Register(&AlignInstance);
@@ -31,7 +31,11 @@ void loop()
     
     switch (State)
     {
-    case Process_Start:
+    case Process_Waiting:
+        if (WsInstance.ReadStart())
+        {
+            State = Process_FirstRound;
+        }
             Cubes = 0;
     break;
 
@@ -61,8 +65,7 @@ void loop()
     case Process_UnloadedCubes:
         State = Process_Finish;
         break;
-
-        case Process_Parking:
+    case Process_Parking:
         ExectueParking();
         break;
     }

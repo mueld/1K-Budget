@@ -5,7 +5,7 @@
 #define Webserver_h
 enum Processstate
 {
-    Process_Start = 0,
+    Process_Waiting = 0,
     Process_Searching = 2,
     Process_ObjectFound = 3,
     Process_Collect = 4,
@@ -24,14 +24,18 @@ class Webserver
 private:
     String SSID = "ZbW-IoT";
     HttpClient *Client_;
+    Errorhandler *Errors[2];
     int SendState;
     int Cubes;
     String Send;
+    bool Start;
+    char buffer;
 
 public:
+    bool ReadStart();
     void sending();
     int ActiveState();
-    void Setup(Processstate &SendState, int &Cubes, HttpClient *Client_);
+    void Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, ToF *sensors, DrivesController *Controller);
     void Summery(const Processstate SendState, const int Cubes);
 };
 #endif

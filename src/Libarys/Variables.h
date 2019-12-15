@@ -24,9 +24,6 @@ Parking ParkingInstance;
 Align AlignInstance;
 Webserver WsInstance;
 
-
-
-
 Processstate State;
 Processstate OldState;
 int Cubes = 6;

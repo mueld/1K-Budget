@@ -8,13 +8,19 @@ void Webserver::sending()
         Summery(SendState, Cubes);
         Serial.println(Send);
         Client_->get(Send);
+        Send = "";
+        while (Client_->available())
+        {
+            buffer = Client_->read();
+        }
 }
-void Webserver::Setup(Processstate &SendState, int &Cubes, HttpClient *Client_)
+void Webserver::Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, ToF *sensors, DrivesController *Controller)
 {
     this->SendState = (int)SendState;
     this->Cubes = Cubes;
     this->Client_ = Client_;
-
+    Errors[0] = sensors;
+    Errors[1] = Controller;
 }
 void Webserver::Summery(const Processstate SendState, const int Cubes)
 {
@@ -25,4 +31,12 @@ void Webserver::Summery(const Processstate SendState, const int Cubes)
     {
          Send +=send_[i];
     }
+}
+bool Webserver::ReadStart()
+{
+    if(buffer == "1")
+    {
+        return true;
+    }
+    return false;
 }

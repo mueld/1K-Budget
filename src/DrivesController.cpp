@@ -117,3 +117,21 @@ void DrivesController::PrintEncoder()
 {
     Serial.println(Encoder[0]);
 }
+bool DrivesController::ErrorState()
+{
+    if(Linear.ErrorState() == true || Rotate.ErrorState() == true)
+    {
+        return true;
+    }
+}
+String DrivesController::Error_Message()
+{
+    if(Linear.ErrorState() == true)
+    {
+        return Linear.Error_Message();
+    }
+    else if (Rotate.ErrorState() == true)
+    {
+        return Rotate.Error_Message();
+    }
+}

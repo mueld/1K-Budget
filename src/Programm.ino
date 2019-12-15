@@ -20,6 +20,7 @@ void setup()
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
     Sensors.Register(&AlignInstance);
     Sensors.Register(&Round);
+
 }
 
 
@@ -30,7 +31,6 @@ void loop()
     
     switch (State)
     {
-
     case Process_Start:
             Cubes = 0;
     break;
@@ -46,18 +46,25 @@ void loop()
     case Process_Searching:
         Execute_Searching();
         break;
-
+    case Process_ObjectFound:
+        State = Process_Collect;
+        break;
     case Process_Collect:
         ExectueCollect();
         break;
-
+    case Process_CollectedCube:
+        State = Process_Idle;
+        break;
     case Process_Unload:
         ExecuteUnload();
         break;
+    case Process_UnloadedCubes:
+        State = Process_Finish;
+        break;
 
-    case Process_Parking:
+        case Process_Parking:
         ExectueParking();
         break;
     }
-
+        WsInstance.sending();
 }

@@ -24,6 +24,5 @@ void Webserver::Summery(const Processstate SendState, const int Cubes)
     for (int i = 0; i < 4; i++)
     {
          Send +=send_[i];
-   }
-   
+    }
 }

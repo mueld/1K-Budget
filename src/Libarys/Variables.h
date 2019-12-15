@@ -13,7 +13,6 @@ int port = 8080;
 
 WiFiClient wifi;
 HttpClient client = HttpClient(wifi, serverAddress, port);
-
 ToF Sensors;
 FirstRound Round;
 Pixy2 Pixyinstance;
@@ -31,6 +30,8 @@ Webserver WsInstance;
 Processstate State;
 Processstate OldState;
 int Cubes = 6;
+
+
 void DrivesControllerEncoderLinear()
 {
     DrivesControllerInstance.ReadEncoderLinear();
@@ -44,7 +45,7 @@ void Execute_FirstRound()
     ObjectdetectionInstance.FirstRound();
     if (ObjectdetectionInstance.ActiveState() == Objectstate_found)
     {
-        State = Process_Collect;
+        State = Process_ObjectFound;
     }
     else if (Round.activeState() == FirstRound_Finish)
     {
@@ -77,7 +78,7 @@ void Execute_Idle()
     }
     else if (Cubes == 6)
     {
-        State = Process_Unload;
+        State = Process_Parking;
     }
     else
     {
@@ -95,14 +96,14 @@ void ExecuteUnload()
 {
     if (UnloadInstance.ActiveState() == Unload_Idle)
     {
-        State = Process_Parking;
+        State = Process_UnloadedCubes;
     }
 }
 void ExectueParking()
 {
     if (ParkingInstance.ActiveState() == Parking_Idle)
     {
-         State = Process_Idle;
+         State = Process_Unload;
     }
 }
 #endif

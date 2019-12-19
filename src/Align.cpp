@@ -43,6 +43,8 @@ void Align::Execute(int Distance)
             State = Align_Idle;
         }
         break;
+    case Align_Idle:
+        State = Align_Distance;
     }
 }
 void Align::update(int Table[])

@@ -22,8 +22,16 @@ void Objectdetection::ExecuteStateMachine()
         Camera->ccc.getBlocks();
         if (FirstCubeFound == false && Camera->ccc.numBlocks != 0)
         {
-            index = Camera->ccc.blocks[0].m_index;
-            FirstCubeFound = true;
+            for (int i = 0; i < Camera->ccc.numBlocks; i++)
+            {
+                if(Camera->ccc.blocks[i].m_signature == 1)
+                {
+                    index = Camera->ccc.blocks[0].m_index;
+                    FirstCubeFound = true;
+                }
+            }
+            
+            
         }
         if (Camera->ccc.numBlocks != 0)
         {
@@ -75,7 +83,7 @@ void Objectdetection::FirstRound()
         {
             for (int i = 0; i < Camera->ccc.numBlocks; i++)
             {
-                if (Camera->ccc.blocks[i].m_y >= 170 && Camera->ccc.blocks[i].m_x <= 120)
+                if (Camera->ccc.blocks[i].m_y >= 170 && Camera->ccc.blocks[i].m_x <= 120 && (Camera->ccc.blocks[i].m_signature == 1))
                 {
                     Drivecontroller->Stay();
                     state = Objectstate_found;

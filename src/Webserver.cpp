@@ -1,21 +1,19 @@
 #include "Parking.h"
-#include <WiFiNINA.h>
+#include <WiFi.h>
 #include <ArduinoHttpClient.h>
 #include "Webserver.h"
 
 void Webserver::sending()
 {       
         Summery(SendState, Cubes);
-        SendDebugMessage("Get-Request:");
-        SendDebugMessage(Send);
         Client_->get(Send);
         Send = "";
         while (Client_->available())
         {
             Response = Client_->responseBody();
         }
-        SendDebugMessage("Get response:");
-        SendDebugMessage(Response);
+       
+     
 }
 void Webserver::Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, ToF *sensors, DrivesController *Controller)
 {
@@ -27,7 +25,6 @@ void Webserver::Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, 
     while (WifiState != WL_CONNECTED)
     {
         WifiState = WiFi.begin("ZbW-IoT", "zbwzbw");
-        SendDebugMessage("Try to Connect with WIFI");
         delay(10000);
     }
     Serial.println("Connect to WiFi");

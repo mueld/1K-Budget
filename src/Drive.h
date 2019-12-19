@@ -3,12 +3,8 @@
 
 #ifndef Drive_h
 #define Drive_h
-void SendDebugMessage(const String &message)
-{
-#ifdef DEBUG
-    Serial.println(message);
-#endif
-}
+
+
 enum Direction_Drive
 {
     Drive_Forward = 0,

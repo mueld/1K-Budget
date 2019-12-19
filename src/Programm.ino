@@ -15,7 +15,7 @@ void setup()
     CollectInstance.Setup(&Sensors, &DrivesControllerInstance);
     UnloadInstance.Setup(&DrivesControllerInstance, &Sensors);
     ParkingInstance.Setup(&DrivesControllerInstance, &ObjectdetectionInstance, &Sensors);
-    WsInstance.Setup(State, Cubes, &client, &Sensors, &DrivesControllerInstance);
+    WsInstance.Setup(State, Cubes, &client, &wifi, &Sensors, &DrivesControllerInstance);
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
     Sensors.Register(&AlignInstance);

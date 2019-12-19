@@ -1,5 +1,5 @@
 #include "Parking.h"
-#include <WiFi.h>
+#include <WiFiNINA.h>
 #include <ArduinoHttpClient.h>
 #ifndef Webserver_h
 #define Webserver_h
@@ -22,20 +22,23 @@ enum Processstate
 class Webserver
 {
 private:
-    String SSID = "ZbW-IoT";
+    char SSID[8] = "ZbW-IoT";
+    char PWD[7] = "zbwzbw";
+    String Response;
     HttpClient *Client_;
+    WiFiClient *client;
+    int WifiState = WL_IDLE_STATUS;
     Errorhandler *Errors[2];
     int SendState;
     int Cubes;
     String Send;
     bool Start;
-    char buffer;
 
 public:
     bool ReadStart();
     void sending();
     int ActiveState();
-    void Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, ToF *sensors, DrivesController *Controller);
+    void Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, WiFiClient *client, ToF *sensors, DrivesController *Controller);
     void Summery(const Processstate SendState, const int Cubes);
 };
 #endif

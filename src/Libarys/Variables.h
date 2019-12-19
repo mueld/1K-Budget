@@ -5,11 +5,8 @@
 #define Variables_h
 #define DEBUG
 
-char ssid[] = "Mueller";
-char pass[] = "SECRET_PASS";
-
-char serverAddress[] = "192.168.0.3"; // server address
-int port = 8080;
+char serverAddress[] = "192.168.1.125";
+int port = 80;
 
 WiFiClient wifi;
 HttpClient client = HttpClient(wifi, serverAddress, port);

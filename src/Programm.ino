@@ -20,7 +20,7 @@ void setup()
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
     Sensors.Register(&AlignInstance);
     Sensors.Register(&Round);
-
+    SendDebugMessage("Setup finished");
 }
 
 

@@ -110,10 +110,28 @@ void DrivesController::Setup()
     HL.Setup(&AFMS1, 4, Location_HL);
     Linear.Setup(&AFMS2, 1, &Encoder[0]);
     Rotate.Setup(&AFMS2, 2, &Encoder[1]);
-    AFMS2.begin();
     AFMS1.begin();
+    AFMS2.begin();
 }
 void DrivesController::PrintEncoder()
 {
     Serial.println(Encoder[0]);
+}
+bool DrivesController::ErrorState()
+{
+    if(Linear.ErrorState() == true || Rotate.ErrorState() == true)
+    {
+        return true;
+    }
+}
+String DrivesController::Error_Message()
+{
+    if(Linear.ErrorState() == true)
+    {
+        return Linear.Error_Message();
+    }
+    else if (Rotate.ErrorState() == true)
+    {
+        return Rotate.Error_Message();
+    }
 }

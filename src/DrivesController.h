@@ -23,7 +23,7 @@ enum ControllerState
 
 };
 
-class DrivesController
+class DrivesController:public Errorhandler
 {
 private:
     Wheel VR;
@@ -54,8 +54,9 @@ public:
     bool setPosition(Motor Motor, Position_Axis position);
     void ReadEncoderLinear();
     void ReadEncoderRotate();
+    String Error_Message();
+    bool ErrorState();
     void PrintEncoder();
-
 };
 
 #endif

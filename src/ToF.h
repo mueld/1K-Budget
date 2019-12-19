@@ -51,6 +51,7 @@ public:
     void Reading();
     void InitToF();
     bool ErrorState();
+    String Error_Message();
     void Register(ToF_Interface *Ob);
     void NotifyObserver();
 };

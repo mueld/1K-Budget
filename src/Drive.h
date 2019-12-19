@@ -3,7 +3,12 @@
 
 #ifndef Drive_h
 #define Drive_h
-
+void SendDebugMessage(const String &message)
+{
+#ifdef DEBUG
+    Serial.println(message);
+#endif
+}
 enum Direction_Drive
 {
     Drive_Forward = 0,
@@ -33,6 +38,7 @@ class Errorhandler
 {   
     public:
     virtual bool ErrorState();
+    virtual String Error_Message();
 };
 class Drive
 {
@@ -65,18 +71,24 @@ public:
 };
 
 
-class Axis: public Drive{
+class Axis: public Drive, public Errorhandler
+{
     protected:
         int Position[4]{0, 4000, 0, 4000};
         bool InPosition;
         volatile int *Encoder;
         volatile int Encoder_old = 100;
         bool Error = false;
-        int actualtime;
+        unsigned int starttime = 0;
+        float faktor = 0;
+        int Sollposition;
 
     public:
-    void Setup(Adafruit_MotorShield *shield, int port, volatile int *encoder);
-    bool SetPosition(Position_Axis position);
+        String Error_Message();
+        void Setup(Adafruit_MotorShield *shield, int port, volatile int *encoder);
+        bool SetPosition(Position_Axis position);
+        bool ErrorState();
+        bool Schleppabstand();
 };    
 
 

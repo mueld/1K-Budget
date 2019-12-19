@@ -35,8 +35,9 @@ void loop()
         if (WsInstance.ReadStart())
         {
             State = Process_FirstRound;
-        }
             Cubes = 0;
+        }
+            
     break;
 
     case Process_FirstRound:

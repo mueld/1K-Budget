@@ -110,8 +110,8 @@ void DrivesController::Setup()
     HL.Setup(&AFMS1, 4, Location_HL);
     Linear.Setup(&AFMS2, 1, &Encoder[0]);
     Rotate.Setup(&AFMS2, 2, &Encoder[1]);
-    AFMS2.begin();
     AFMS1.begin();
+    AFMS2.begin();
 }
 void DrivesController::PrintEncoder()
 {

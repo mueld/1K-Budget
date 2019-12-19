@@ -26,7 +26,6 @@ private:
     char PWD[7] = "zbwzbw";
     String Response;
     HttpClient *Client_;
-    WiFiClient *client;
     int WifiState = WL_IDLE_STATUS;
     Errorhandler *Errors[2];
     int SendState;
@@ -38,7 +37,7 @@ public:
     bool ReadStart();
     void sending();
     int ActiveState();
-    void Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, WiFiClient *client, ToF *sensors, DrivesController *Controller);
+    void Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, ToF *sensors, DrivesController *Controller);
     void Summery(const Processstate SendState, const int Cubes);
 };
 #endif

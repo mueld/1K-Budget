@@ -17,17 +17,16 @@ void Webserver::sending()
         SendDebugMessage("Get response:");
         SendDebugMessage(Response);
 }
-void Webserver::Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, WiFiClient *client, ToF *sensors, DrivesController *Controller)
+void Webserver::Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, ToF *sensors, DrivesController *Controller)
 {
     this->SendState = (int)SendState;
     this->Cubes = Cubes;
     this->Client_ = Client_;
-    this->client = client;
     Errors[0] = sensors;
     Errors[1] = Controller;
     while (WifiState != WL_CONNECTED)
     {
-        WifiState = WiFi.begin(SSID, PWD);
+        WifiState = WiFi.begin("ZbW-IoT", "zbwzbw");
         SendDebugMessage("Try to Connect with WIFI");
         delay(10000);
     }
@@ -36,7 +35,7 @@ void Webserver::Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, 
 }
 void Webserver::Summery(const Processstate SendState, const int Cubes)
 {
-    String send_[4] = {"http://192.168.1.111/save_data.php?State=","","&Cubes=",""};
+    String send_[4] = {"http://192.168.1.112/save_data.php?State=","","&Cubes=",""};
     send_[1] = String(SendState);
     send_[3] = String(Cubes);
     for (int i = 0; i < 4; i++)

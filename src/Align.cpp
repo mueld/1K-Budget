@@ -67,5 +67,5 @@ void Align::Print()
     }
 int Align::ActiveState()
 {
-    return State;
+    return (int)State;
 }

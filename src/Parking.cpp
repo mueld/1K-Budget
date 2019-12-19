@@ -16,7 +16,7 @@ void Parking::ExecuteParking()
     switch (State)
     {
     case Parking_SearchPosition:
-        if (camera->ccc.numBlocks[0].m_x >=160)
+        if (camera->ccc.blocks[0].m_x >=160)
         {
             Controller->TurnRight(100);
         }
@@ -24,7 +24,7 @@ void Parking::ExecuteParking()
 
     case Parking_Align:
         align->Execute(600);
-        if(align->ActiveState == Align_Idle)
+        if(align->ActiveState() == Align_Idle)
         {
             State = Parking_GotoWall;
         }
@@ -52,5 +52,5 @@ void Parking::ExecuteParking()
 }
 int Parking::ActiveState()
 {
-    return State;
+    return (int)State;
 }

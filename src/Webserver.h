@@ -1,5 +1,5 @@
 #include "Parking.h"
-#include <WiFiNINA.h>
+#include <WiFi.h>
 #include <ArduinoHttpClient.h>
 #ifndef Webserver_h
 #define Webserver_h

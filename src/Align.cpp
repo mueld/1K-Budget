@@ -56,13 +56,12 @@ void Align::update(int Table[])
 }
 void Align::Print()
 {
-    if (Sensor_Data[0] >303 )
-    {
+
         for (int i = 0; i < 4; i++)
     {
         Serial.println(Sensor_Data[i]);
     }
-    }
+    
     
     }
 int Align::ActiveState()

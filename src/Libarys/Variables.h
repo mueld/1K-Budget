@@ -4,6 +4,7 @@
 #ifndef Variables_h
 #define Variables_h
 #define DEBUG
+
 /*
 char serverAddress[] = "192.168.1.125";
 int port = 80;
@@ -21,7 +22,7 @@ Parking ParkingInstance;*/
 Align AlignInstance;
 //Webserver WsInstance;
 
-Processstate State;
+Processstate State = Process_FirstRound;
 Processstate OldState;
 int Cubes = 6;
 
@@ -36,18 +37,20 @@ void DrivesControllerEncoderRotate()
 }
 void Execute_FirstRound()
 {
-    ObjectdetectionInstance.FirstRound();
+   ObjectdetectionInstance.FirstRound();
     if (ObjectdetectionInstance.ActiveState() == Objectstate_found)
     {
         State = Process_ObjectFound;
     }
     else if (Round.activeState() == FirstRound_Finish)
     {
+        
         State = Process_Idle;
     }
 
     else if (Round.activeState() != FirstRound_Finish)
     {
+
         Round.ExecuteStateMachine();
     }
 }

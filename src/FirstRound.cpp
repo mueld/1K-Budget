@@ -23,16 +23,18 @@ void FirstRound::ExecuteStateMachine()
     switch (State)
     {
     case FirstRound_Start:
-        if (Sensor_Data[2] <= 1000)
+        if (Sensor_Data[2] >= 660)
         {
-            DriveController->MoveForward(100);
+                DriveController->MoveForward(100);
         }
         else if (Sensor_Data[0] >= 10)
         {
-            DriveController->MoveRight(50);
+            SendDebugFirstround("660 erreicht jetzt nacht rechts");
+            DriveController->MoveRight(200);
         }
         else
         {
+            SendDebugFirstround("startposition erreicht");
             DriveController->Stay();
             State = FirstRound_Align;
         }

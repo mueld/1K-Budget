@@ -30,10 +30,11 @@ void DrivesController::ReadEncoderRotate()
 void DrivesController::MoveTheLadies(Direction_Drive Direction, int Veloctiy)
 {
     Serial.println("bin in MoveTheLadies");
+    Serial.print("Direction:");
+    Serial.println(Direction);
     State = Controller_MoveTheLadies;
     for (int i = 0; i < 4; i++)
     {
-        Serial.println(i);
         Drives[i]->startMovement(Direction, Veloctiy);
     }
 }
@@ -102,16 +103,16 @@ bool DrivesController::setPosition(Motor Motor, Position_Axis Position)
 void DrivesController::Setup()
 {
     Serial.println("bin im setup");
-    AFMS1 = Adafruit_MotorShield(0x61);
-    AFMS2 = Adafruit_MotorShield(0x60);
+    AFMS1 = Adafruit_MotorShield(0x60);
+   // AFMS2 = Adafruit_MotorShield(0x60);
     VR.Setup(&AFMS1, 1, Location_VR);
     VL.Setup(&AFMS1, 2, Location_VL);
     HR.Setup(&AFMS1, 3, Location_HR);
     HL.Setup(&AFMS1, 4, Location_HL);
-    Linear.Setup(&AFMS2, 1, &Encoder[0]);
-    Rotate.Setup(&AFMS2, 2, &Encoder[1]);
+   // Linear.Setup(&AFMS2, 1, &Encoder[0]);
+    //Rotate.Setup(&AFMS2, 2, &Encoder[1]);
     AFMS1.begin();
-    AFMS2.begin();
+   // AFMS2.begin();
 }
 void DrivesController::PrintEncoder()
 {

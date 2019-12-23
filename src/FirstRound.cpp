@@ -13,10 +13,7 @@ void FirstRound::Setup(DrivesController *Instance, ToF *ToFs, IModuleState *IMod
     this->IModuleState_ = IModuleState_;
     Align_ = AlignInstance;
 }
-void FirstRound::Print_State()
-{
-    Serial.println(IModuleState_->ActiveState());
-}
+
 void FirstRound::ExecuteStateMachine()
 {
     Sensor->Reading();
@@ -29,12 +26,12 @@ void FirstRound::ExecuteStateMachine()
         }
         else if (Sensor_Data[0] >= 10)
         {
-            SendDebugFirstround("660 erreicht jetzt nacht rechts");
+           
             DriveController->MoveRight(200);
         }
         else
         {
-            SendDebugFirstround("startposition erreicht");
+            
             DriveController->Stay();
             State = FirstRound_Align;
         }

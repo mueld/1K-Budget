@@ -4,13 +4,7 @@
 #ifndef FirstRound_h
 #define FirstRound_h
 
-void SendDebugFirstround(const String &message)
-{
-#ifndef DEBUG_
-#define DEBUG_
-    Serial.println(message);
-#endif
-}
+
 enum FirstRound_State
 {
     FirstRound_Start,

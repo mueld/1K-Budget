@@ -4,22 +4,22 @@
 #ifndef Variables_h
 #define Variables_h
 #define DEBUG
-
+/*
 char serverAddress[] = "192.168.1.125";
 int port = 80;
 
 WiFiClient wifi;
-HttpClient client = HttpClient(wifi, serverAddress, port);
+HttpClient client = HttpClient(wifi, serverAddress, port);*/
 ToF Sensors;
 FirstRound Round;
 Pixy2 Pixyinstance;
 Objectdetection ObjectdetectionInstance;
 DrivesController DrivesControllerInstance;
-Collect CollectInstance;
+/* Collect CollectInstance;
 Unload UnloadInstance;
-Parking ParkingInstance;
+Parking ParkingInstance;*/
 Align AlignInstance;
-Webserver WsInstance;
+//Webserver WsInstance;
 
 Processstate State;
 Processstate OldState;
@@ -60,12 +60,12 @@ void Execute_Searching()
         State = Process_Collect;
     }
 }
-void Execute_Idle()
+/*void Execute_Idle()
 {
-    /* if (StartButton == true)
+     if (StartButton == true)
     {
         State = Process_Start;
-    }*/
+    }
     if (Round.activeState() != FirstRound_Finish)
     {
         State = Process_FirstRound;
@@ -100,4 +100,5 @@ void ExectueParking()
          State = Process_Unload;
     }
 }
+*/
 #endif

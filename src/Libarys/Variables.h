@@ -22,7 +22,7 @@ Parking ParkingInstance;*/
 Align AlignInstance;
 //Webserver WsInstance;
 
-Processstate State = Process_FirstRound;
+Processstate State = Process_Searching;
 Processstate OldState;
 int Cubes = 6;
 

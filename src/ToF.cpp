@@ -91,7 +91,7 @@ void ToF::Register(ToF_Interface *O)
 }
 void ToF::NotifyObserver()
 {
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 2; i++)
     {
         Observers[i]->update(Table_Measure_Data);
     }

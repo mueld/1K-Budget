@@ -17,17 +17,22 @@ void FirstRound::Setup(DrivesController *Instance, ToF *ToFs, IModuleState *IMod
 void FirstRound::ExecuteStateMachine()
 {
     Sensor->Reading();
+    Serial.print("State:");
+    Serial.println(State);
     switch (State)
     {
     case FirstRound_Start:
-        if (Sensor_Data[2] >= 660)
+        Serial.print("Sensordata VR:");
+        Serial.println(Sensor_Data[2]);
+        if (Sensor_Data[2] > 670 && Sensor_Data[1] <70)
         {
-                DriveController->MoveForward(100);
+            Serial.println("start vorwaärts");
+            DriveController->MoveForward(70);
         }
-        else if (Sensor_Data[0] >= 10)
+        else if (Sensor_Data[0] >= 30 && Sensor_Data[2]<670)
         {
-           
-            DriveController->MoveRight(200);
+            Serial.println("start rechts");
+            DriveController->MoveRight(80);
         }
         else
         {
@@ -38,7 +43,7 @@ void FirstRound::ExecuteStateMachine()
         break;
 
     case FirstRound_Align:
-        Align_->Execute(10);
+        Align_->Execute(30);
         
         if(Align_->ActiveState() == Align_Idle)
         {
@@ -46,8 +51,8 @@ void FirstRound::ExecuteStateMachine()
         }
         break;
     case FirstRound_Move:
-            DriveController->MoveForward(50);
-            State = FirstRound_Align;
+            DriveController->MoveForward(70);
+            State = FirstRound_Idle;
 
             break;
 
@@ -58,7 +63,7 @@ void FirstRound::ExecuteStateMachine()
         }
         else
         {
-            State = FirstRound_Idle;
+            State = FirstRound_Align;
         }
         
         break;
@@ -66,11 +71,11 @@ void FirstRound::ExecuteStateMachine()
     case FirstRound_Turn:
         if(Turns <2)
         {
-            Turn(10);
+            Turn(70);
         }
        else
        {
-           Turn(780);
+           Turn(810);
        }
         if(State_turn == Idle)
         {
@@ -87,7 +92,7 @@ void FirstRound::Turn(int Distance)
         if (Sensor_Data[2] <= Distance)
         {
             State_turn = Turn_;
-            DriveController->TurnLeft(30);
+            DriveController->TurnLeft(50);
         }
         else 
         {
@@ -99,7 +104,7 @@ void FirstRound::Turn(int Distance)
 
         if (Sensor_Data[2] <= 900 )
         {
-            DriveController->TurnLeft(30);
+            DriveController->TurnLeft(50);
         }
         else
         {
@@ -117,7 +122,12 @@ void FirstRound::Turn(int Distance)
 void FirstRound::update(int Table[4]) {
     for (int i = 0; i < 4; i++)
     {
-        Sensor_Data[i] = Table[i];
+        if (Table[i] != 8190)
+        {
+            Sensor_Data[i] = Table[i];
+        }
+        
+        
     }
     
 }

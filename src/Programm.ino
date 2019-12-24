@@ -19,17 +19,19 @@ void setup()
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
     Sensors.Register(&AlignInstance);
-   // Sensors.Register(&Round);
+    Sensors.Register(&Round);
     //SendDebugMessage("Setup finished");
 }
 
 
 
 void loop()
-{Sensors.Reading();
+{   Sensors.Reading();
     Sensors.NotifyObserver();
-    Serial.println(Sensors.Table_Measure[2]->RangeMilliMeter);
     Serial.println(Round.activeState());
+    Serial.print("Sensor:");
+    Serial.println(Sensors.Table_Measure_Data[2]);
+    
     switch (State)
     {
     case Process_Waiting:
@@ -38,7 +40,7 @@ void loop()
             State = Process_FirstRound;
             Cubes = 0;
         }
-     */       
+     */     
     break;
 
     case Process_FirstRound:
@@ -53,7 +55,8 @@ void loop()
         Execute_Searching();
         break;
     case Process_ObjectFound:
-       // State = Process_Collect;
+        Serial.println("objekt gefunden");
+        // State = Process_Collect;
         break;
    /* case Process_Collect:
         ExectueCollect();

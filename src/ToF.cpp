@@ -59,12 +59,29 @@ void ToF::Reading()
     {
         Sensoren[i]->rangingTest(Table_Measure[i], false);
     }
+    index = index % 4;
+    Serial.print("index:");
+    Serial.println(index);
     for (int i = 0; i < 4; i++)
     {
-        Table_Measure_Data[i] = Table_Measure[i]->RangeMilliMeter;
-      //  Serial.println("Übergabe an Array:");
+             Table_Measure_Data[i][index] = Table_Measure[i]->RangeMilliMeter;
+           
+        //  Serial.println("Übergabe an Array:");
         //Serial.println(Table_Measure_Data[i]);
     }
+    index++;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int k = 0; k < 4; k++)
+        {
+            summ += Table_Measure_Data[i][k];
+         /*   Serial.print("Summ:");
+            Serial.println(summ);
+*/        }
+        Average_Measure[i] = summ / 4;
+        summ = 0;
+    }
+    
 }
 
 bool ToF::ErrorState()
@@ -93,7 +110,7 @@ void ToF::NotifyObserver()
 {
     for (int i = 0; i < 2; i++)
     {
-        Observers[i]->update(Table_Measure_Data);
+        Observers[i]->update(Average_Measure);
     }
     
 }

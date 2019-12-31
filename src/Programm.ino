@@ -30,8 +30,10 @@ void loop()
     Sensors.NotifyObserver();
     Serial.println(Round.activeState());
     Serial.print("Sensor:");
-    Serial.println(Sensors.Table_Measure_Data[2]);
-    
+    Serial.println(Sensors.Average_Measure[0]+7);
+    Serial.print("HR:");
+    Serial.println(Sensors.Average_Measure[1]);
+
     switch (State)
     {
     case Process_Waiting:

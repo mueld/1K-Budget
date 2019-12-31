@@ -25,6 +25,7 @@ class FirstRound : public ToF_Interface
 {
 private:
     FirstRound_State State = FirstRound_Start;
+    FirstRound_State OldState;
     DrivesController *DriveController;
     ToF *Sensor;
     IModuleState *IModuleState_;
@@ -32,6 +33,7 @@ private:
     Turn_State State_turn = Verify;
     int Turns = 0;
     int Sensor_Data[4];
+    unsigned int starttime = 0;
 
 public:
     void ExecuteStateMachine();

@@ -43,10 +43,14 @@ private:
     VL53L0X_RangingMeasurementData_t measureHR;
     VL53L0X_RangingMeasurementData_t measureFront;
     VL53L0X_RangingMeasurementData_t measureLEFT;
-    //VL53L0X_RangingMeasurementData_t *Table_Measure[4] = {&measureVR, &measureHR, &measureFront, &measureLEFT};
-public:
     VL53L0X_RangingMeasurementData_t *Table_Measure[4] = {&measureVR, &measureHR, &measureFront, &measureLEFT};
-    int Table_Measure_Data[4];
+    int index = 0;
+
+public:
+    //VL53L0X_RangingMeasurementData_t *Table_Measure[4] = {&measureVR, &measureHR, &measureFront, &measureLEFT};
+    int Table_Measure_Data[4][4];
+    int Average_Measure[4];
+    int summ = 0;
     int Cube_Value;
     void Setup();
     void Reading();

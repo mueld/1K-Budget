@@ -25,19 +25,20 @@ private:
     char SSID[8] = "ZbW-IoT";
     char PWD[7] = "zbwzbw";
     String Response;
+    byte RXBuffer[2];
+    int rxindex = 0;
     HttpClient *Client_;
     int WifiState = WL_IDLE_STATUS;
-    Errorhandler *Errors[2];
     int SendState;
     int Cubes;
     String Send;
     bool Start;
 
 public:
-    bool ReadStart();
+    void Reading();
     void sending();
     int ActiveState();
-    void Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, ToF *sensors, DrivesController *Controller);
+    void Setup(HttpClient *Client_);
     void Summery(const Processstate SendState, const int Cubes);
 };
 #endif

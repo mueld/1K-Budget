@@ -15,13 +15,11 @@ void Webserver::sending()
        
      
 }
-void Webserver::Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, ToF *sensors, DrivesController *Controller)
+void Webserver::Setup(HttpClient *Client_)
 {
-    this->SendState = (int)SendState;
-    this->Cubes = Cubes;
+
     this->Client_ = Client_;
-    Errors[0] = sensors;
-    Errors[1] = Controller;
+
     while (WifiState != WL_CONNECTED)
     {
         WifiState = WiFi.begin("ZbW-IoT", "zbwzbw");
@@ -30,7 +28,7 @@ void Webserver::Setup(Processstate &SendState, int &Cubes, HttpClient *Client_, 
     Serial.println("Connect to WiFi");
 
 }
-void Webserver::Summery(const Processstate SendState, const int Cubes)
+void Webserver::Summery(const Processstate &SendState, const int &Cubes)
 {
     String send_[4] = {"http://192.168.1.112/save_data.php?State=","","&Cubes=",""};
     send_[1] = String(SendState);
@@ -40,11 +38,12 @@ void Webserver::Summery(const Processstate SendState, const int Cubes)
          Send +=send_[i];
     }
 }
-bool Webserver::ReadStart()
+void Webserver::Readding()
 {
-    if(Response == "1")
+    while (Serial1.available() > 0 && rxindex < sizeof(RXBuffer))
     {
-        return true;
+        RXBuffer[rxindex] = Serial1.read();
+        rxindex++;
     }
-    return false;
+
 }

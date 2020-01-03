@@ -3,6 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
+                "C:\\Users\\domin\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\**",
+                "C:\\Users\\domin\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\samd\\1.8.4\\**",
                 "C:\\Program Files (x86)\\Arduino\\tools\\**",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\**",
@@ -16,7 +18,7 @@
             "intelliSenseMode": "msvc-x64",
             "compilerArgs": [],
             "forcedInclude": [
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
+                "C:\\Users\\domin\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\samd\\1.8.4\\cores\\arduino\\Arduino.h"
             ]
         }
     ],

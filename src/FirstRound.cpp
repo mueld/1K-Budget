@@ -30,9 +30,9 @@ void FirstRound::ExecuteStateMachine()
         {
            Align_->Execute(50); 
         }
-        else
+        else 
         {
-    Align_->Execute(28);
+            Align_->Execute(28);
         }
 
         if (Align_->ActiveState() == Align_Idle)

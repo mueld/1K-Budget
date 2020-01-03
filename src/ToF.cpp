@@ -60,8 +60,6 @@ void ToF::Reading()
         Sensoren[i]->rangingTest(Table_Measure[i], false);
     }
     index = index % 4;
-    Serial.print("index:");
-    Serial.println(index);
     for (int i = 0; i < 4; i++)
     {
              Table_Measure_Data[i][index] = Table_Measure[i]->RangeMilliMeter;

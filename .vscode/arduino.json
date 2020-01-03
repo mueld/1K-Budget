@@ -1,5 +1,6 @@
 {
-    "board": "arduino:samd:mkr1000",
+    "board": "arduino:avr:mega",
     "sketch": "src\\Programm.ino",
-    "port": "COM8"
+    "port": "COM8",
+    "configuration": "cpu=atmega2560"
 }

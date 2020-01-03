@@ -18,7 +18,7 @@
             "intelliSenseMode": "msvc-x64",
             "compilerArgs": [],
             "forcedInclude": [
-                "C:\\Users\\domin\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\samd\\1.8.4\\cores\\arduino\\Arduino.h"
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
             ]
         }
     ],

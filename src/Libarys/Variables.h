@@ -1,16 +1,26 @@
 #include "../Parking.h"
-#include "../Webserver.h"
-#include <ArduinoHttpClient.h>
+
+
 #ifndef Variables_h
 #define Variables_h
 #define DEBUG
 
-/*
-char serverAddress[] = "192.168.1.125";
-int port = 80;
+enum Processstate
+{
+    Process_Waiting = 0,
+    Process_Searching = 2,
+    Process_ObjectFound = 3,
+    Process_Collect = 4,
+    Process_CollectedCube = 5,
+    Process_Unload = 7,
+    Process_Parking = 6,
+    Process_UnloadedCubes = 8,
+    Process_FirstRound = 1,
+    Process_Idle = 10,
+    Process_Error = 11,
+    Process_Finish = 9
+};
 
-WiFiClient wifi;
-HttpClient client = HttpClient(wifi, serverAddress, port);*/
 ToF Sensors;
 FirstRound Round;
 Pixy2 Pixyinstance;
@@ -20,7 +30,7 @@ DrivesController DrivesControllerInstance;
 Unload UnloadInstance;
 Parking ParkingInstance;*/
 Align AlignInstance;
-//Webserver WsInstance;
+
 
 Processstate State = Process_FirstRound;
 Processstate OldState;

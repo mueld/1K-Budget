@@ -45,13 +45,11 @@ private:
     VL53L0X_RangingMeasurementData_t measureLEFT;
     VL53L0X_RangingMeasurementData_t *Table_Measure[4] = {&measureVR, &measureHR, &measureFront, &measureLEFT};
     int index = 0;
-
-public:
-    //VL53L0X_RangingMeasurementData_t *Table_Measure[4] = {&measureVR, &measureHR, &measureFront, &measureLEFT};
     int Table_Measure_Data[4][4];
-    int Average_Measure[4];
+    
     int summ = 0;
     int Cube_Value;
+public:
     void Setup();
     void Reading();
     void InitToF();
@@ -59,6 +57,7 @@ public:
     String Error_Message();
     void Register(ToF_Interface *Ob);
     void NotifyObserver();
+    int Average_Measure[4];
 };
 
 #endif

@@ -1,9 +1,8 @@
 #include "Unload.h"
 
-void Unload::Setup(DrivesController *DriveController, ToF *Sensoren)
+void Unload::Setup(DrivesController *DriveController)
 {
     Controller = DriveController;
-    Sensors = Sensoren;
 }
 
 void Unload::ExecuteUnload()
@@ -12,9 +11,6 @@ void Unload::ExecuteUnload()
 
     switch (State)
     {
-    case Unload_MoveToPosition:
-        
-        break;
 
     case Unload_ContainerInPosition:
         break;

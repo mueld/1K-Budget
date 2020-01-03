@@ -12,14 +12,15 @@ void setup()
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance, &AlignInstance);
     AlignInstance.Setup(&DrivesControllerInstance);
-    CollectInstance.Setup(&Sensors, &DrivesControllerInstance);
-    UnloadInstance.Setup(&DrivesControllerInstance, &Sensors);
+    CollectInstance.Setup(&DrivesControllerInstance);
+    UnloadInstance.Setup(&DrivesControllerInstance);
     ParkingInstance.Setup(&DrivesControllerInstance, &Pixyinstance, &AlignInstance);
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
     Sensors.Register(&AlignInstance);
     Sensors.Register(&Round);
     Sensors.Register(&ParkingInstance);
+    Sensors.Register(&CollectInstance);
     //SendDebugMessage("Setup finished");
 }
 
@@ -37,12 +38,7 @@ void loop()
     switch (State)
     {
     case Process_Waiting:
-   /*     if (WsInstance.ReadStart())
-        {
-            State = Process_FirstRound;
-            Cubes = 0;
-        }
-     */     
+ 
     break;
 
     case Process_FirstRound:

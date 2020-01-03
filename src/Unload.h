@@ -14,10 +14,9 @@ class Unload: public IModuleState
     private:
     Unload_State State;
     DrivesController *Controller;
-    ToF *Sensors;
 
 public:
-    void Setup(DrivesController *DriveController, ToF *Sensoren);
+    void Setup(DrivesController *DriveController);
     void ExecuteUnload();
     int ActiveState();
 };

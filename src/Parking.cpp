@@ -1,12 +1,10 @@
 #include "Parking.h"
 #include "Unload.h"
 
-void Parking::Setup(DrivesController *DriveController, Objectdetection *objectdetection, ToF *Sensors, Pixy2 *pixy, Align *align)
+void Parking::Setup(DrivesController *DriveController, Pixy2 *pixy, Align *align)
 {
     Controller = DriveController;
-    Detection = objectdetection;
     this->align = align;
-    Sensor = Sensors;
     camera = pixy;
 }
 
@@ -30,7 +28,7 @@ void Parking::ExecuteParking()
         }
         break;
     case Parking_GotoWall:
-        if(Sensor->Table_Measure_Data[2] >10)
+        if(Sensor_Data[2] >10)
         {
             Controller->MoveForward(100);
         }
@@ -53,4 +51,14 @@ void Parking::ExecuteParking()
 int Parking::ActiveState()
 {
     return (int)State;
+}
+void Parking::update(int Table[4])
+{
+    for (int i = 0; i < 4; i++)
+    {
+        if (Table[i] != 8190)
+        {
+            Sensor_Data[i] = Table[i];
+        }
+    }
 }

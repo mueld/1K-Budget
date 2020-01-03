@@ -26,9 +26,9 @@ FirstRound Round;
 Pixy2 Pixyinstance;
 Objectdetection ObjectdetectionInstance;
 DrivesController DrivesControllerInstance;
-/* Collect CollectInstance;
+Collect CollectInstance;
 Unload UnloadInstance;
-Parking ParkingInstance;*/
+Parking ParkingInstance;
 Align AlignInstance;
 
 

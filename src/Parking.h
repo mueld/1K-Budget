@@ -10,20 +10,20 @@ enum Parking_State
     Parking_Idle
 };
 
-class Parking: public IModuleState
+class Parking : public ToF_Interface
 {
 private:
     Parking_State State;
     DrivesController *Controller;
-    Objectdetection *Detection;
-    ToF *Sensor;
     Pixy2 *camera;
     Align *align;
+    int Sensor_Data[4];
 
 public:
-    void Setup(DrivesController *DriveController, Objectdetection *objectdetection, ToF *Sensors, Pixy2 *pixy, Align *align);
+    void Setup(DrivesController *DriveController, Pixy2 *pixy, Align *align);
     void ExecuteParking();
     int ActiveState();
+    void update(int Table[4]);
 };
 
 

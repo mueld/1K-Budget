@@ -106,7 +106,7 @@ void ToF::Register(ToF_Interface *O)
 }
 void ToF::NotifyObserver()
 {
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 4; i++)
     {
         Observers[i]->update(Average_Measure);
     }

@@ -42,7 +42,7 @@ void Objectdetection::ExecuteStateMachine()
                 {
                     if (Camera->ccc.blocks[i].m_x >= 200)
                     {
-                        Drivecontroller->TurnRight(70);
+                        Drivecontroller->TurnRight(50);
                     }
                     else if (Camera->ccc.blocks[i].m_x >= 160)
                     {
@@ -59,7 +59,7 @@ void Objectdetection::ExecuteStateMachine()
         }
         else
         {
-            Drivecontroller->TurnRight(100);
+            Drivecontroller->TurnRight(70);
         }
         break;
 

@@ -70,14 +70,14 @@ void Execute_Searching()
     ObjectdetectionInstance.ExecuteStateMachine();
     if (ObjectdetectionInstance.ActiveState() == Objectstate_found)
     {
-        State = Process_Collect;
+        State = Process_ObjectFound;
     }
 }
-/*void Execute_Idle()
+void Execute_Idle()
 {
-     if (StartButton == true)
+     if (MKR100Instance.Read() == true)
     {
-        State = Process_Start;
+        State = Process_FirstRound;
     }
     if (Round.activeState() != FirstRound_Finish)
     {
@@ -92,7 +92,7 @@ void Execute_Searching()
         State = Process_Searching;
     }
 }
-void ExectueCollect()
+void ExecuteCollect()
 {
     if (CollectInstance.CollectThatShit())
     {
@@ -113,5 +113,5 @@ void ExectueParking()
          State = Process_Unload;
     }
 }
-*/
+
 #endif

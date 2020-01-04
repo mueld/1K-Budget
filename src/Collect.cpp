@@ -11,8 +11,9 @@ bool Collect::CollectThatShit()
     switch (State)
     {
     case MovetoPosition:
-        if (Sensor_Data[3] >= 5)
+        if (Sensor_Data[2] >= 50)
         {
+            Serial.println("Fahre auf würfel zu");
             Controller->MoveForward(75);
         }
         else
@@ -48,10 +49,7 @@ bool Collect::CollectThatShit()
     }
     return result;
 }
-int Collect::ActiveState()
-{
-    return State;
-}
+
 void Collect::update(int Table[4])
 {
     for (int i = 0; i < 4; i++)

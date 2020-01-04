@@ -11,18 +11,18 @@ enum State_Collect
     MovingHome
 };
 
-class Collect: public IModuleState , public ToF_Interface
+class Collect: public ToF_Interface
 {
     private:
-        State_Collect State;
+        State_Collect State = MovetoPosition;
         DrivesController *Controller;
-        int Sensor_Data[4];
+        
 
     public:
         void Setup(DrivesController *DriveController);
         bool CollectThatShit();
-        int ActiveState();
         void update(int Table[4]);
+        int Sensor_Data[4];
 };
 
 #endif

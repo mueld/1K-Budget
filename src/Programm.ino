@@ -7,7 +7,7 @@ void setup()
         pinMode(i, OUTPUT);
     }
     Serial.begin(115200);
-    Serial1.begin(9600);
+    //Serial1.begin(9600);
     Sensors.Setup();
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
@@ -20,8 +20,9 @@ void setup()
     attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
     Sensors.Register(&AlignInstance);
     Sensors.Register(&Round);
-    Sensors.Register(&ParkingInstance);
     Sensors.Register(&CollectInstance);
+    Sensors.Register(&ParkingInstance);
+    
     //SendDebugMessage("Setup finished");
 }
 
@@ -57,11 +58,14 @@ void loop()
         break;
     case Process_ObjectFound:
         Serial.println("objekt gefunden");
-        // State = Process_Collect;
+        State = Process_Collect;
         break;
-   /* case Process_Collect:
-        ExectueCollect();
+    case Process_Collect:
+        Serial.print("Sensor Front:");
+        Serial.println(CollectInstance.Sensor_Data[2]);
+        ExecuteCollect();
         break;
+        /*
     case Process_CollectedCube:
         State = Process_Idle;
         break;
@@ -75,5 +79,5 @@ void loop()
         ExectueParking();
         break;*/
     }
-    MKR100Instance.SendData(State, Cubes);
+   // MKR100Instance.SendData(State, Cubes);
 }

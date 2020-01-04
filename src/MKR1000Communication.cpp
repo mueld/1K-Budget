@@ -11,7 +11,7 @@ bool MKR1000Communication::Read()
     bool result = false;
     if(Serial1.available() == 1)
     {
-        if(Serial.read() == "1")
+        if(Serial.read() == '1')
         {
             result = true;
         }

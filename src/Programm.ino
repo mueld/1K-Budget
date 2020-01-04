@@ -28,14 +28,19 @@ void setup()
 
 
 void loop()
-{   Sensors.Reading();
+{
+    Sensors.Reading();
     Sensors.NotifyObserver();
     
 
     switch (State)
     {
     case Process_Waiting:
- 
+        if (MKR100Instance.Read())
+        {
+            State = Process_FirstRound;
+        }
+        
     break;
 
     case Process_FirstRound:
@@ -70,4 +75,5 @@ void loop()
         ExectueParking();
         break;*/
     }
+    MKR100Instance.SendData(State, Cubes);
 }

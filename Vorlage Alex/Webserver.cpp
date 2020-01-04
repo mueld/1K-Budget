@@ -1,4 +1,4 @@
-#include "Parking.h"
+
 #include <WiFi.h>
 #include <ArduinoHttpClient.h>
 #include "Webserver.h"
@@ -12,8 +12,7 @@ void Webserver::sending()
         {
             Response = Client_->responseBody();
         }
-       
-     
+        Serial.println(Response);
 }
 void Webserver::Setup(HttpClient *Client_)
 {
@@ -22,28 +21,27 @@ void Webserver::Setup(HttpClient *Client_)
 
     while (WifiState != WL_CONNECTED)
     {
-        WifiState = WiFi.begin("ZbW-IoT", "zbwzbw");
+        WifiState = WiFi.begin("Mueller", "W17SaX98-1998");
         delay(10000);
     }
     Serial.println("Connect to WiFi");
 
 }
-void Webserver::Summery(const Processstate &SendState, const int &Cubes)
+void Webserver::Summery()
 {
-    String send_[4] = {"http://192.168.1.112/save_data.php?State=","","&Cubes=",""};
-    send_[1] = String(SendState);
-    send_[3] = String(Cubes);
+    String send_[4] = {"http://192.168.1.125/save_data.php?State=","","&Cubes=",""};
+    send_[1] = String(RXBuffer[STATE_INDEX]);
+    send_[3] = String(RXBuffer[CUBES_INDEX]);
     for (int i = 0; i < 4; i++)
     {
          Send +=send_[i];
     }
 }
-void Webserver::Readding()
+void Webserver::Reading_Serial()
 {
     while (Serial1.available() > 0 && rxindex < sizeof(RXBuffer))
     {
         RXBuffer[rxindex] = Serial1.read();
         rxindex++;
     }
-
 }

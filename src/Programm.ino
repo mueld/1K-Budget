@@ -7,6 +7,7 @@ void setup()
         pinMode(i, OUTPUT);
     }
     Serial.begin(115200);
+    Serial1.begin(9600);
     Sensors.Setup();
     DrivesControllerInstance.Setup();
     ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);

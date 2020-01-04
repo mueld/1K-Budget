@@ -1,4 +1,4 @@
-#include "../Parking.h"
+#include "../MKR1000Communication.h"
 
 
 #ifndef Variables_h
@@ -30,7 +30,7 @@ Collect CollectInstance;
 Unload UnloadInstance;
 Parking ParkingInstance;
 Align AlignInstance;
-
+MKR1000Communication MKR100Instance;
 
 Processstate State = Process_Searching;
 Processstate OldState;

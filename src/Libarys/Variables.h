@@ -32,7 +32,7 @@ Parking ParkingInstance;
 Align AlignInstance;
 
 
-Processstate State = Process_FirstRound;
+Processstate State = Process_Searching;
 Processstate OldState;
 int Cubes = 6;
 

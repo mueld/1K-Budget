@@ -29,11 +29,7 @@ void setup()
 void loop()
 {   Sensors.Reading();
     Sensors.NotifyObserver();
-    Serial.println(Round.activeState());
-    Serial.print("Sensor:");
-    Serial.println(Sensors.Average_Measure[0]);
-    Serial.print("HR:");
-    Serial.println(Sensors.Average_Measure[1]);
+    
 
     switch (State)
     {

@@ -17,9 +17,9 @@ enum Direction_Drive
 
 enum Position_Axis
 {
-    Position_StartingPositionStroke,
+    Position_StrokeMovingHome,
     Position_Stroke,
-    Position_StartingPositionRotate,
+    Position_RotateMovingHome,
     Position_Rotate
 };
 
@@ -58,7 +58,7 @@ private:
             {2, 2, 2, 2},
             {1, 1, 1, 1},
             {2, 2, 1, 1},
-            {1, 1, 2, 1}};
+            {1, 1, 2, 2}};
 
 
 public:

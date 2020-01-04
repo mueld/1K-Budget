@@ -7,7 +7,8 @@ enum State_Collect
 {
     MovetoPosition,
     Stroke,
-    Finish
+    Verify_Cube,
+    MovingHome
 };
 
 class Collect: public IModuleState , public ToF_Interface

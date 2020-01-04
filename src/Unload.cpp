@@ -7,21 +7,30 @@ void Unload::Setup(DrivesController *DriveController)
 
 void Unload::ExecuteUnload()
 {
-
-
     switch (State)
     {
 
-    case Unload_ContainerInPosition:
+    case Unload_Start:
+    if (Controller->setPosition(Motor_Rotate, Position_Rotate))
+    {
+        State = Unload_MovingHome;
+        starttime = millis();
+    }
         break;
 
-    case Unload_ConatainerStartPostion:
-
-
+    case Unload_MovingHome:
+    if (millis()-starttime > 10000)
+    {
+        if (Controller->setPosition(Motor_Rotate, Position_RotateMovingHome))
+        {
+            State = Unload_Idle;
+        }
+        
+    }
         break;
 
     case Unload_Idle:
-        State = Unload_MoveToPosition;
+        State = Unload_Start;
         break;
     }
 

@@ -25,15 +25,26 @@ bool Collect::CollectThatShit()
     case Stroke:
         if (Controller->setPosition(Motor_Linear, Position_Stroke))
         {
-            State = Finish;
-            result = true;
-            return result;
+            State = MovingHome;
         }
-    break;
+    case MovingHome:
+        if (Controller->setPosition(Motor_Linear, Position_StrokeMovingHome))
+        {
+            State = Verify_Cube;
+        }
+        break;
 
-    case Finish:
+    case Verify_Cube:
+        /*if(Sensor_Data[4] < 50)
+    {
         State = MovetoPosition;
-    break;
+        result = true;
+    }
+    else{
+        State = Stroke;
+    }
+        */
+        break;
     }
     return result;
 }

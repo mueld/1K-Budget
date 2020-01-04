@@ -21,19 +21,25 @@ void FirstRound::ExecuteStateMachine()
     case FirstRound_Start:
         starttime = millis();
         DriveController->MoveForward(70);
-        State = FirstRound_Align;
+        State = FirstRound_Wait;
         OldState = FirstRound_Start;
         break;
-
-    case FirstRound_Align:
-        if(millis()-starttime > 2500 && OldState==FirstRound_Start)
+    case FirstRound_Wait:
+        if (millis() - starttime > 2500)
         {
-           Align_->Execute(50); 
+            DriveController->Stay();
+            State = FirstRound_Align;
         }
-        else 
-        {
-            Align_->Execute(28);
-        }
+        break;
+        case FirstRound_Align:
+            if (OldState == FirstRound_Start)
+            {
+                Align_->Execute(50);
+            }
+            else
+            {
+                Align_->Execute(28);
+            }
 
         if (Align_->ActiveState() == Align_Idle)
         {

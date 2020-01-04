@@ -31,7 +31,7 @@ void loop()
     Sensors.NotifyObserver();
     Serial.println(Round.activeState());
     Serial.print("Sensor:");
-    Serial.println(Sensors.Average_Measure[0]+7);
+    Serial.println(Sensors.Average_Measure[0]);
     Serial.print("HR:");
     Serial.println(Sensors.Average_Measure[1]);
 
@@ -42,6 +42,7 @@ void loop()
     break;
 
     case Process_FirstRound:
+       // DrivesControllerInstance.MoveLeft(100);
         Execute_FirstRound();
         break;
 

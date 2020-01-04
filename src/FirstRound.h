@@ -8,6 +8,7 @@
 enum FirstRound_State
 {
     FirstRound_Start,
+    FirstRound_Wait,
     FirstRound_Move,
     FirstRound_Turn,
     FirstRound_Align,

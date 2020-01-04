@@ -39,6 +39,7 @@ void Webserver::Summery()
 }
 void Webserver::Reading_Serial()
 {
+    rxindex == 0;
     while (Serial1.available() > 0 && rxindex < sizeof(RXBuffer))
     {
         RXBuffer[rxindex] = Serial1.read();

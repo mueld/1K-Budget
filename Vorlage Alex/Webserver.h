@@ -21,7 +21,7 @@ private:
     bool Start;
 
 public:
-    void Reading();
+    void Reading_Serial();
     void sending();
     void Setup(HttpClient *Client_);
     void Summery(const int &State, const int &Cubes);

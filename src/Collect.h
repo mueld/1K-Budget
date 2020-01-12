@@ -16,13 +16,13 @@ class Collect: public ToF_Interface
     private:
         State_Collect State = MovetoPosition;
         DrivesController *Controller;
-        
+        int Sensor_Data[4];
 
     public:
         void Setup(DrivesController *DriveController);
         bool CollectThatShit();
         void update(int Table[4]);
-        int Sensor_Data[4];
+        
 };
 
 #endif

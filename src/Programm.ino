@@ -6,11 +6,12 @@ void setup()
     {
         pinMode(i, OUTPUT);
     }
+    pinMode(20, INPUT_PULLUP);
     Serial.begin(115200);
     //Serial1.begin(9600);
-    Sensors.Setup();
+   // Sensors.Setup();
     DrivesControllerInstance.Setup();
-    ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
+   /* ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance, &AlignInstance);
     AlignInstance.Setup(&DrivesControllerInstance);
     CollectInstance.Setup(&DrivesControllerInstance);
@@ -23,17 +24,17 @@ void setup()
     Sensors.Register(&CollectInstance);
     Sensors.Register(&ParkingInstance);
     
-    //SendDebugMessage("Setup finished");
+    //SendDebugMessage("Setup finished");*/
 }
 
 
 
 void loop()
 {
-    Sensors.Reading();
-    Sensors.NotifyObserver();
-    
-
+    DrivesControllerInstance.IBNAxis(Motor_Linear);
+    // Sensors.Reading();
+    //Sensors.NotifyObserver();
+    /*
     switch (State)
     {
     case Process_Waiting:
@@ -64,8 +65,8 @@ void loop()
         Serial.print("Sensor Front:");
         Serial.println(CollectInstance.Sensor_Data[2]);
         ExecuteCollect();
-        break;
-        /*
+        break;*/
+    /*
     case Process_CollectedCube:
         State = Process_Idle;
         break;
@@ -78,6 +79,6 @@ void loop()
     case Process_Parking:
         ExectueParking();
         break;*/
-    }
+    //}
    // MKR100Instance.SendData(State, Cubes);
 }

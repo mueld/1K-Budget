@@ -74,7 +74,7 @@ void DrivesController::Stay()
     State = Controller_Idle;
     for (int i = 0; i < 4; i++)
     {
-        Drives[i]->startMovement(1, 0);
+        Drives[i]->MovementMotor(1, 0);
     }
 }
 
@@ -135,4 +135,30 @@ String DrivesController::Error_Message()
     {
         return Rotate.Error_Message();
     }
+}
+void DrivesController::IBNAxis(Motor motor)
+{
+     if (!digitalRead(20) == true)
+    {
+        switch (motor)
+        {
+        case Motor_Linear:
+            Linear.MovementMotor(1, 50);
+            break;
+        
+        case Motor_Rotate:
+            Rotate.MovementMotor(1, 50);
+            break;
+        }  
+    }
+    else
+    {
+        Linear.MovementMotor(1, 0);
+        Rotate.MovementMotor(1, 0);
+    }
+    if (!digitalRead(19) == true)
+    {
+        Encoder[0] = 0;
+     }
+     
 }

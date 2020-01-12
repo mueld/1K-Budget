@@ -57,6 +57,7 @@ public:
     String Error_Message();
     bool ErrorState();
     void PrintEncoder();
+    void IBNAxis(Motor motor);
 };
 
 #endif

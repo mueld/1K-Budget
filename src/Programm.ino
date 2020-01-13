@@ -25,13 +25,15 @@ void setup()
     Sensors.Register(&ParkingInstance);
     
     //SendDebugMessage("Setup finished");*/
+    DrivesControllerInstance.ReadEEPROM();
 }
 
 
 
 void loop()
 {
-    DrivesControllerInstance.IBNAxis(Motor_Linear);
+    DrivesControllerInstance.MoveLeft(150);
+    //DrivesControllerInstance.IBNAxis(Motor_Linear);
     // Sensors.Reading();
     //Sensors.NotifyObserver();
     /*
@@ -81,4 +83,5 @@ void loop()
         break;*/
     //}
    // MKR100Instance.SendData(State, Cubes);
+    DrivesControllerInstance.UpdateEEPROM();
 }

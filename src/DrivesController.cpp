@@ -162,3 +162,14 @@ void DrivesController::IBNAxis(Motor motor)
      }
      
 }
+void DrivesController::ReadEEPROM()
+{
+    Encoder[0]=EEPROM.read(0);
+    Encoder[1] = EEPROM.read(1);
+
+}
+void DrivesController::UpdateEEPROM()
+{
+    EEPROM.update(0, Encoder[0]);
+    EEPROM.update(1, Encoder[1]);
+}

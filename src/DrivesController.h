@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
 #include "Drive.h"
-
+#include <EEPROM.h>
 #ifndef DrivesController_h
 #define DrivesController_h
 #define EncoderPinA_L 2
@@ -58,6 +58,8 @@ public:
     bool ErrorState();
     void PrintEncoder();
     void IBNAxis(Motor motor);
+    void ReadEEPROM();
+    void UpdateEEPROM();
 };
 
 #endif

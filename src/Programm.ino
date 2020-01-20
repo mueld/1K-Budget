@@ -32,8 +32,8 @@ void setup()
 
 void loop()
 {
-    DrivesControllerInstance.MoveLeft(150);
-    //DrivesControllerInstance.IBNAxis(Motor_Linear);
+    
+    DrivesControllerInstance.IBNAxis(Motor_Linear);
     // Sensors.Reading();
     //Sensors.NotifyObserver();
     /*

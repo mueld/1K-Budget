@@ -103,8 +103,8 @@ bool DrivesController::setPosition(Motor Motor, Position_Axis Position)
 void DrivesController::Setup()
 {
     Serial.println("bin im setup");
-    AFMS1 = Adafruit_MotorShield(0x60);
-   AFMS2 = Adafruit_MotorShield(0x61);
+ AFMS1 = Adafruit_MotorShield(0x50);
+   AFMS2 = Adafruit_MotorShield(0x51);
     VR.Setup(&AFMS1, 1, Location_VR);
     VL.Setup(&AFMS1, 2, Location_VL);
     HR.Setup(&AFMS1, 3, Location_HR);
@@ -112,7 +112,7 @@ void DrivesController::Setup()
    Linear.Setup(&AFMS2, 1, &Encoder[0]);
     Rotate.Setup(&AFMS2, 2, &Encoder[1]);
     AFMS1.begin();
-   AFMS2.begin();
+    AFMS2.begin();
 }
 void DrivesController::PrintEncoder()
 {
@@ -143,11 +143,11 @@ void DrivesController::IBNAxis(Motor motor)
         switch (motor)
         {
         case Motor_Linear:
-            Linear.MovementMotor(1, 50);
+            Linear.MovementMotor(1, 100);
             break;
         
         case Motor_Rotate:
-            Rotate.MovementMotor(1, 50);
+            Rotate.MovementMotor(1, 100);
             break;
         }  
     }

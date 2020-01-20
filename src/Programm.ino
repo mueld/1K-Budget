@@ -2,38 +2,43 @@
 
 void setup()
 {
-    for (int i = 3; i < 8; i++)
+    for (int i =7 ; i < 8; i++)
     {
         pinMode(i, OUTPUT);
+    }
+    for (int i = 2; i < 6; i++)
+    {
+        pinMode(i, INPUT_PULLUP);
     }
     pinMode(20, INPUT_PULLUP);
     Serial.begin(115200);
     //Serial1.begin(9600);
    // Sensors.Setup();
     DrivesControllerInstance.Setup();
-   /* ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
+   /* /* ObjectdetectionInstance.Setup(&DrivesControllerInstance, &Pixyinstance);
     Round.Setup(&DrivesControllerInstance, &Sensors, &ObjectdetectionInstance, &AlignInstance);
     AlignInstance.Setup(&DrivesControllerInstance);
     CollectInstance.Setup(&DrivesControllerInstance);
     UnloadInstance.Setup(&DrivesControllerInstance);
-    ParkingInstance.Setup(&DrivesControllerInstance, &Pixyinstance, &AlignInstance);
+    ParkingInstance.Setup(&DrivesControllerInstance, &Pixyinstance, &AlignInstance); */
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
-    attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
+   /*  attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
     Sensors.Register(&AlignInstance);
     Sensors.Register(&Round);
     Sensors.Register(&CollectInstance);
-    Sensors.Register(&ParkingInstance);
+    Sensors.Register(&ParkingInstance); */
     
     //SendDebugMessage("Setup finished");*/
-    DrivesControllerInstance.ReadEEPROM();
+   // DrivesControllerInstance.ReadEEPROM();
 }
 
 
 
 void loop()
 {
-    
-    DrivesControllerInstance.IBNAxis(Motor_Linear);
+    DrivesControllerInstance.setPosition(Motor_Linear, Position_StrokeMovingHome);
+    //DrivesControllerInstance.PrintEncoder();
+    // DrivesControllerInstance.IBNAxis(Motor_Linear);
     // Sensors.Reading();
     //Sensors.NotifyObserver();
     /*
@@ -82,6 +87,6 @@ void loop()
         ExectueParking();
         break;*/
     //}
-   // MKR100Instance.SendData(State, Cubes);
+    // MKR100Instance.SendData(State, Cubes);
     DrivesControllerInstance.UpdateEEPROM();
 }

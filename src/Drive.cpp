@@ -40,20 +40,20 @@ bool Axis::SetPosition(Position_Axis position)
     {
         starttime = millis();
     }
-    if (*Encoder < Position[position] -100 )
+    if (*Encoder < Position[position] -10 )
     {
         Serial.println("Position:");
         Serial.println(Position[position]);
         Serial.println("Positioniere Forwärts");
-        MovementMotor(FORWARD, 100);
+        MovementMotor(FORWARD, 150);
     } 
 
-    else if (*Encoder > Position[position]+100)
+    else if (*Encoder > Position[position]+10)
     {
         Serial.println("Position:");
         Serial.println(Position[position]);
         Serial.println("Positioniere Rückwärts");
-        MovementMotor(BACKWARD, 100);
+        MovementMotor(BACKWARD, 150);
     } 
     else
     {

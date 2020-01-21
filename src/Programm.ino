@@ -29,17 +29,15 @@ void setup()
     Sensors.Register(&ParkingInstance);
      */
     //SendDebugMessage("Setup finished");*/
-   // DrivesControllerInstance.ReadEEPROM();
+   DrivesControllerInstance.ReadEEPROM();
 }
 
 
 
 void loop()
 {
-    //DrivesControllerInstance.setPosition(Motor_Linear, Position_StrokeMovingHome);
-    DrivesControllerInstance.MoveLeft(100);
-    DrivesControllerInstance.PrintEncoder(Motor_Linear);
-    DrivesControllerInstance.IBNAxis(Motor_Rotate);
+
+   DrivesControllerInstance.setPosition(Motor_Linear, Position_Stroke);
     // Sensors.Reading();
     //Sensors.NotifyObserver();
     /*

@@ -7,11 +7,11 @@ void DrivesController::ReadEncoderLinear()
 {
     if (digitalRead(EncoderPinB_L) == LOW)
     {
-        Encoder[0]++;
+        Encoder[0]--;
     }
     else
     {
-        Encoder[0]--;
+        Encoder[0]++;
     }
 }
 
@@ -136,7 +136,7 @@ String DrivesController::Error_Message()
         return Rotate.Error_Message();
     }
 }
-void DrivesController::IBNAxis(Motor motor)
+void DrivesController::IBNAxis(Motor motor, int direction)
 {
      if (digitalRead(6) ==  false)
     {
@@ -144,11 +144,11 @@ void DrivesController::IBNAxis(Motor motor)
         switch (motor)
         {
         case Motor_Linear:
-            Linear.MovementMotor(1, 100);
+            Linear.MovementMotor(direction, 255);
             break;
         
         case Motor_Rotate:
-            Rotate.MovementMotor(1, 100);
+            Rotate.MovementMotor(direction, 100);
             break;
         }  
     }
@@ -157,25 +157,9 @@ void DrivesController::IBNAxis(Motor motor)
         Linear.MovementMotor(1, 0);
         Rotate.MovementMotor(1, 0);
     }
-    if (digitalRead(7) == false)
-    {
-        Serial.println("Taster backward gedrüvkt");
-        switch (motor)
-        {
-        case Motor_Linear:
-            Linear.MovementMotor(2, 250);
-            break;
+    
 
-        case Motor_Rotate:
-            Rotate.MovementMotor(2, 250);
-            break;
-        }
-    }
-    else
-    {
-        Linear.MovementMotor(1, 0);
-        Rotate.MovementMotor(1, 0);
-    }
+
     if (digitalRead(5) == false)
     {
         Encoder[motor] = 0;
@@ -184,12 +168,27 @@ void DrivesController::IBNAxis(Motor motor)
 }
 void DrivesController::ReadEEPROM()
 {
-    Encoder[0]=EEPROM.read(0);
-    Encoder[1] = EEPROM.read(1);
-
+    byte *p = (byte*)&Encoder[0];
+    for (int i = 0; i < 4; i++)
+    {
+        *p++ =EEPROM.read(i);
+    }
+    
 }
 void DrivesController::UpdateEEPROM()
 {
-    EEPROM.update(0, Encoder[0]);
-    EEPROM.update(1, Encoder[1]);
+    if (millis()-activetime >10)
+    {
+        Serial.println("update EEPROM");
+        byte *p;
+    p = (byte *)&Encoder[0];
+
+    for (int i = 0; i < 4; i++)
+
+    {
+        
+        EEPROM.update(i, *p++);
+    }
+    activetime = millis();
+    }
 }

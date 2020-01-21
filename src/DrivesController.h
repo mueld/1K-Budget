@@ -36,9 +36,10 @@ private:
 
     Adafruit_MotorShield AFMS1;
     Adafruit_MotorShield AFMS2;
-    volatile int Encoder[2] = {0,0};
+    volatile int Encoder[2] = {12067,0};
 
     ControllerState State;
+    unsigned long activetime = 0;
     void MoveTheLadies(Direction_Drive Direction, int Velocity_Drives);
 
 public:
@@ -57,7 +58,7 @@ public:
     String Error_Message();
     bool ErrorState();
     void PrintEncoder(Motor motor);
-    void IBNAxis(Motor motor);
+    void IBNAxis(Motor motor, int direction);
     void ReadEEPROM();
     void UpdateEEPROM();
 };

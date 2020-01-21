@@ -103,8 +103,8 @@ bool DrivesController::setPosition(Motor Motor, Position_Axis Position)
 void DrivesController::Setup()
 {
     Serial.println("bin im setup");
- AFMS1 = Adafruit_MotorShield(0x50);
-   AFMS2 = Adafruit_MotorShield(0x51);
+ AFMS1 = Adafruit_MotorShield(0x60);
+   AFMS2 = Adafruit_MotorShield(0x61);
     VR.Setup(&AFMS1, 1, Location_VR);
     VL.Setup(&AFMS1, 2, Location_VL);
     HR.Setup(&AFMS1, 3, Location_HR);
@@ -114,9 +114,9 @@ void DrivesController::Setup()
     AFMS1.begin();
     AFMS2.begin();
 }
-void DrivesController::PrintEncoder()
+void DrivesController::PrintEncoder(Motor motor)
 {
-    Serial.println(Encoder[0]);
+    Serial.println(Encoder[motor]);
 }
 bool DrivesController::ErrorState()
 {
@@ -138,8 +138,9 @@ String DrivesController::Error_Message()
 }
 void DrivesController::IBNAxis(Motor motor)
 {
-     if (!digitalRead(20) == true)
+     if (digitalRead(6) ==  false)
     {
+        Serial.println("Taster FOrwad gedrüvkt");
         switch (motor)
         {
         case Motor_Linear:
@@ -156,9 +157,28 @@ void DrivesController::IBNAxis(Motor motor)
         Linear.MovementMotor(1, 0);
         Rotate.MovementMotor(1, 0);
     }
-    if (!digitalRead(19) == true)
+    if (digitalRead(7) == false)
     {
-        Encoder[0] = 0;
+        Serial.println("Taster backward gedrüvkt");
+        switch (motor)
+        {
+        case Motor_Linear:
+            Linear.MovementMotor(2, 250);
+            break;
+
+        case Motor_Rotate:
+            Rotate.MovementMotor(2, 250);
+            break;
+        }
+    }
+    else
+    {
+        Linear.MovementMotor(1, 0);
+        Rotate.MovementMotor(1, 0);
+    }
+    if (digitalRead(5) == false)
+    {
+        Encoder[motor] = 0;
      }
      
 }

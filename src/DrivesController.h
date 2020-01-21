@@ -7,7 +7,7 @@
 #define EncoderPinA_L 2
 #define EncoderPinB_L 4
 #define EncoderPinA_R 3
-#define EncoderPinB_R 5
+#define EncoderPinB_R 12
 
 enum Motor
 {
@@ -36,7 +36,7 @@ private:
 
     Adafruit_MotorShield AFMS1;
     Adafruit_MotorShield AFMS2;
-    volatile int Encoder[2] = {2000,0};
+    volatile int Encoder[2] = {0,0};
 
     ControllerState State;
     void MoveTheLadies(Direction_Drive Direction, int Velocity_Drives);
@@ -56,7 +56,7 @@ public:
     void ReadEncoderRotate();
     String Error_Message();
     bool ErrorState();
-    void PrintEncoder();
+    void PrintEncoder(Motor motor);
     void IBNAxis(Motor motor);
     void ReadEEPROM();
     void UpdateEEPROM();

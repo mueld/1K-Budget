@@ -2,15 +2,15 @@
 
 void setup()
 {
-    for (int i =7 ; i < 8; i++)
-    {
-        pinMode(i, OUTPUT);
-    }
-    for (int i = 2; i < 6; i++)
+//  for (int i =7 ; i < 8; i++)
+//     {
+//         pinMode(i, OUTPUT);
+//     }
+    for (int i = 0; i < 8; i++)
     {
         pinMode(i, INPUT_PULLUP);
     }
-    pinMode(20, INPUT_PULLUP);
+    pinMode(12, INPUT_PULLUP);
     Serial.begin(115200);
     //Serial1.begin(9600);
    // Sensors.Setup();
@@ -22,12 +22,12 @@ void setup()
     UnloadInstance.Setup(&DrivesControllerInstance);
     ParkingInstance.Setup(&DrivesControllerInstance, &Pixyinstance, &AlignInstance); */
     attachInterrupt(0, DrivesControllerEncoderLinear, FALLING);
-   /*  attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
-    Sensors.Register(&AlignInstance);
+    attachInterrupt(1, DrivesControllerEncoderRotate, FALLING);
+    /* Sensors.Register(&AlignInstance);
     Sensors.Register(&Round);
     Sensors.Register(&CollectInstance);
-    Sensors.Register(&ParkingInstance); */
-    
+    Sensors.Register(&ParkingInstance);
+     */
     //SendDebugMessage("Setup finished");*/
    // DrivesControllerInstance.ReadEEPROM();
 }
@@ -36,9 +36,10 @@ void setup()
 
 void loop()
 {
-    DrivesControllerInstance.setPosition(Motor_Linear, Position_StrokeMovingHome);
-    //DrivesControllerInstance.PrintEncoder();
-    // DrivesControllerInstance.IBNAxis(Motor_Linear);
+    //DrivesControllerInstance.setPosition(Motor_Linear, Position_StrokeMovingHome);
+    DrivesControllerInstance.MoveLeft(100);
+    DrivesControllerInstance.PrintEncoder(Motor_Linear);
+    DrivesControllerInstance.IBNAxis(Motor_Rotate);
     // Sensors.Reading();
     //Sensors.NotifyObserver();
     /*

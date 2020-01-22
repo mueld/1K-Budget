@@ -115,7 +115,7 @@ void FirstRound::Turn(int Distance)
         break;
     }
 }
-void FirstRound::update(int Table[4]) {
+void FirstRound::update(int Table[5]) {
     for (int i = 0; i < 4; i++)
     {
         if (Table[i] != 8190)

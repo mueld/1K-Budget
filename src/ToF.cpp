@@ -7,14 +7,14 @@
 void ToF::InitToF()
 {
     
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         digitalWrite(Pin[i], LOW);
     }
     
     delay(10);
     // all unreset
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         digitalWrite(Pin[i], HIGH);
     }
@@ -22,13 +22,14 @@ void ToF::InitToF()
     delay(10);
 
     // activating LOX1 and reseting LOX2
-    digitalWrite(3, HIGH);
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
-    digitalWrite(6, LOW);
+    digitalWrite(8, HIGH);
+    digitalWrite(9, LOW);
+    digitalWrite(10, LOW);
+    digitalWrite(11, LOW);
+    digitalWrite(12, LOW);
 
     // initing LOX1
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         digitalWrite(Pin[i], HIGH);
         delay(10);
@@ -55,7 +56,7 @@ void ToF::Setup()
 
 void ToF::Reading()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         Sensoren[i]->rangingTest(Table_Measure[i], false);
     }
@@ -68,7 +69,7 @@ void ToF::Reading()
         //Serial.println(Table_Measure_Data[i]);
     }
     index++;
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         for (int k = 0; k < 4; k++)
         {
@@ -84,7 +85,7 @@ void ToF::Reading()
 
 bool ToF::ErrorState()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         if (Sensoren[i]->Status != 0)
         {

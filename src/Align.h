@@ -14,7 +14,7 @@ class Align: public ToF_Interface, public IModuleState
     private:
         Align_State State = Align_Parallel;
         DrivesController *Controller;
-        int Sensor_Data[4];
+        int Sensor_Data[5];
 
     public:
         void Setup(DrivesController *Controller);

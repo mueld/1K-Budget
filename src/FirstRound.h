@@ -33,7 +33,7 @@ private:
     Align *Align_;
     Turn_State State_turn = Verify;
     int Turns = 0;
-    int Sensor_Data[4];
+    int Sensor_Data[5];
     unsigned int starttime = 0;
 
 public:
@@ -41,7 +41,7 @@ public:
     void Setup(DrivesController *Instance, ToF *ToFs, IModuleState *IModuleState_, Align *AlignInstance);
     void Turn(int Distance);
    void Print_State();
-   void update(int Table[4]);
+   void update(int Table[5]);
    FirstRound_State activeState();
 };
 

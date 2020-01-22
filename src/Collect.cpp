@@ -50,7 +50,7 @@ bool Collect::CollectThatShit()
     return result;
 }
 
-void Collect::update(int Table[4])
+void Collect::update(int Table[5])
 {
     for (int i = 0; i < 4; i++)
     {

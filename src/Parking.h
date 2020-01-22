@@ -17,13 +17,13 @@ private:
     DrivesController *Controller;
     Pixy2 *camera;
     Align *align;
-    int Sensor_Data[4];
+    int Sensor_Data[5];
 
 public:
     void Setup(DrivesController *DriveController, Pixy2 *pixy, Align *align);
     void ExecuteParking();
     int ActiveState();
-    void update(int Table[4]);
+    void update(int Table[5]);
 };
 
 

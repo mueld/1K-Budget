@@ -52,7 +52,7 @@ void Objectdetection::ExecuteStateMachine()
                     {
                         Drivecontroller->Stay();
                         FirstCubeFound = false;
-                        state = Objectstate_found;
+                        state = Objectstate_MovingForward;
                     }
                 }
             }
@@ -63,13 +63,27 @@ void Objectdetection::ExecuteStateMachine()
         }
         break;
 
-    case Objectstate_found:
+    case Objectstate_MovingForward:
 
-        state = Objectstate_Searching;
-        break;
+        for (int i = 0; i < Camera->ccc.numBlocks; i++)
+        {
+            if (Camera->ccc.blocks[i].m_index == index)
+            {
+                if (Camera->ccc.blocks[i].m_y != 190)
+                {
+                    Drivecontroller->MoveForward(100);
+                }
+                else
+                {
+                    Drivecontroller->Stay();
+                    state = Objectstate_found;
+                }
+                
+            }
+        }
+            break;
     }
 }
-
 void Objectdetection::FirstRound()
 {
     Camera->ccc.getBlocks();

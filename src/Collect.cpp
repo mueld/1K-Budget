@@ -52,7 +52,7 @@ bool Collect::CollectThatShit()
 
 void Collect::update(int Table[5])
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         if (Table[i] != 8190)
         {

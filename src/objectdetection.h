@@ -7,6 +7,7 @@
 enum Objectstate
 {
   Objectstate_Searching,
+  Objectstate_MovingForward,
   Objectstate_found,
   Objectstate_Idle,
   Objectstate_initialize,

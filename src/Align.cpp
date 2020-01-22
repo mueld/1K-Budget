@@ -50,7 +50,7 @@ void Align::Execute(int Distance)
 }
 void Align::update(int Table[])
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         Sensor_Data[i] = Table[i];
     }
@@ -58,7 +58,7 @@ void Align::update(int Table[])
 void Align::Print()
 {
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
     {
         Serial.println(Sensor_Data[i]);
     }

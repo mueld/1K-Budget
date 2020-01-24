@@ -16,12 +16,12 @@ void Align::Execute(int Distance)
     case Align_Distance:
         if (Sensor_Data[0] > Distance)
         {
-            Controller->MoveRight(70);
+            Controller->MoveRight(90);
         }
-        /*else if (Sensor_Data[0] < Distance)
+        else if (Sensor_Data[0] <  (Distance-10))
         {
-            Controller->MoveLeft(25);
-        }*/
+            Controller->MoveLeft(70);
+        }
         else
         {
             
@@ -48,7 +48,7 @@ void Align::Execute(int Distance)
         State = Align_Parallel;
     }
 }
-void Align::update(int Table[])
+void Align::update(int Table[5])
 {
     for (int i = 0; i < 5; i++)
     {

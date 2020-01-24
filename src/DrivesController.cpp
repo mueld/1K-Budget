@@ -179,7 +179,6 @@ void DrivesController::UpdateEEPROM()
 {
     if (millis()-activetime >10)
     {
-        Serial.println("update EEPROM");
         byte *p;
     p = (byte *)&Encoder[0];
 

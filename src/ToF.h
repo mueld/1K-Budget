@@ -30,7 +30,7 @@ class ToF : public Subject_Interface, public Errorhandler
 private:
     ToF_Interface *Observers[4];
     int Pin[5] = {8,9,10,11,12};
-    int Address[5] = {48, 49, 50, 51,52};
+    int Address[5] = {48, 49, 50, 51,53};
     Adafruit_VL53L0X VR = Adafruit_VL53L0X();
     Adafruit_VL53L0X HR = Adafruit_VL53L0X();
     Adafruit_VL53L0X Front = Adafruit_VL53L0X();

@@ -61,7 +61,7 @@ void ToF::Reading()
         Sensoren[i]->rangingTest(Table_Measure[i], false);
     }
     index = index % 4;
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
              Table_Measure_Data[i][index] = Table_Measure[i]->RangeMilliMeter;
            
@@ -107,6 +107,7 @@ void ToF::Register(ToF_Interface *O)
 }
 void ToF::NotifyObserver()
 {
+   
     for (int i = 0; i < 4; i++)
     {
         Observers[i]->update(Average_Measure);

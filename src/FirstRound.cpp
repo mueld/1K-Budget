@@ -20,7 +20,7 @@ void FirstRound::ExecuteStateMachine()
     {
     case FirstRound_Start:
         starttime = millis();
-        DriveController->MoveForward(70);
+        DriveController->MoveForward(100);
         State = FirstRound_Wait;
         OldState = FirstRound_Start;
         break;
@@ -32,13 +32,21 @@ void FirstRound::ExecuteStateMachine()
         }
         break;
         case FirstRound_Align:
+            Serial.println("FirstRound Align");
+            if(Turns == 3)
+            {
+                Serial.println("Align 320 Turns= 3 ");
+                Align_->Execute(320);
+                return;
+            }
+
             if (OldState == FirstRound_Start)
             {
                 Align_->Execute(50);
             }
             else
             {
-                Align_->Execute(28);
+                Align_->Execute(33);
             }
 
         if (Align_->ActiveState() == Align_Idle)
@@ -48,12 +56,14 @@ void FirstRound::ExecuteStateMachine()
         }
         break;
     case FirstRound_Move:
-            DriveController->MoveForward(70);
-            State = FirstRound_Idle;
+        Serial.println("Firstround Move");
+        DriveController->MoveForward(80);
+        State = FirstRound_Idle;
 
-            break;
+        break;
 
     case FirstRound_Idle:
+        Serial.println("FirsrroundIdle");
         if (IModuleState_->ActiveState() != Objectstate_found)
         {
             State = FirstRound_Turn;
@@ -79,6 +89,7 @@ void FirstRound::ExecuteStateMachine()
 
 void FirstRound::Turn(int Distance)
 {
+    Serial.println("Turn");
     switch (State_turn)
     {
     case Verify:

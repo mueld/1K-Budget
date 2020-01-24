@@ -17,8 +17,8 @@ enum Direction_Drive
 
 enum Position_Axis
 {
-    Position_StrokeMovingHome,
-    Position_Stroke,
+    Position_StrokeOT,
+    Position_StrokeUT,
     Position_RotateMovingHome,
     Position_Rotate
 };

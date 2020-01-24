@@ -16,10 +16,12 @@ int Objectdetection::ActiveState()
 
 void Objectdetection::ExecuteStateMachine()
 {
+    Camera->ccc.getBlocks();
+    Serial.println(Camera->ccc.blocks[0].m_signature);
     switch (state)
     {
     case Objectstate_Searching:
-        Camera->ccc.getBlocks();
+        
         if (FirstCubeFound == false && Camera->ccc.numBlocks != 0)
         {
             for (int i = 0; i < Camera->ccc.numBlocks; i++)
@@ -52,7 +54,7 @@ void Objectdetection::ExecuteStateMachine()
                     {
                         Drivecontroller->Stay();
                         FirstCubeFound = false;
-                        state = Objectstate_MovingForward;
+                        state = Objectstate_found;
                     }
                 }
             }
@@ -62,7 +64,9 @@ void Objectdetection::ExecuteStateMachine()
             Drivecontroller->TurnRight(70);
         }
         break;
-
+    case Objectstate_found:
+        state = Objectstate_Searching;
+        break;
     case Objectstate_MovingForward:
 
         for (int i = 0; i < Camera->ccc.numBlocks; i++)

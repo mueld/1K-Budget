@@ -4,7 +4,6 @@
 #ifndef FirstRound_h
 #define FirstRound_h
 
-
 enum FirstRound_State
 {
     FirstRound_Start,
@@ -13,6 +12,7 @@ enum FirstRound_State
     FirstRound_Turn,
     FirstRound_Align,
     FirstRound_Idle,
+    FirstRound_FoundObject,
     FirstRound_Finish
 };
 enum Turn_State

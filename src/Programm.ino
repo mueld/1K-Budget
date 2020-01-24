@@ -37,11 +37,11 @@ void setup()
 
 void loop()
 {
-
+    Serial.print("Encoder:");
+    DrivesControllerInstance.PrintEncoder(Motor_Linear);
     Sensors.Reading();
     Sensors.NotifyObserver();
-    AlignInstance.Print();
-
+    DrivesControllerInstance.setPosition(Motor_Linear, Position_StrokeUT);
     switch (State)
     {
     case Process_Waiting:
@@ -54,7 +54,7 @@ void loop()
 
     case Process_FirstRound:
 
-        Execute_FirstRound();
+       Execute_FirstRound();
         break;
 
     case Process_Idle:
@@ -62,7 +62,7 @@ void loop()
         break;
 
     case Process_Searching:
-        Execute_Searching();
+       // Execute_Searching();
         break;
     case Process_ObjectFound:
         Serial.println("objekt gefunden");

@@ -11,25 +11,11 @@ void Align::Setup(DrivesController *Controller)
 void Align::Execute(int Distance)
 {
     Serial.println("bin in align execute");
+    Serial.println(Sensor_Data[0]);
     switch (State)
     {
-    case Align_Distance:
-        if (Sensor_Data[0] > Distance)
-        {
-            Controller->MoveRight(90);
-        }
-        else if (Sensor_Data[0] <  (Distance-10))
-        {
-            Controller->MoveLeft(70);
-        }
-        else
-        {
-            
-            State = Align_Idle;
-        }
-        break;
-    
-    case  Align_Parallel:
+     case  Align_Parallel:
+        Serial.println("AlignParallel");
         if ((Sensor_Data[0]+8) % Sensor_Data[1] >= 10 && (Sensor_Data[0]+8) > Sensor_Data[1])
         {
             Controller->TurnRight(50);
@@ -40,10 +26,35 @@ void Align::Execute(int Distance)
         }
         else
         {
-            Controller->Stay();
-            State = Align_Distance;
+            if (Sensor_Data[0] < Distance)
+            {
+                State = Align_Idle;
+            }
+            else
+            {
+                Controller->Stay();
+            State = Align_Distance; 
+            }
         }
         break;
+    
+    case Align_Distance:
+        if (Sensor_Data[0] > Distance)
+        {
+            Controller->MoveRight(80);
+        }
+        else if (Sensor_Data[0] <  (Distance-10))
+        {
+            Controller->MoveLeft(80);
+        }
+        else
+        {
+            
+            State = Align_Idle;
+        }
+        break;
+    
+   
     case Align_Idle:
         State = Align_Parallel;
     }

@@ -47,7 +47,7 @@ private:
     VL53L0X_RangingMeasurementData_t measureCube;
     VL53L0X_RangingMeasurementData_t *Table_Measure[5] = {&measureVR, &measureHR, &measureFront, &measureLEFT, &measureCube};
     int index = 0;
-    int Table_Measure_Data[5][4];
+    int Table_Measure_Data[5][2];
     
     int summ = 0;
     int Cube_Value;

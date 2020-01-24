@@ -60,7 +60,7 @@ void ToF::Reading()
     {
         Sensoren[i]->rangingTest(Table_Measure[i], false);
     }
-    index = index % 4;
+    index = index % 2;
     for (int i = 0; i < 5; i++)
     {
              Table_Measure_Data[i][index] = Table_Measure[i]->RangeMilliMeter;
@@ -71,13 +71,13 @@ void ToF::Reading()
     index++;
     for (int i = 0; i < 5; i++)
     {
-        for (int k = 0; k < 4; k++)
+        for (int k = 0; k < 2; k++)
         {
             summ += Table_Measure_Data[i][k];
          /*   Serial.print("Summ:");
             Serial.println(summ);
 */        }
-        Average_Measure[i] = summ / 4;
+        Average_Measure[i] = summ / 2;
         summ = 0;
     }
     

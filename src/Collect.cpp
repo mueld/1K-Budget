@@ -5,49 +5,56 @@ void Collect::Setup(DrivesController *DriveController)
 {
     Controller = DriveController;
 }
-bool Collect::CollectThatShit()
+void Collect::CollectThatShit()
 {
-    bool result = false;
     switch (State)
     {
-    case MovetoPosition:
+    case MovetoPosition_Sensor:
         if (Sensor_Data[2] >= 50)
         {
             Serial.println("Fahre auf würfel zu");
             Controller->MoveForward(75);
+            if (Sensor_Data[4] < 150)
+            {
+                Starttime = millis();
+            }
+            
         }
         else
         {
             Controller->Stay();
-            State = Stroke;
         }
         break;
-
+    case MovetoPosition:
+        if (millis() - Starttime > 1000)
+        {
+            Controller->Stay();
+            if (Controller->setPosition(Motor_Linear, Position_StrokeOT))
+            {
+                Starttime = millis();
+                State = Stroke;
+            }
+        
+    }
+    
+        break;
     case Stroke:
-        if (Controller->setPosition(Motor_Linear, Position_Stroke))
+        if (millis() - Starttime < 1000)
         {
-            State = MovingHome;
+            Controller->MoveForward(80);
         }
-    case MovingHome:
-        if (Controller->setPosition(Motor_Linear, Position_StrokeMovingHome))
-        {
-            State = Verify_Cube;
-        }
-        break;
-
-    case Verify_Cube:
-        /*if(Sensor_Data[4] < 50)
+    else
     {
+       if (Controller->setPosition(Motor_Linear, Position_StrokeUT))
+        {
+            State = Collect_Finish;
+        }
+    }
+    break;
+    case Collect_Finish:
         State = MovetoPosition;
-        result = true;
-    }
-    else{
-        State = Stroke;
-    }
-        */
         break;
     }
-    return result;
 }
 
 void Collect::update(int Table[5])
@@ -59,4 +66,8 @@ void Collect::update(int Table[5])
             Sensor_Data[i] = Table[i];
         }
     }
+}
+State_Collect Collect::ActiveState()
+{
+    return State;
 }

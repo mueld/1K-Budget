@@ -32,7 +32,7 @@ Parking ParkingInstance;
 Align AlignInstance;
 MKR1000Communication MKR100Instance;
 
-Processstate State = Process_FirstRound;
+Processstate State = Process_Searching;
 Processstate OldState;
 int Cubes = 6;
 
@@ -47,8 +47,7 @@ void DrivesControllerEncoderRotate()
 }
 void Execute_FirstRound()
 {
-   ObjectdetectionInstance.FirstRound();
-    if (ObjectdetectionInstance.ActiveState() == Objectstate_found)
+    if (Round.activeState() == FirstRound_FoundObject )
     {
         State = Process_ObjectFound;
     }
@@ -94,9 +93,11 @@ void Execute_Idle()
 }
 void ExecuteCollect()
 {
-    if (CollectInstance.CollectThatShit())
+    CollectInstance.CollectThatShit();
+    if (CollectInstance.ActiveState() == Collect_Finish)
     {
         State = Process_Idle;
+        Cubes++;
     }
 }
 void ExecuteUnload()

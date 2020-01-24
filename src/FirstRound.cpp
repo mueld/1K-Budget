@@ -25,7 +25,7 @@ void FirstRound::ExecuteStateMachine()
         OldState = FirstRound_Start;
         break;
     case FirstRound_Wait:
-        if (millis() - starttime > 2500)
+        if (millis() - starttime > 2200)
         {
             DriveController->Stay();
             State = FirstRound_Align;
@@ -42,11 +42,18 @@ void FirstRound::ExecuteStateMachine()
 
             if (OldState == FirstRound_Start)
             {
-                Align_->Execute(50);
+                Align_->Execute(40);
             }
             else
             {
-                Align_->Execute(33);
+                if (Turns == 3)
+                {
+                    State = FirstRound_Move;
+                    OldState = FirstRound_Align;
+                    return;
+                }
+                
+                Align_->Execute(32);
             }
 
         if (Align_->ActiveState() == Align_Idle)
@@ -64,14 +71,20 @@ void FirstRound::ExecuteStateMachine()
 
     case FirstRound_Idle:
         Serial.println("FirsrroundIdle");
-        if (IModuleState_->ActiveState() != Objectstate_found)
+        if (Sensor_Data[4] > 200)
         {
             State = FirstRound_Turn;
         }
-        
+         else
+         {
+             State = FirstRound_FoundObject;
+         }    
+        break;
+    case FirstRound_FoundObject:
+        State = FirstRound_Turn;
         break;
 
-    case FirstRound_Turn:
+        case FirstRound_Turn:
         if(Turns <2)
         {
             Turn(140);
@@ -82,7 +95,15 @@ void FirstRound::ExecuteStateMachine()
        }
         if(State_turn == Idle)
         {
+            if(Turns != 3)
+            {
             State = FirstRound_Align;
+            }
+            else
+            {
+                State = FirstRound_Finish;
+            }
+            
         }
     }
 }
@@ -95,12 +116,9 @@ void FirstRound::Turn(int Distance)
     case Verify:
         if (Sensor_Data[2] <= Distance)
         {
-            Align_->Execute(50);
-            if (Align_->ActiveState() == Align_Idle)
-            {
-                State_turn = Turn_;
+            State_turn = Turn_;
             DriveController->TurnLeft(80);
-            }
+            starttime = millis();
         }
         else 
         {
@@ -109,17 +127,16 @@ void FirstRound::Turn(int Distance)
             break;
     
     case Turn_:
-
-        if (Sensor_Data[2] <= 560 )
+        if (millis() - starttime < 3300 )
         {
             DriveController->TurnLeft(80);
         }
         else
         {
-            DriveController->Stay();
-                Turns++;
-                State_turn = Idle;
-        }
+                    DriveController->Stay();
+                    Turns++;
+                    State_turn = Idle;
+        }  
         break;
     case Idle:
         State_turn = Verify;

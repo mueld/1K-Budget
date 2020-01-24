@@ -7,7 +7,7 @@
 #define EncoderPinA_L 2
 #define EncoderPinB_L 4
 #define EncoderPinA_R 3
-#define EncoderPinB_R 12
+#define EncoderPinB_R 5
 
 enum Motor
 {
@@ -36,7 +36,7 @@ private:
 
     Adafruit_MotorShield AFMS1;
     Adafruit_MotorShield AFMS2;
-    volatile int Encoder[2] = {12067,0};
+    volatile int Encoder[2] = {0,0};
 
     ControllerState State;
     unsigned long activetime = 0;

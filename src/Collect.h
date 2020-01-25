@@ -14,7 +14,7 @@ enum State_Collect
 class Collect: public ToF_Interface
 {
     private:
-        State_Collect State = MovetoPosition;
+        State_Collect State = MovetoPosition_Sensor;
         DrivesController *Controller;
         int Sensor_Data[5];
         unsigned long Starttime = 0;

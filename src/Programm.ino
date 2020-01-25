@@ -6,7 +6,7 @@ void setup()
     {
         pinMode(i, OUTPUT);
     }
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 8; i++)
     {
         pinMode(i, INPUT_PULLUP);
     }
@@ -29,7 +29,7 @@ void setup()
     Sensors.Register(&ParkingInstance);
      
     //SendDebugMessage("Setup finished");*/
-   DrivesControllerInstance.ReadEEPROM();
+  DrivesControllerInstance.ReadEEPROM();
    
 }
 
@@ -39,9 +39,11 @@ void loop()
 {
     Serial.print("Encoder:");
     DrivesControllerInstance.PrintEncoder(Motor_Linear);
+    DrivesControllerInstance.IBNAxis(Motor_Linear, 2);
+
     Sensors.Reading();
     Sensors.NotifyObserver();
-    DrivesControllerInstance.setPosition(Motor_Linear, Position_StrokeUT);
+
     switch (State)
     {
     case Process_Waiting:
@@ -62,7 +64,7 @@ void loop()
         break;
 
     case Process_Searching:
-       // Execute_Searching();
+        //Execute_Searching();
         break;
     case Process_ObjectFound:
         Serial.println("objekt gefunden");

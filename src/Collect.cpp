@@ -16,7 +16,9 @@ void Collect::CollectThatShit()
             Controller->MoveForward(75);
             if (Sensor_Data[4] < 150)
             {
+                Serial.println("Sensor detected Cube!!!!!!!!!!!!!!!");
                 Starttime = millis();
+                State = MovetoPosition;
             }
             
         }
@@ -39,13 +41,15 @@ void Collect::CollectThatShit()
     
         break;
     case Stroke:
-        if (millis() - Starttime < 1000)
+        if (millis() - Starttime < 500)
         {
             Controller->MoveForward(80);
         }
     else
     {
-       if (Controller->setPosition(Motor_Linear, Position_StrokeUT))
+        Controller->Stay();
+        
+        if (Controller->setPosition(Motor_Linear, Position_StrokeUT))
         {
             State = Collect_Finish;
         }

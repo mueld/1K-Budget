@@ -157,13 +157,6 @@ void DrivesController::IBNAxis(Motor motor, int direction)
         Linear.MovementMotor(1, 0);
         Rotate.MovementMotor(1, 0);
     }
-    
-
-
-    if (digitalRead(5) == false)
-    {
-        Encoder[motor] = 0;
-     }
      
 }
 void DrivesController::ReadEEPROM()

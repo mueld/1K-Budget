@@ -29,7 +29,7 @@ void setup()
     Sensors.Register(&ParkingInstance);
      
     //SendDebugMessage("Setup finished");*/
-  DrivesControllerInstance.ReadEEPROM();
+    DrivesControllerInstance.ReadEEPROM();
    
 }
 
@@ -39,8 +39,7 @@ void loop()
 {
     Serial.print("Encoder:");
     DrivesControllerInstance.PrintEncoder(Motor_Linear);
-    DrivesControllerInstance.IBNAxis(Motor_Linear, 2);
-
+    //DrivesControllerInstance.IBNAxis(Motor_Linear, 2);
     Sensors.Reading();
     Sensors.NotifyObserver();
 
@@ -64,7 +63,7 @@ void loop()
         break;
 
     case Process_Searching:
-        //Execute_Searching();
+    Execute_Searching();
         break;
     case Process_ObjectFound:
         Serial.println("objekt gefunden");

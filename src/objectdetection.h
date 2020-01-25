@@ -27,6 +27,7 @@ private:
   Objectstate state;
   Pixy2 *Camera;
   DrivesController *Drivecontroller;
+  unsigned long Starttime = 0;
 
 public:
   void Setup(DrivesController *drivecontroller, Pixy2 *pixy);

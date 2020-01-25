@@ -46,15 +46,22 @@ void Objectdetection::ExecuteStateMachine()
                     {
                         Drivecontroller->TurnRight(50);
                     }
-                    else if (Camera->ccc.blocks[i].m_x >= 160)
+                    else if (Camera->ccc.blocks[i].m_x >= 165)
                     {
-                        Drivecontroller->TurnRight(40);
+                        Drivecontroller->TurnRight(30);
                     }
+                    else if (Camera->ccc.blocks[i].m_x <= 155)
+                    {
+                        Drivecontroller->TurnLeft(30);
+                        return;
+                    }
+                    
                     else
                     {
                         Drivecontroller->Stay();
                         FirstCubeFound = false;
-                        state = Objectstate_found;
+                        state = Objectstate_MovingForward;
+                        Starttime = millis();
                     }
                 }
             }
@@ -68,24 +75,33 @@ void Objectdetection::ExecuteStateMachine()
         state = Objectstate_Searching;
         break;
     case Objectstate_MovingForward:
-
-        for (int i = 0; i < Camera->ccc.numBlocks; i++)
+        Serial.println("Objectstate moving forward!!!!!!");
+        if (millis() - Starttime < 2000)
         {
-            if (Camera->ccc.blocks[i].m_index == index)
+            for (int i = 0; i < Camera->ccc.numBlocks; i++)
             {
-                if (Camera->ccc.blocks[i].m_y != 190)
+                if (Camera->ccc.blocks[i].m_index == index)
                 {
-                    Drivecontroller->MoveForward(100);
+                    if (Camera->ccc.blocks[i].m_y <= 190)
+                    {
+                        Drivecontroller->MoveForward(100);
+                    }
+                    else
+                    {
+                        Drivecontroller->Stay();
+                        Serial.println("Objectstate found pos: 210!!!!!!");
+                        state = Objectstate_found;
+                    }
+                    
                 }
-                else
-                {
-                    Drivecontroller->Stay();
-                    state = Objectstate_found;
-                }
-                
             }
         }
-            break;
+       else
+       {
+           state = Objectstate_Searching;
+       }
+       
+        break;
     }
 }
 void Objectdetection::FirstRound()

@@ -16,12 +16,18 @@ void Parking::ExecuteParking()
     case Parking_SearchPosition:
         if (camera->ccc.blocks[0].m_x >=160)
         {
-            Controller->TurnRight(100);
+            Controller->TurnRight(50);
         }
+        else
+        {
+            Controller->Stay();
+            State = 
+        }
+        
         break;
 
     case Parking_Align:
-        align->Execute(500);
+        align->Execute(100);
         if(align->ActiveState() == Align_Idle)
         {
             State = Parking_GotoWall;

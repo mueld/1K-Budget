@@ -32,9 +32,9 @@ Parking ParkingInstance;
 Align AlignInstance;
 MKR1000Communication MKR100Instance;
 
-Processstate State = Process_Searching;
+Processstate State = Process_Unload;
 Processstate OldState;
-int Cubes = 6;
+int Cubes = 0;
 
 
 void DrivesControllerEncoderLinear()
@@ -74,20 +74,21 @@ void Execute_Searching()
 }
 void Execute_Idle()
 {
-     if (MKR100Instance.Read() == true)
-    {
-        State = Process_FirstRound;
-    }
-    if (Round.activeState() != FirstRound_Finish)
-    {
-        State = Process_FirstRound;
-    }
-    else if (Cubes == 6)
+    //  if (MKR100Instance.Read() == true)
+    // {
+    //     State = Process_FirstRound;
+    // }
+    // if (Round.activeState() != FirstRound_Finish)
+    // {
+    //     State = Process_FirstRound;
+    // }
+     if (Cubes == 3)
     {
         State = Process_Parking;
     }
     else
     {
+        Serial.println("STate = Searching");
         State = Process_Searching;
     }
 }
@@ -96,12 +97,16 @@ void ExecuteCollect()
     CollectInstance.CollectThatShit();
     if (CollectInstance.ActiveState() == Collect_Finish)
     {
+        Serial.println("Collect finish");
         State = Process_Idle;
         Cubes++;
+        Serial.print("Cubes");
+        Serial.println(Cubes);
     }
 }
 void ExecuteUnload()
 {
+    UnloadInstance.ExecuteUnload();
     if (UnloadInstance.ActiveState() == Unload_Idle)
     {
         State = Process_UnloadedCubes;
@@ -109,6 +114,7 @@ void ExecuteUnload()
 }
 void ExectueParking()
 {
+    ParkingInstance.ExecuteParking();
     if (ParkingInstance.ActiveState() == Parking_Idle)
     {
          State = Process_Unload;

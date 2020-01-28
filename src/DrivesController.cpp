@@ -29,9 +29,6 @@ void DrivesController::ReadEncoderRotate()
 
 void DrivesController::MoveTheLadies(Direction_Drive Direction, int Veloctiy)
 {
-    Serial.println("bin in MoveTheLadies");
-    Serial.print("Direction:");
-    Serial.println(Direction);
     State = Controller_MoveTheLadies;
     for (int i = 0; i < 4; i++)
     {

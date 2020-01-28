@@ -13,7 +13,7 @@ enum Parking_State
 class Parking : public ToF_Interface
 {
 private:
-    Parking_State State;
+    Parking_State State = Parking_SearchPosition;
     DrivesController *Controller;
     Pixy2 *camera;
     Align *align;

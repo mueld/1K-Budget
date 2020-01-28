@@ -37,9 +37,16 @@ void setup()
 
 void loop()
 {
-    Serial.print("Encoder:");
-    DrivesControllerInstance.PrintEncoder(Motor_Linear);
-    //DrivesControllerInstance.IBNAxis(Motor_Linear, 2);
+    Serial.print("State Objectdetection:  ");
+    Serial.println(ObjectdetectionInstance.ActiveState());
+    Serial.print("State Process:  ");
+    Serial.println(State);
+    Serial.print("State CollectInstance:  ");
+    Serial.println(CollectInstance.ActiveState());
+    DrivesControllerInstance.PrintEncoder(Motor_Rotate);
+    // Serial.print("Encoder:  ");
+    // DrivesControllerInstance.PrintEncoder(Motor_Linear);
+    // DrivesControllerInstance.IBNAxis(Motor_Linear, 2);
     Sensors.Reading();
     Sensors.NotifyObserver();
 
@@ -59,7 +66,7 @@ void loop()
         break;
 
     case Process_Idle:
-    //    Execute_Idle();
+        Execute_Idle();
         break;
 
     case Process_Searching:
@@ -72,19 +79,20 @@ void loop()
     case Process_Collect:
         ExecuteCollect();
         break;
-    /*
+    
     case Process_CollectedCube:
         State = Process_Idle;
         break;
     case Process_Unload:
-        ExecuteUnload();
+        DrivesControllerInstance.IBNAxis(Motor_Linear, 1);
+        //ExecuteUnload();
         break;
     case Process_UnloadedCubes:
         State = Process_Finish;
         break;
     case Process_Parking:
         ExectueParking();
-        break;*/
+        break;
     //}
     // MKR100Instance.SendData(State, Cubes);
     }

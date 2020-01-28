@@ -17,7 +17,6 @@ int Objectdetection::ActiveState()
 void Objectdetection::ExecuteStateMachine()
 {
     Camera->ccc.getBlocks();
-    Serial.println(Camera->ccc.blocks[0].m_signature);
     switch (state)
     {
     case Objectstate_Searching:
@@ -76,15 +75,15 @@ void Objectdetection::ExecuteStateMachine()
         break;
     case Objectstate_MovingForward:
         Serial.println("Objectstate moving forward!!!!!!");
-        if (millis() - Starttime < 2000)
+        if (millis() - Starttime < 500)
         {
             for (int i = 0; i < Camera->ccc.numBlocks; i++)
             {
                 if (Camera->ccc.blocks[i].m_index == index)
                 {
-                    if (Camera->ccc.blocks[i].m_y <= 190)
+                    if (Camera->ccc.blocks[i].m_y <= 120)
                     {
-                        Drivecontroller->MoveForward(150);
+                        Drivecontroller->MoveForward(100);
                     }
                     else
                     {

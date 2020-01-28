@@ -14,15 +14,25 @@ void Parking::ExecuteParking()
     switch (State)
     {
     case Parking_SearchPosition:
-        if (camera->ccc.blocks[0].m_x >=160)
+    if (camera->ccc.numBlocks != 0)
+    {
+         if (camera->ccc.blocks[0].m_x >= 160)
         {
-            Controller->TurnRight(50);
+            Controller->TurnRight(80);
         }
         else
         {
             Controller->Stay();
-            State = 
+            State = Parking_Align;
         }
+    }
+    else
+    {
+        Controller->TurnRight(70);
+    }
+    
+    
+      
         
         break;
 
@@ -48,7 +58,7 @@ void Parking::ExecuteParking()
     case Parking_Park:
        if(Sensor_Data[3] > 50)
        {
-           Controller->MoveLeft(100);
+           Controller->MoveLeft(150);
        }
        else
        {

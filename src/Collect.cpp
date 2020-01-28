@@ -56,7 +56,7 @@ void Collect::CollectThatShit()
     }
     break;
     case Collect_Finish:
-        State = MovetoPosition;
+        State = MovetoPosition_Sensor;
         break;
     }
 }

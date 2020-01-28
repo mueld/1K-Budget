@@ -71,7 +71,7 @@ public:
 class Axis: public Drive, public Errorhandler
 {
     protected:
-        int Position[4]{11200, 1000, 0, 2330};
+        int Position[4]{12000, 1000, 0, 4000};
         bool InPosition;
         volatile int *Encoder;
         volatile int Encoder_old = 100;

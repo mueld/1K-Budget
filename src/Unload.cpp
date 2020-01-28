@@ -11,10 +11,15 @@ void Unload::ExecuteUnload()
     {
 
     case Unload_Start:
-    if (Controller->setPosition(Motor_Rotate, Position_Rotate))
-    {
-        State = Unload_MovingHome;
-        starttime = millis();
+        if (Controller->setPosition(Motor_Linear, Position_StrokeOT))
+        {
+            if (Controller->setPosition(Motor_Rotate, Position_Rotate))
+            {
+                State = Unload_MovingHome;
+            starttime = millis();
+            }
+
+            
     }
         break;
 

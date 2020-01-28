@@ -44,7 +44,7 @@ void Objectdetection::ExecuteStateMachine()
                 {
                     if (Camera->ccc.blocks[i].m_x >= 200)
                     {
-                        Drivecontroller->TurnRight(50);
+                        Drivecontroller->TurnRight(100);
                     }
                     else if (Camera->ccc.blocks[i].m_x >= 165)
                     {
@@ -68,7 +68,7 @@ void Objectdetection::ExecuteStateMachine()
         }
         else
         {
-            Drivecontroller->TurnRight(70);
+            Drivecontroller->TurnRight(100);
         }
         break;
     case Objectstate_found:
@@ -84,7 +84,7 @@ void Objectdetection::ExecuteStateMachine()
                 {
                     if (Camera->ccc.blocks[i].m_y <= 190)
                     {
-                        Drivecontroller->MoveForward(100);
+                        Drivecontroller->MoveForward(150);
                     }
                     else
                     {

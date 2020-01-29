@@ -15,6 +15,7 @@ void Align::Execute(int Distance)
     switch (State)
     {
      case  Align_Parallel:
+        //Roboter richter sich parallel zur rechten seite aus.
         Serial.println("AlignParallel");
         if ((Sensor_Data[0]+8) % Sensor_Data[1] >= 10 && (Sensor_Data[0]+8) > Sensor_Data[1])
         {
@@ -39,6 +40,7 @@ void Align::Execute(int Distance)
         break;
     
     case Align_Distance:
+    //Richtet sich nach der übergeben Distanz aus
         if (Sensor_Data[0] > Distance)
         {
             Controller->MoveRight(80);

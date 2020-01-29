@@ -61,6 +61,8 @@ void ToF::Reading()
         Sensoren[i]->rangingTest(Table_Measure[i], false);
     }
     index = index % 2;
+
+    //Tabelle für die Durchschnittsberechnung
     for (int i = 0; i < 5; i++)
     {
              Table_Measure_Data[i][index] = Table_Measure[i]->RangeMilliMeter;

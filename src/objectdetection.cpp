@@ -21,6 +21,7 @@ void Objectdetection::ExecuteStateMachine()
     {
     case Objectstate_Searching:
         
+        //Ersten Würfel suchen da Pixy Objekte nach grösse sortiert.
         if (FirstCubeFound == false && Camera->ccc.numBlocks != 0)
         {
             for (int i = 0; i < Camera->ccc.numBlocks; i++)
@@ -35,6 +36,7 @@ void Objectdetection::ExecuteStateMachine()
             
             
         }
+        //Wenn der erste Würfel gfunden wurde 
         if (Camera->ccc.numBlocks != 0 && FirstCubeFound == true)
         {
             for (int i = 0; i < Camera->ccc.numBlocks; i++)

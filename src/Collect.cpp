@@ -10,6 +10,8 @@ void Collect::CollectThatShit()
     switch (State)
     {
     case MovetoPosition_Sensor:
+
+    //Roboter fährt solange geradeaus bis "Lichtschranke" den Würfel erkennt.
         if (Sensor_Data[2] >= 50)
         {
             Serial.println("Fahre auf würfel zu");
@@ -28,6 +30,9 @@ void Collect::CollectThatShit()
         }
         break;
     case MovetoPosition:
+
+        //Ist der Würfel erkannt wurden wird 1s gerade ausgefahren um Würfel gerade zu stellen
+
         if (millis() - Starttime > 1000)
         {
             Controller->Stay();
@@ -41,6 +46,7 @@ void Collect::CollectThatShit()
     
         break;
     case Stroke:
+    //Unter die Lineareinheit fahren 500ms, danach wird hub ausgeführt.
         if (millis() - Starttime < 500)
         {
             Controller->MoveForward(80);

@@ -29,7 +29,7 @@ void setup()
     Sensors.Register(&ParkingInstance);
      
     //SendDebugMessage("Setup finished");*/
-    DrivesControllerInstance.ReadEEPROM();
+    DrivesControllerInstance.ReadEEPROM(); //liest Encoderpositionen aus dem EEPROM
    
 }
 
@@ -48,7 +48,7 @@ void loop()
     // DrivesControllerInstance.PrintEncoder(Motor_Linear);
     // DrivesControllerInstance.IBNAxis(Motor_Linear, 2);
     Sensors.Reading();
-    Sensors.NotifyObserver();
+    Sensors.NotifyObserver();           //übergibt allen Observers die Messdaten der Sensoren
 
     switch (State)
     {
@@ -96,5 +96,5 @@ void loop()
     //}
     // MKR100Instance.SendData(State, Cubes);
     }
-    DrivesControllerInstance.UpdateEEPROM();
+    DrivesControllerInstance.UpdateEEPROM(); //schreibt alle 10ms Encoderpositionen aus dem EEPROM 
 }

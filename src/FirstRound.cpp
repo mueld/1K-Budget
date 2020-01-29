@@ -19,6 +19,7 @@ void FirstRound::ExecuteStateMachine()
     switch (State)
     {
     case FirstRound_Start:
+    //Aus Startposition fahren
         starttime = millis();
         DriveController->MoveForward(100);
         State = FirstRound_Wait;

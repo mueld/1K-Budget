@@ -11,6 +11,7 @@ void Unload::ExecuteUnload()
     {
 
     case Unload_Start:
+    //Beide Achsen auf in Kippposition bringen
         if (Controller->setPosition(Motor_Linear, Position_StrokeOT))
         {
             if (Controller->setPosition(Motor_Rotate, Position_Rotate))

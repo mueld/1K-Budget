@@ -14,13 +14,19 @@ enum ToF_State
     ToF_Verify_Error,
     ToF_Error
 };
+
+
 class ToF_Interface
 {
+    //muss von den Observern implementiert werden!!
     public:
     virtual void update(int Table[]);
 };
+
 class Subject_Interface
 {
+    //muss vom Subjekt implentiert werden!!
+    //bietet Registerung und benachrichtung.
     public:
         virtual void Register(ToF_Interface *Ob);
         virtual void NotifyObserver();
@@ -58,7 +64,7 @@ public:
     bool ErrorState();
     String Error_Message();
     void Register(ToF_Interface *Ob);
-    void NotifyObserver();
+    void NotifyObserver(); //benachtitigt Observer
     int Average_Measure[5];
 };
 

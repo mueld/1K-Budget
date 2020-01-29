@@ -83,7 +83,7 @@ void Objectdetection::ExecuteStateMachine()
                 {
                     if (Camera->ccc.blocks[i].m_y <= 120)
                     {
-                        Drivecontroller->MoveForward(100);
+                        Drivecontroller->MoveForward(150);
                     }
                     else
                     {

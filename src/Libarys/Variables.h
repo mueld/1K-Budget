@@ -32,7 +32,7 @@ Parking ParkingInstance;
 Align AlignInstance;
 MKR1000Communication MKR100Instance;
 
-Processstate State = Process_Unload;
+Processstate State = Process_Searching;
 Processstate OldState;
 int Cubes = 0;
 

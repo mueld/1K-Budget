@@ -6,15 +6,26 @@ void MKR1000Communication::SendData(const int &ProcessState, const int &ProcessC
     Serial1.write(ProcessCubes);
 }
 
-bool MKR1000Communication::Read()
+int MKR1000Communication::Read()
 {
-    bool result = false;
+    char Data = Serial1.read();
+    int State = 0;
+
     if(Serial1.available() == 1)
     {
-        if(Serial.read() == '1')
+        switch (Data)
         {
-            result = true;
-        }
+            case '1':
+                State = 1;  //1 = Start
+                break;
+            case '2':
+                State = 2; //2 = Restart
+                break;
+            case '3':
+                State = 3; //3 = Stop
+                break;
+        } 
     }
-    return result;
+    
+    return State;
 }

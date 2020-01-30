@@ -11,7 +11,7 @@ class MKR1000Communication
 
     public:
         void SendData(const int &ProcessState, const int &ProcessCubes);
-        bool Read();
+        int Read();
 };
 
 #endif

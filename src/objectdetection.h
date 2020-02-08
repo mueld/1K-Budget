@@ -7,6 +7,7 @@
 enum Objectstate
 {
   Objectstate_Searching,
+  Objectstate_MovingForward,
   Objectstate_found,
   Objectstate_Idle,
   Objectstate_initialize,
@@ -26,6 +27,7 @@ private:
   Objectstate state;
   Pixy2 *Camera;
   DrivesController *Drivecontroller;
+  unsigned long Starttime = 0;
 
 public:
   void Setup(DrivesController *drivecontroller, Pixy2 *pixy);

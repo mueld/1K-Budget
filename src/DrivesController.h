@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
 #include "Drive.h"
-
+#include <EEPROM.h>
 #ifndef DrivesController_h
 #define DrivesController_h
 #define EncoderPinA_L 2
@@ -36,9 +36,10 @@ private:
 
     Adafruit_MotorShield AFMS1;
     Adafruit_MotorShield AFMS2;
-    volatile int Encoder[2] = {2000,0};
+    volatile int Encoder[2] = {0,0};
 
     ControllerState State;
+    unsigned long activetime = 0;
     void MoveTheLadies(Direction_Drive Direction, int Velocity_Drives);
 
 public:
@@ -56,7 +57,10 @@ public:
     void ReadEncoderRotate();
     String Error_Message();
     bool ErrorState();
-    void PrintEncoder();
+    void PrintEncoder(Motor motor);
+    void IBNAxis(Motor motor, int direction);
+    void ReadEEPROM();
+    void UpdateEEPROM();
 };
 
 #endif

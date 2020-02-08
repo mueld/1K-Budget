@@ -1,15 +1,26 @@
-#include "../Parking.h"
-#include "../Webserver.h"
-#include <ArduinoHttpClient.h>
+#include "../MKR1000Communication.h"
+
+
 #ifndef Variables_h
 #define Variables_h
 #define DEBUG
 
-char serverAddress[] = "192.168.1.125";
-int port = 80;
+enum Processstate
+{
+    Process_Waiting = 0,
+    Process_Searching = 2,
+    Process_ObjectFound = 3,
+    Process_Collect = 4,
+    Process_CollectedCube = 5,
+    Process_Unload = 7,
+    Process_Parking = 6,
+    Process_UnloadedCubes = 8,
+    Process_FirstRound = 1,
+    Process_Idle = 10,
+    Process_Error = 11,
+    Process_Finish = 9
+};
 
-WiFiClient wifi;
-HttpClient client = HttpClient(wifi, serverAddress, port);
 ToF Sensors;
 FirstRound Round;
 Pixy2 Pixyinstance;
@@ -19,11 +30,11 @@ Collect CollectInstance;
 Unload UnloadInstance;
 Parking ParkingInstance;
 Align AlignInstance;
-Webserver WsInstance;
+MKR1000Communication MKR100Instance;
 
-Processstate State;
-Processstate OldState;
-int Cubes = 6;
+Processstate State = Process_Waiting ;
+Processstate OldState = Process_Waiting;
+int Cubes = 0;
 
 
 void DrivesControllerEncoderLinear()
@@ -36,20 +47,19 @@ void DrivesControllerEncoderRotate()
 }
 void Execute_FirstRound()
 {
-    ObjectdetectionInstance.FirstRound();
-    if (ObjectdetectionInstance.ActiveState() == Objectstate_found)
+    Round.ExecuteStateMachine();
+    if (Round.ActiveState() == FirstRound_FoundObject)
     {
         State = Process_ObjectFound;
+        OldState = State;
     }
-    else if (Round.activeState() == FirstRound_Finish)
+    if (Round.ActiveState() == FirstRound_Finish)
     {
+        
         State = Process_Idle;
+        OldState = State;
     }
 
-    else if (Round.activeState() != FirstRound_Finish)
-    {
-        Round.ExecuteStateMachine();
-    }
 }
 
 void Execute_Searching()
@@ -57,47 +67,61 @@ void Execute_Searching()
     ObjectdetectionInstance.ExecuteStateMachine();
     if (ObjectdetectionInstance.ActiveState() == Objectstate_found)
     {
-        State = Process_Collect;
+        State = Process_ObjectFound;
+        OldState = State;
     }
+    OldState = State;
 }
 void Execute_Idle()
 {
-    /* if (StartButton == true)
-    {
-        State = Process_Start;
-    }*/
-    if (Round.activeState() != FirstRound_Finish)
+    if (Round.ActiveState() != FirstRound_Finish)
     {
         State = Process_FirstRound;
+     return;
     }
-    else if (Cubes == 6)
+    if (Cubes == 6)
     {
         State = Process_Parking;
     }
     else
     {
+        Serial.println("STate = Searching");
         State = Process_Searching;
     }
+    
 }
-void ExectueCollect()
+void ExecuteCollect()
 {
-    if (CollectInstance.CollectThatShit())
+    CollectInstance.CollectThatShit();
+    if (CollectInstance.ActiveState() == Collect_Finish)
     {
+        Serial.println("Collect finish");
         State = Process_Idle;
+        Cubes++;
+        Serial.print("Cubes");
+        Serial.println(Cubes);
     }
+    OldState = State;
 }
 void ExecuteUnload()
 {
+    UnloadInstance.ExecuteUnload();
     if (UnloadInstance.ActiveState() == Unload_Idle)
     {
         State = Process_UnloadedCubes;
+        OldState = State;
     }
+    OldState = State;
 }
 void ExectueParking()
 {
+    ParkingInstance.ExecuteParking();
     if (ParkingInstance.ActiveState() == Parking_Idle)
     {
          State = Process_Unload;
+         OldState = State;
     }
+    OldState = State;
 }
+
 #endif

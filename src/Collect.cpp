@@ -1,44 +1,94 @@
 #include "Collect.h"
 #include "FirstRound.h"
 
-void Collect::Setup(ToF *Sensor, DrivesController *DriveController)
+void Collect::Setup(DrivesController *DriveController, IModuleState *FirstRound)
 {
     Controller = DriveController;
-    Sensoren = Sensor;
+    firstround = FirstRound;
 }
-bool Collect::CollectThatShit()
+void Collect::CollectThatShit()
 {
-    bool result = false;
     switch (State)
     {
-    case MovetoPosition:
-        if (Sensoren->Cube_Value >= 5)
+    case MovetoPosition_Sensor:
+
+             //Roboter fährt solange geradeaus bis "Lichtschranke" den Würfel erkennt.
+        if (Sensor_Data[2] >= 50)
         {
-            Controller->MoveForward(75);
+            Serial.println("Fahre auf würfel zu");
+            Serial.println(Sensor_Data[4]);
+            Controller->MoveForward(80);
+            if (Sensor_Data[4] < 180)
+            {
+                Serial.println("Sensor detected Cube!!!!!!!!!!!!!!!");
+                Starttime = millis();
+                State = MovetoPosition;
+            }
+            
         }
         else
         {
             Controller->Stay();
-            State = Stroke;
-        }
+            State = MovetoPosition;
+        } 
+    
+
         break;
+    case MovetoPosition:
+        //Ist der Würfel erkannt wurden wird 1s gerade ausgefahren um Würfel gerade zu stellen
 
-    case Stroke:
-        if (Controller->setPosition(Motor_Linear, Position_Stroke))
+        if (millis() - Starttime > 1500)
         {
-            State = Finish;
-            result = true;
-            return result;
-        }
-    break;
-
-    case Finish:
-        State = MovetoPosition;
-    break;
+            Serial.println("time is over");
+            Controller->Stay();
+            if (Controller->setPosition(Motor_Linear, Position_StrokeOT))
+            {
+                Starttime = millis();
+                State = Stroke;
+            }
+        
     }
-    return result;
+    
+        break;
+    case Stroke:
+    //Unter die Lineareinheit fahren 500ms, danach wird hub ausgeführt.
+        if (millis() - Starttime < 500)
+        {
+            Controller->MoveForward(80);
+        }
+    else
+    {
+        Controller->Stay();
+        
+        if (Controller->setPosition(Motor_Linear, Position_StrokeUT))
+        {
+            State = Collect_Finish;
+        }
+    }
+    break;
+    case Collect_Finish:
+        State = MovetoPosition_Sensor;
+        break;
+    }
 }
-int Collect::ActiveState()
+
+void Collect::update(int Table[5])
+{
+    for (int i = 0; i < 5; i++)
+    {
+        if (Table[i] != 8190)
+        {
+            Sensor_Data[i] = Table[i];
+            
+        }
+       ;
+    } 
+    Serial.print("Sensor Cube:");
+    Serial.println(Sensor_Data[4]);
+    Serial.print("Sensor Front:");
+    Serial.println(Sensor_Data[2]);
+}
+State_Collect Collect::ActiveState()
 {
     return State;
 }

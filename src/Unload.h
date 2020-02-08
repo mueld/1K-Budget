@@ -3,10 +3,11 @@
 #include "Collect.h"
 enum Unload_State
 {
-    Unload_MoveToPosition,
-    Unload_ContainerInPosition,
-    Unload_ConatainerStartPostion,
-    Unload_Idle
+    Unload_Start,
+    Unload_MovingHome,
+    Unload_MovetoPosition,
+    Unload_Idle,
+    Unload_Crash
 };
 
 class Unload: public IModuleState
@@ -14,10 +15,11 @@ class Unload: public IModuleState
     private:
     Unload_State State;
     DrivesController *Controller;
-    ToF *Sensors;
+    unsigned long int starttime = 0;
+    bool Pushposition = false;
 
 public:
-    void Setup(DrivesController *DriveController, ToF *Sensoren);
+    void Setup(DrivesController *DriveController);
     void ExecuteUnload();
     int ActiveState();
 };

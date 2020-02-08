@@ -17,10 +17,13 @@ enum Direction_Drive
 
 enum Position_Axis
 {
-    Position_StartingPositionStroke,
-    Position_Stroke,
-    Position_StartingPositionRotate,
-    Position_Rotate
+    Position_StrokeOT,
+    Position_StrokeUT,
+    Position_RotateMovingHome,
+    Position_Rotate,
+    Position_LinearUnload,
+    Position_RotatePushCube,
+    Position_LinearPushCube
 };
 
 enum Location
@@ -58,7 +61,8 @@ private:
             {2, 2, 2, 2},
             {1, 1, 1, 1},
             {2, 2, 1, 1},
-            {1, 1, 2, 1}};
+            {1, 1, 2, 2},
+            };
 
 
 public:
@@ -70,7 +74,7 @@ public:
 class Axis: public Drive, public Errorhandler
 {
     protected:
-        int Position[4]{0, 4000, 0, 4000};
+        int Position[7]{14000, 1000, 0, 2400,20000,560,8000};
         bool InPosition;
         volatile int *Encoder;
         volatile int Encoder_old = 100;

@@ -12,14 +12,14 @@ enum Align_State
 class Align: public ToF_Interface, public IModuleState
 {
     private:
-        Align_State State;
+        Align_State State = Align_Parallel;
         DrivesController *Controller;
-        int Sensor_Data[4];
+        int Sensor_Data[5];
 
     public:
         void Setup(DrivesController *Controller);
         void Execute(int Distance);
-        void update(int Table[]);
+        void update(int Table[5]);
         void Print();
         int ActiveState();
 };

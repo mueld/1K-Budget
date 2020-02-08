@@ -2,17 +2,19 @@
 #include <Wire.h>
 #include <Adafruit_VL53L0X.h>
 #include <Adafruit_VL6180X.h>
+
+
 void ToF::InitToF()
 {
     
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         digitalWrite(Pin[i], LOW);
     }
     
     delay(10);
     // all unreset
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         digitalWrite(Pin[i], HIGH);
     }
@@ -20,13 +22,14 @@ void ToF::InitToF()
     delay(10);
 
     // activating LOX1 and reseting LOX2
-    digitalWrite(3, HIGH);
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
-    digitalWrite(6, LOW);
+    digitalWrite(8, HIGH);
+    digitalWrite(9, LOW);
+    digitalWrite(10, LOW);
+    digitalWrite(11, LOW);
+    digitalWrite(13, LOW);
 
     // initing LOX1
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         digitalWrite(Pin[i], HIGH);
         delay(10);
@@ -53,21 +56,38 @@ void ToF::Setup()
 
 void ToF::Reading()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         Sensoren[i]->rangingTest(Table_Measure[i], false);
     }
-    for (int i = 0; i < 4; i++)
+    index = index % 2;
+
+    //Tabelle für die Durchschnittsberechnung
+    for (int i = 0; i < 5; i++)
     {
-        Table_Measure_Data[i] = Table_Measure[i]->RangeMilliMeter;
-      //  Serial.println("Übergabe an Array:");
+             Table_Measure_Data[i][index] = Table_Measure[i]->RangeMilliMeter;
+           
+        //  Serial.println("Übergabe an Array:");
         //Serial.println(Table_Measure_Data[i]);
     }
+    index++;
+    for (int i = 0; i < 5; i++)
+    {
+        for (int k = 0; k < 2; k++)
+        {
+            summ += Table_Measure_Data[i][k];
+         /*   Serial.print("Summ:");
+            Serial.println(summ);
+*/        }
+        Average_Measure[i] = summ / 2;
+        summ = 0;
+    }
+    
 }
 
 bool ToF::ErrorState()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         if (Sensoren[i]->Status != 0)
         {
@@ -89,9 +109,10 @@ void ToF::Register(ToF_Interface *O)
 }
 void ToF::NotifyObserver()
 {
-    for (int i = 0; i < 1; i++)
+   
+    for (int i = 0; i < 4; i++)
     {
-        Observers[i]->update(Table_Measure_Data);
+        Observers[i]->update(Average_Measure);
     }
     
 }

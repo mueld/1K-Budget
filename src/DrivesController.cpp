@@ -7,11 +7,11 @@ void DrivesController::ReadEncoderLinear()
 {
     if (digitalRead(EncoderPinB_L) == LOW)
     {
-        Encoder[0]++;
+        Encoder[0]--;
     }
     else
     {
-        Encoder[0]--;
+        Encoder[0]++;
     }
 }
 
@@ -29,11 +29,9 @@ void DrivesController::ReadEncoderRotate()
 
 void DrivesController::MoveTheLadies(Direction_Drive Direction, int Veloctiy)
 {
-    Serial.println("bin in MoveTheLadies");
     State = Controller_MoveTheLadies;
     for (int i = 0; i < 4; i++)
     {
-        Serial.println(i);
         Drives[i]->startMovement(Direction, Veloctiy);
     }
 }
@@ -73,7 +71,7 @@ void DrivesController::Stay()
     State = Controller_Idle;
     for (int i = 0; i < 4; i++)
     {
-        Drives[i]->startMovement(1, 0);
+        Drives[i]->MovementMotor(1, 0);
     }
 }
 
@@ -102,20 +100,20 @@ bool DrivesController::setPosition(Motor Motor, Position_Axis Position)
 void DrivesController::Setup()
 {
     Serial.println("bin im setup");
-    AFMS1 = Adafruit_MotorShield(0x61);
-    AFMS2 = Adafruit_MotorShield(0x60);
+ AFMS1 = Adafruit_MotorShield(0x60);
+   AFMS2 = Adafruit_MotorShield(0x61);
     VR.Setup(&AFMS1, 1, Location_VR);
     VL.Setup(&AFMS1, 2, Location_VL);
-    HR.Setup(&AFMS1, 3, Location_HR);
-    HL.Setup(&AFMS1, 4, Location_HL);
-    Linear.Setup(&AFMS2, 1, &Encoder[0]);
+    HR.Setup(&AFMS1, 4, Location_HR);
+    HL.Setup(&AFMS1, 3, Location_HL);
+   Linear.Setup(&AFMS2, 1, &Encoder[0]);
     Rotate.Setup(&AFMS2, 2, &Encoder[1]);
     AFMS1.begin();
     AFMS2.begin();
 }
-void DrivesController::PrintEncoder()
+void DrivesController::PrintEncoder(Motor motor)
 {
-    Serial.println(Encoder[0]);
+    Serial.println(Encoder[motor]);
 }
 bool DrivesController::ErrorState()
 {
@@ -133,5 +131,53 @@ String DrivesController::Error_Message()
     else if (Rotate.ErrorState() == true)
     {
         return Rotate.Error_Message();
+    }
+}
+void DrivesController::IBNAxis(Motor motor, int direction)
+{
+     if (digitalRead(6) ==  false)
+    {
+        Serial.println("Taster FOrwad gedrüvkt");
+        switch (motor)
+        {
+        case Motor_Linear:
+            Linear.MovementMotor(direction, 255);
+            break;
+        
+        case Motor_Rotate:
+            Rotate.MovementMotor(direction, 100);
+            break;
+        }  
+    }
+    else
+    {
+        Linear.MovementMotor(1, 0);
+        Rotate.MovementMotor(1, 0);
+    }
+     
+}
+void DrivesController::ReadEEPROM()
+{
+    byte *p = (byte*)&Encoder[0];
+    for (int i = 0; i < 4; i++)
+    {
+        *p++ =EEPROM.read(i);
+    }
+    
+}
+void DrivesController::UpdateEEPROM()
+{
+    if (millis()-activetime >10)
+    {
+        byte *p;
+    p = (byte *)&Encoder[0];
+
+    for (int i = 0; i < 4; i++)
+
+    {
+        
+        EEPROM.update(i, *p++);
+    }
+    activetime = millis();
     }
 }

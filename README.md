@@ -12,3 +12,8 @@ Abstände:
 Fragen Alex:    -Fehlerbehandlung wo? Global in der Klasse??? try catch....
                 -Executstatemachine return True?
                 -
+Positionen:
+
+ausladen rotate -2333
+hub ot = 0
+hub UT = 

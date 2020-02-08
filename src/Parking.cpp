@@ -1,12 +1,10 @@
 #include "Parking.h"
 #include "Unload.h"
 
-void Parking::Setup(DrivesController *DriveController, Objectdetection *objectdetection, ToF *Sensors, Pixy2 *pixy, Align *align)
+void Parking::Setup(DrivesController *DriveController, Pixy2 *pixy, Align *align)
 {
     Controller = DriveController;
-    Detection = objectdetection;
     this->align = align;
-    Sensor = Sensors;
     camera = pixy;
 }
 
@@ -16,23 +14,39 @@ void Parking::ExecuteParking()
     switch (State)
     {
     case Parking_SearchPosition:
-        if (camera->ccc.blocks[0].m_x >=160)
+    if (camera->ccc.numBlocks != 0)
+    {
+         if (camera->ccc.blocks[0].m_x >= 160)
         {
-            Controller->TurnRight(100);
+            Controller->TurnRight(120);
         }
+        else
+        {
+            Controller->Stay();
+            State = Parking_Align;
+        }
+    }
+    else
+    {
+        Controller->TurnRight(70);
+    }
+    
+    
+      
+        
         break;
 
     case Parking_Align:
-        align->Execute(600);
+        align->Execute(100);
         if(align->ActiveState() == Align_Idle)
         {
             State = Parking_GotoWall;
         }
         break;
     case Parking_GotoWall:
-        if(Sensor->Table_Measure_Data[2] >10)
+        if(Sensor_Data[2] > 50)
         {
-            Controller->MoveForward(100);
+            Controller->MoveForward(150);
         }
         else
         {
@@ -42,15 +56,30 @@ void Parking::ExecuteParking()
         
         break;
     case Parking_Park:
-        align->Execute(960);
-        if (align->ActiveState()== Align_Idle)
-        {
-            State = Parking_Idle;
-        }
+       if(Sensor_Data[3] > 30)
+       {
+           Controller->MoveLeft(180);
+       }
+       else
+       {
+           Controller->Stay();
+           State = Parking_Idle;
+       }
+       
         break;
     }
 }
 int Parking::ActiveState()
 {
     return (int)State;
+}
+void Parking::update(int Table[5])
+{
+    for (int i = 0; i < 5; i++)
+    {
+        if (Table[i] != 8190)
+        {
+            Sensor_Data[i] = Table[i];
+        }
+    }
 }

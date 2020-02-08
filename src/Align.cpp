@@ -10,59 +10,72 @@ void Align::Setup(DrivesController *Controller)
 
 void Align::Execute(int Distance)
 {
+    Serial.println("bin in align execute");
+    Serial.println(Sensor_Data[0]);
     switch (State)
     {
-    case Align_Distance:
-        if (Sensor_Data[0] > Distance)
+     case  Align_Parallel:
+        //Roboter richter sich parallel zur rechten seite aus.
+        Serial.println("AlignParallel");
+        if ((Sensor_Data[0]+8) % Sensor_Data[1] >= 10 && (Sensor_Data[0]+8) > Sensor_Data[1])
         {
-            Controller->MoveRight(25);
+            Controller->TurnRight(50);
         }
-        else if (Sensor_Data[0] < Distance)
+        else if ((Sensor_Data[1] - 8) % Sensor_Data[0] >= 10 && (Sensor_Data[0] + 8) < Sensor_Data[1])
         {
-            Controller->MoveLeft(25);
+            Controller->TurnLeft(50);
         }
         else
         {
-            Controller->Stay();
-            State = Align_Parallel;
+            if (Sensor_Data[0] < Distance)
+            {
+                State = Align_Idle;
+            }
+            else
+            {
+                Controller->Stay();
+            State = Align_Distance; 
+            }
         }
         break;
     
-    case  Align_Parallel:
-        if (Sensor_Data[0] % Sensor_Data[1] >= 4 && Sensor_Data[0] > Sensor_Data[1])
+    case Align_Distance:
+    //Richtet sich nach der übergeben Distanz aus
+        if (Sensor_Data[0] > Distance)
         {
-            Controller->TurnLeft(25);
+            Controller->MoveRight(150);
         }
-        else if (Sensor_Data[1] % Sensor_Data[0] >= 2)
+        else if (Sensor_Data[0] <  (Distance-10))
         {
-            Controller->TurnRight(25);
+            Controller->MoveLeft(150);
         }
         else
         {
-            Controller->Stay();
+            
             State = Align_Idle;
         }
         break;
+    
+   
     case Align_Idle:
-        State = Align_Distance;
+        State = Align_Parallel;
     }
 }
-void Align::update(int Table[])
+void Align::update(int Table[5])
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         Sensor_Data[i] = Table[i];
     }
 }
 void Align::Print()
 {
-    if (Sensor_Data[0] >303 )
-    {
-        for (int i = 0; i < 4; i++)
+
+        for (int i = 0; i < 5; i++)
     {
         Serial.println(Sensor_Data[i]);
     }
-    }
+    
     
     }
 int Align::ActiveState()

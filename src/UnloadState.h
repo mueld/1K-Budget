@@ -10,7 +10,7 @@ enum Unload_State
     Unload_Crash
 };
 
-class Unload: public IModuleState
+class UnloadState: public IModuleState
 {
     private:
     Unload_State State;

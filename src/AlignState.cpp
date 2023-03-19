@@ -1,14 +1,14 @@
 #include "objectdetection.h"
 #include "ToF.h"
-#include "Align.h"
+#include "AlignState.h"
 
-void Align::Setup(DrivesController *Controller)
+void AlignState::Setup(DrivesController *Controller)
 {
     this->Controller = Controller;
 
 }
 
-void Align::Execute(int Distance)
+void AlignState::Execute(int Distance)
 {
     Serial.println("bin in align execute");
     Serial.println(Sensor_Data[0]);
@@ -61,14 +61,14 @@ void Align::Execute(int Distance)
         State = Align_Parallel;
     }
 }
-void Align::update(int Table[5])
+void AlignState::update(int Table[5])
 {
     for (int i = 0; i < 5; i++)
     {
         Sensor_Data[i] = Table[i];
     }
 }
-void Align::Print()
+void AlignState::Print()
 {
 
         for (int i = 0; i < 5; i++)
@@ -78,7 +78,7 @@ void Align::Print()
     
     
     }
-int Align::ActiveState()
+int AlignState::ActiveState()
 {
     return (int)State;
 }

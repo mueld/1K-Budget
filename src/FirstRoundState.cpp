@@ -1,12 +1,12 @@
-#include "FirstRound.h"
+#include "FirstRoundState.h"
 #include "ToF.h"
 #include "objectdetection.h"
 
-int FirstRound::ActiveState()
+int FirstRoundState::ActiveState()
 {
     return State;
 }
-void FirstRound::Setup(DrivesController *Instance, ToF *ToFs, IModuleState *IModuleState_, Align *AlignInstance)
+void FirstRoundState::Setup(DrivesController *Instance, ToF *ToFs, IModuleState *IModuleState_, Align *AlignInstance)
 {
     DriveController = Instance;
     Sensor = ToFs;
@@ -14,26 +14,26 @@ void FirstRound::Setup(DrivesController *Instance, ToF *ToFs, IModuleState *IMod
     Align_ = AlignInstance;
 }
 
-void FirstRound::ExecuteStateMachine()
+void FirstRoundState::ExecuteStateMachine()
 {
     switch (State)
     {
-    case FirstRound_Start:
+    case FirstRoundState_Start:
     //Aus Startposition fahren
         starttime = millis();
         DriveController->MoveForward(100);
-        State = FirstRound_Wait;
-        OldState = FirstRound_Start;
+        State = FirstRoundState_Wait;
+        OldState = FirstRoundState_Start;
         break;
-    case FirstRound_Wait:
+    case FirstRoundState_Wait:
         if (millis() - starttime > 2500)
         {
             DriveController->Stay();
-            State = FirstRound_Align;
+            State = FirstRoundState_Align;
         }
         break;
-        case FirstRound_Align:
-            Serial.println("FirstRound Align");
+        case FirstRoundState_Align:
+            Serial.println("FirstRoundState Align");
             if(Turns == 3)
             {
                 Serial.println("Align 320 Turns= 3 ");
@@ -41,7 +41,7 @@ void FirstRound::ExecuteStateMachine()
                 return;
             }
 
-            if (OldState == FirstRound_Start)
+            if (OldState == FirstRoundState_Start)
             {
                 Align_->Execute(40);
             }
@@ -49,8 +49,8 @@ void FirstRound::ExecuteStateMachine()
             {
                 if (Turns == 3)
                 {
-                    State = FirstRound_Move;
-                    OldState = FirstRound_Align;
+                    State = FirstRoundState_Move;
+                    OldState = FirstRoundState_Align;
                     return;
                 }
                 
@@ -59,35 +59,35 @@ void FirstRound::ExecuteStateMachine()
 
         if (Align_->ActiveState() == Align_Idle)
         {
-            State = FirstRound_Finish;
-            OldState = FirstRound_Align;
+            State = FirstRoundState_Finish;
+            OldState = FirstRoundState_Align;
         }
         break;
-    case FirstRound_Move:
-        Serial.println("Firstround Move");
+    case FirstRoundState_Move:
+        Serial.println("FirstRoundState Move");
         DriveController->MoveForward(80);
-        State = FirstRound_Idle;
+        State = FirstRoundState_Idle;
 
         break;
 
-    case FirstRound_Idle:
+    case FirstRoundState_Idle:
         Serial.println("FirsrroundIdle");
         if (Sensor_Data[4] < 200)
         {
              starttime = millis();
              DriveController->MoveLeft(100);
-             State = FirstRound_Prepare;
+             State = FirstRoundState_Prepare;
         }
          else
          {
-            State = FirstRound_Turn;
+            State = FirstRoundState_Turn;
          }    
         break;
-    case FirstRound_FoundObject:
-        State = FirstRound_Turn;
+    case FirstRoundState_FoundObject:
+        State = FirstRoundState_Turn;
         break;
 
-        case FirstRound_Turn:
+        case FirstRoundState_Turn:
         if(Turns < 2)
         {
             Turn(150);
@@ -100,16 +100,16 @@ void FirstRound::ExecuteStateMachine()
         {
             if(Turns != 3)
             {
-            State = FirstRound_Align;
+            State = FirstRoundState_Align;
             }
             else
             {
-                State = FirstRound_Finish;
+                State = FirstRoundState_Finish;
             }
             
         }
         break;
-        case FirstRound_Prepare:
+        case FirstRoundState_Prepare:
             if (millis()-starttime > 1500 && prepare == false)
             {
                 DriveController->MoveRight(100);
@@ -120,17 +120,17 @@ void FirstRound::ExecuteStateMachine()
             {
                 DriveController->Stay();
                 prepare = false;
-                State = FirstRound_FoundObject;
+                State = FirstRoundState_FoundObject;
             }
             break;
-        case FirstRound_Finish:
+        case FirstRoundState_Finish:
             Turns = 0;
-            State = FirstRound_Start;
+            State = FirstRoundState_Start;
             break;
     }
 }
 
-void FirstRound::Turn(int Distance)
+void FirstRoundState::Turn(int Distance)
 {
     Serial.print("TState Turn.");
     Serial.println(State_turn);
@@ -166,7 +166,7 @@ void FirstRound::Turn(int Distance)
         break;
     }
 }
-void FirstRound::update(int Table[5]) {
+void FirstRoundState::update(int Table[5]) {
     for (int i = 0; i < 5; i++)
     {
         if (Table[i] != 8190)

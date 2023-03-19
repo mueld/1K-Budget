@@ -1,14 +1,14 @@
-#include "Parking.h"
+#include "ParkingState.h"
 #include "Unload.h"
 
-void Parking::Setup(DrivesController *DriveController, Pixy2 *pixy, Align *align)
+void ParkingState::Setup(DrivesController *DriveController, Pixy2 *pixy, Align *align)
 {
     Controller = DriveController;
     this->align = align;
     camera = pixy;
 }
 
-void Parking::ExecuteParking()
+void ParkingState::ExecuteParking()
 {
     camera->ccc.getBlocks();
     switch (State)
@@ -69,11 +69,11 @@ void Parking::ExecuteParking()
         break;
     }
 }
-int Parking::ActiveState()
+int ParkingState::ActiveState()
 {
     return (int)State;
 }
-void Parking::update(int Table[5])
+void ParkingState::update(int Table[5])
 {
     for (int i = 0; i < 5; i++)
     {

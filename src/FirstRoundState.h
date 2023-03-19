@@ -1,20 +1,20 @@
 #include "ToF.h"
 #include "objectdetection.h"
 #include "Align.h"
-#ifndef FirstRound_h
-#define FirstRound_h
+#ifndef FirstRoundState_h
+#define FirstRoundState_h
 
-enum FirstRound_State
+enum FirstRoundState_State
 {
-    FirstRound_Start,
-    FirstRound_Prepare,
-        FirstRound_Wait,
-    FirstRound_Move,
-    FirstRound_Turn,
-    FirstRound_Align,
-    FirstRound_Idle,
-    FirstRound_FoundObject,
-    FirstRound_Finish
+    FirstRoundState_Start,
+    FirstRoundState_Prepare,
+    FirstRoundState_Wait,
+    FirstRoundState_Move,
+    FirstRoundState_Turn,
+    FirstRoundState_Align,
+    FirstRoundState_Idle,
+    FirstRoundState_FoundObject,
+    FirstRoundState_Finish
 };
 enum Turn_State
 {
@@ -23,11 +23,11 @@ enum Turn_State
     Idle
 };
 
-class FirstRound : public ToF_Interface, public IModuleState
+class FirstRoundState : public ToF_Interface, public IModuleState
 {
 private:
-    FirstRound_State State = FirstRound_Start;
-    FirstRound_State OldState;
+    FirstRoundState_State State = FirstRoundState_Start;
+    FirstRoundState_State OldState;
     DrivesController *DriveController;
     ToF *Sensor;
     IModuleState *IModuleState_;

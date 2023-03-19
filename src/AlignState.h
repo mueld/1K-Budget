@@ -9,7 +9,7 @@ enum Align_State
     Align_Parallel,
     Align_Idle
 };
-class Align: public ToF_Interface, public IModuleState
+class AlignState: public ToF_Interface, public IModuleState
 {
     private:
         Align_State State = Align_Parallel;

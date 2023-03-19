@@ -10,7 +10,7 @@ enum Parking_State
     Parking_Idle
 };
 
-class Parking : public ToF_Interface
+class ParkingState : public ToF_Interface
 {
 private:
     Parking_State State = Parking_SearchPosition;

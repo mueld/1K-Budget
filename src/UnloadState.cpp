@@ -1,11 +1,11 @@
-#include "Unload.h"
+#include "UnloadState.h"
 
-void Unload::Setup(DrivesController *DriveController)
+void UnloadState::Setup(DrivesController *DriveController)
 {
     Controller = DriveController;
 }
 
-void Unload::ExecuteUnload()
+void UnloadState::ExecuteUnload()
 {
     switch (State)
     {
@@ -67,7 +67,7 @@ void Unload::ExecuteUnload()
     }
 
 }
-int Unload::ActiveState()
+int UnloadState::ActiveState()
 {
     return State;
 }

@@ -22,14 +22,14 @@ enum Processstate
 };
 
 ToF Sensors;
-FirstRound Round;
+FirstRoundState Round;
 Pixy2 Pixyinstance;
 Objectdetection ObjectdetectionInstance;
 DrivesController DrivesControllerInstance;
-Collect CollectInstance;
-Unload UnloadInstance;
-Parking ParkingInstance;
-Align AlignInstance;
+CollectState CollectInstance;
+UnloadState UnloadInstance;
+ParkingState ParkingInstance;
+AlignState AlignInstance;
 MKR1000Communication MKR100Instance;
 
 Processstate State = Process_Waiting ;

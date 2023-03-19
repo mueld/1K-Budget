@@ -1,19 +1,16 @@
 # 1K-Budget
 
-This is the super master robot project from mueld
+This is robot project.
 
-Anpassungen Programm:
-Abstände: 
--Für Adjust_Distance2;
--Allgemeine Abstände Für adjustment Distance
--Abstand Front für 2ten Turn.
+## Task
+Find and collect 6 coloured cubes. When all cubes have been collected,  they must be placed in a specific offloading area.Once all the cubes are placed in the area, the robot must park in the defined parking area. 
 
 
-Fragen Alex:    -Fehlerbehandlung wo? Global in der Klasse??? try catch....
-                -Executstatemachine return True?
-                -
-Positionen:
+## Technologies
+To find the coloured cubes it will use the pixy camera 2.
 
-ausladen rotate -2333
-hub ot = 0
-hub UT = 
+To orientate in the field the robot has ladar sensors attachted to each side of it. 
+The robto has mecanum wheels. These allows it to move in any direction and turn around its own axis.
+
+
+

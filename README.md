@@ -1,4 +1,4 @@
-# 1K-Budget
+# 1K-Budget 2019
 
 This is robot project. This is a cross-training project consisting of the following disciplines: systems engineering, electrical engineering and mechanical engineering.
 This project serves to expand my very basic knowledge of programming that i have acquired through studying systems engineering.

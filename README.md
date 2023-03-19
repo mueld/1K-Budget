@@ -1,6 +1,7 @@
 # 1K-Budget
 
-This is robot project.
+This is robot project. This is a cross-training project consisting of the following disciplines: systems engineering, electrical engineering and mechanical engineering.
+This project serves to expand my very basic knowledge of programming that i have acquired through studying systems engineering.
 
 ## Task
 Find and collect 6 coloured cubes. When all cubes have been collected,  they must be placed in a specific offloading area.Once all the cubes are placed in the area, the robot must park in the defined parking area. 
